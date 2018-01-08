@@ -1,5 +1,5 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
-    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+   
     <aura:attribute name="AccTeam" type="String" />
     <aura:attribute name="AccTeam1" type="String" />
     <aura:attribute name="AccTeam2" type="String" />
