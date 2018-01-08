@@ -1,5 +1,5 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller='AddNewNotesClass'>
-    <!-- Imports & Declarations-->
+   
     <!--HANDLERS AND EVENTS-->
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler event="c:AddNotesFormCloseEvnt" action="{!c.setAttributeValue}" />
