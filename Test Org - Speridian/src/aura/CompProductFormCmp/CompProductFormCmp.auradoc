@@ -1,0 +1,14 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="CompetitorProductForm" ref="CompProductFormcmp" label="CompProductFormcmp">
+	<p>Competitor Product List</p>	
+ <p> Usage                      :  content of Model box
+     Parent Component           :  CompProductListcmp
+     Events Fired               :  ProductModifyEvt
+     Events Handled             :  Name="SubmitForm"  - to save given product details in the table (CompProductListcmp).
+     								<!-- <aura:registerEvent name="editProduct" type="c:ProductModifyEvt" /> -->
+     Dependent Child Components :  
+     
+        </p>
+	</aura:example>
+</aura:documentation>

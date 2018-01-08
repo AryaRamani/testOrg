@@ -1,0 +1,28 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	
+    <!-- <aura:handler event="c:ba_navigationAttAppEvt"
+		action="{!c.handleNavigateAction}" />
+    <aura:registerEvent name="navCompFlow" type="c:Ba_NavigationFlowCompEvt"/> -->
+    <aura:attribute name="selectedlst" type="Object[]" /> 
+    <aura:attribute name="GroupId" type="String"  />
+     
+    
+	<div class="slds-card">
+	<c:Ba_QuoteLstCmp GroupId="{!v.GroupId}"/>
+	<c:DataTableCmp selectedlst="{!v.selectedlst}"  aura:id="data-id" 
+	fieldnames="[{value:'LineNumber', hide: true},
+					{value:'Predefined_Packages__r.Name',hide:true},{value:'Predefined_Packages__r.ba_ProductLine__c',hide:true},
+					{value:'ba_Status__c',hide:true},
+					{value:'ba_TerminationDate__c',hide:false},{value:'ServiceDate',hide:false},
+					{value:'Quote.ba_EffectiveDate__c',hide:false},{value:'Quote.ba_TerminationDate__c',hide:false},
+					{value:'Quote.ba_RatingRegion__c',hide:false}
+					 ]"
+	fieldlabel="['Line Item','Benefit Package','Product Line','Line Item Status']"
+	objectName="QuoteLineItem"
+	searchfield="QuoteId"
+	showSelection="true"
+	/>
+        
+        
+	</div>
+</aura:component>

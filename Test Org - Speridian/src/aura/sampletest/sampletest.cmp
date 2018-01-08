@@ -1,0 +1,6 @@
+<aura:component >
+<aura:attribute name="sample" type="string"/>
+<h1>{!v.sample}</h1>
+	
+
+</aura:component>

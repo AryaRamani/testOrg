@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+	<aura:attribute name="product" type="BA_Group_Competitor_Product__c" />
+	<aura:attribute name="productidx" type="Integer" />
+</aura:event>

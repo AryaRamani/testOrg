@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="Account" type="Account"/>
+    <aura:attribute name="Accountidx" type="Integer"/>
+</aura:event>

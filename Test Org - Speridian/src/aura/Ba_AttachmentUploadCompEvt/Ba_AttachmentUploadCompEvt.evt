@@ -1,0 +1,10 @@
+<aura:event type="COMPONENT" description="Event template">
+ 	<aura:attribute name="type" type="String" />
+ 	<aura:attribute name="status" type="String" />
+ 	<aura:attribute name="selectedoption" type="String" />
+ 	<aura:attribute name="docclink" type="String" />
+ 	<aura:attribute name="fileName" type="String"  />
+ 	<aura:attribute name="hide" type="Boolean"  />
+ 	
+ 	
+</aura:event>

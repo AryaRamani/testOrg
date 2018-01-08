@@ -1,0 +1,87 @@
+<aura:component >
+	<!-- Imports & Declarations-->
+	<aura:registerEvent name="editCompetitor" type="c:CompetitorModifyEvt" />
+	<aura:registerEvent name="deleteCompetitor"
+		type="c:CompetitorModifyEvt" />
+	<aura:registerEvent name="selectCompetitor"
+		type="c:CompetitorModifyEvt" />
+	<aura:attribute name="parentGroupId" type="String" required="true" />
+	<aura:attribute name="activeRow" type="Integer" />
+	<aura:attribute name="competitors" type="BA_Group_Competitor__c[]" />
+	<aura:attribute name="IsSpinner" type="Boolean" />
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+	<!-- Exposed API To Refresh List Items-->
+	<aura:method name="refreshCompetitorList" action="{!c.doInit}" />
+	<!-- / Imports & Declarations-->
+	<!-- Competitor List Items Table -->
+	<div class="container">
+		<table
+			class="slds-table slds-table--bordered slds-table--striped slds-max-medium-table--stacked-horizontal"
+			id="dataTable">
+			<thead>
+				<tr class="slds-text-title_caps">
+					<th scope="col">
+						<div class="slds-truncate" title="Competitor Name">Competitor
+							Name</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Created">Created</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Contracts Enrolled">Contracts
+							Enrolled</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Notes">Notes</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Action Menu"></div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.competitors}" var="competitor"
+					indexVar="idx">
+					<tr data-data="{!idx}" onclick="{!c.handleRowSelect}">
+						<td data-label="Competitor Name" data-data="divCol">
+							<div class="slds-truncate" title="Competitor Name"
+								data-data="divData">
+								<ui:outputText value="{!competitor.ba_CompetitorName__c}" />
+							</div>
+						</td>
+						<td data-label="Created" data-data="divCol">
+							<div class="slds-truncate" title="Created" data-data="divData">
+								<ui:outputDateTime value="{!competitor.ba_Created__c}" />
+							</div>
+						</td>
+						<td data-label="Contracts Enrolled" data-data="divCol">
+							<div class="slds-truncate" title="Contracts Enrolled"
+								data-data="divData">
+								<ui:outputNumber value="{!competitor.ba_ContractsEnrolled__c}" />
+							</div>
+						</td>
+						<td data-label="Notes" data-data="divCol">
+							<div class="slds-textarea" title="Notes" data-data="divData">
+								<ui:outputTextArea value="{!competitor.Notes__c}" />
+							</div>
+						</td>
+						<td data-label="Lightning Menu" data-data="divCol"><lightning:buttonMenu iconName="utility:settings"
+								onselect="{! c.competitorMenuSelect }">
+								<lightning:menuItem label="Edit"
+									value="{!'EditCompetitor_' + idx}" />
+								<lightning:menuItem label="Delete"
+									value="{!'DeleteCompetitor_' + idx}" />
+							</lightning:buttonMenu></td>
+					</tr>
+				</aura:iteration>
+			</tbody>
+		</table>
+
+		<aura:if isTrue="{!v.IsSpinner}">
+			<lightning:spinner variant="brand" size="large"
+				alternativeText="Page Loading..." />
+		</aura:if>
+
+	</div>
+	<!-- / Competitor List Items Table -->
+</aura:component>

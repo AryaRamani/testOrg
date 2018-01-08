@@ -1,0 +1,71 @@
+<aura:component controller="Ba_GroupClassPackageClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="groupId" type="Id" default="0017F000009Ih8RQAS" />
+    <aura:attribute name="Classlst" type="Object[]" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    
+     <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+    
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon size="small" iconName="utility:package" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Package Information">Group Class Package Association</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    
+     <div aura:id="mainform" style="padding-top: 20px; " class="slds-grid slds-wrap slds-form--compound ">
+       <div >
+            <span style="font-style:italic; padding-bottom:10px;font-weight:bold;color:black">Please associate each class to one benefit package</span>
+        </div>
+         
+          <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" style="width:100%">
+
+            <thead>
+
+                <tr class="slds-text-heading--label">
+                    <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Effective Date</span></th>
+                    <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Class ID</span></th>
+                    <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Class Description</span></th>
+                    <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Probationary Period</span></th>
+                    <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Class Status</span></th>
+                    <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Enrollable Class</span></th>
+                   
+                </tr>
+            </thead>
+            <tbody aura:id="body-id">
+
+                <aura:iteration items="{!v.Classlst}" var="class" indexVar="index">
+                    <tr aura:id="row-id" onclick=" " data-row-index="{!index}">
+
+
+                        <td class="slds-size--1-of-12">{!class.ba_EffectiveDate__c}</td>
+                        <td class="slds-size--1-of-12">{!class.Name}</td>
+                        <td class="slds-size--1-of-12">{!class.ba_ClassDescription__c}</td>
+                        <td class="slds-size--1-of-12">{!class.ba_ProbationaryPeriod__c }</td>
+                        <td class="slds-size--1-of-12">{!class.ba_ClassStatus__c}</td>
+                        
+                      <td class="slds-size--1-of-12"><lightning:input type="checkbox" label=" " name="class"  checked="{!class.Enrollable_Class__c}" disabled="true"/>
+                        </td>
+                    </tr>
+                </aura:iteration>
+
+            </tbody>
+        </table>
+    </div>
+    
+</aura:component>

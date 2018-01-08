@@ -1,0 +1,11 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <ltng:require scripts="/canvas/sdk/js/36.0/publisher.js"
+             afterScriptsLoaded="{!c.jsLoaded}" />
+    <ltng:require scripts="/canvas/sdk/js/36.0/controller.js"/>
+    
+	<ui:button label="Framework Button" press="{!c.handleClick}"/>
+
+
+
+</aura:component>

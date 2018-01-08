@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT" description="by this event we are pass the selected value in the parent component">
+    <aura:attribute name="codeByEvent" type="String"/>
+ 
+</aura:event>

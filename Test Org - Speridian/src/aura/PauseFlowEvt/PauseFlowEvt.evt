@@ -1,0 +1,8 @@
+<aura:event type="COMPONENT" description="Event template" >
+ <aura:attribute name="cellinfo" type="Object[]" />
+   
+ 
+<aura:attribute name="Objtype" type="BA_Quote_Census__c[]"/> 
+
+<aura:attribute name="AllDependent" type="Object[]"/>
+</aura:event>

@@ -1,0 +1,5 @@
+<aura:event type="APPLICATION" description="Event template">
+    <aura:attribute name="Notesnw" type="AddNewNotesClass.ContentNoteDetails" />
+    <aura:attribute name="Type" type="String" />
+    <aura:attribute name="closeMdl" type="boolean" />
+</aura:event>

@@ -1,0 +1,54 @@
+<aura:component controller="MemberSearchController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="memberdetails" type="MemberSearchController.Memberdetails" /><!--to store search member results-->
+    <aura:attribute name="searchmember" type="string" /><!-- key to find the id in search bar-->
+    <aura:attribute name="Message" type="String" />
+      <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    
+     <aura:registerEvent name="sendtoParent" type="c:sendCasetoParentEvt"/>
+
+ <div class="slds">
+ <aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner variant="brand" size="large"/>
+   </aura:if>
+        <!-- Page header of the component -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+
+                    <div class="slds-form-element">
+
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:user" />
+
+                    </div>
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="PCP Change"> Member Search </h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>  
+        
+   
+    <div class="slds-m-around--large">
+      <form class="slds-form--inline">
+         <div class="slds-form-element">
+            <label class="slds-form-element__label" for="search"></label>
+            <div class="slds-form-element__control">
+               <ui:inputText aura:id="searchId" label="Enter Member ID" class="slds-input" value="{!v.searchmember}" required="true" />
+           <div aura:id='message-id' class="slds-hide">{!v.Message}</div>
+             </div>
+         </div>
+         
+         
+           <footer role="contentinfo" class="slds-p-around--large">
+         <div class="slds-form-element">
+                 <lightning:button variant="brand" label="Search" onclick="{! c.Search }" />
+
+          </div>
+          </footer>
+      </form>               
+       
+     </div>
+   </div>
+</aura:component>

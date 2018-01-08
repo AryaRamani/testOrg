@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ContactSearch" ref="ContactSearchCmp" label="Label">
+ Usage : AddNewProspectFlow
+ Parent Components: AddNewPrspctContactParentCmp
+ Events Fired:ContactSearchEvent(to pass selected contact to ContactInfoCmp component)
+ Events Handled:CloseContactModalEvnt(fired From CreateContactModalCmp to close the same)
+ Dependent Child Components:CreateContactModalCmp 
+
+	</aura:example>
+</aura:documentation>

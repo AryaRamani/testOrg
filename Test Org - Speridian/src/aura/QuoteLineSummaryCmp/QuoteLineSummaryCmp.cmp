@@ -1,0 +1,104 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" >
+	
+	
+	
+	 	
+  <!--   <aura:handler name="init" value="{!this}" action="{!c.doInit}" />-->
+     
+	<!--Displays the predefined Packages list-->
+	
+	<div class="slds-section">
+    <h3 class="slds-section-title--divider">Predefined Packages</h3>
+	<div class="container" style="padding-left:15px;padding-right:15px">
+    <table class="slds-table slds-table--bordered slds-table--striped slds-max-medium-table--stacked-horizontal">
+    
+    <thead>
+				<tr class="slds-text-title">
+ 	
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Remove">Remove</div>
+					</th>
+					
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Business Package ID">BUsiness Package ID</div>
+					</th>
+					
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Predefined Package Name">Predefined Package Name</div>
+					</th>
+					
+					
+					</tr>
+			</thead>
+			<tbody>
+                   <tr>
+                        <td class="slds-size--2-of-12"></td>
+                       <td class="slds-size--2-of-12"></td>
+                       <td class="slds-size--2-of-12"></td>
+                    </tr>
+			</tbody>
+    </table>
+   </div>
+	</div>
+	
+	<div class="slds-section" style="padding-top:20px">
+	<h3 class="slds-section-title--divider">Member Rate Info</h3>
+	<div class="container" style="padding-left:15px;padding-right:15px">
+    <table class="slds-table slds-table--bordered slds-table--striped slds-max-medium-table--stacked-horizontal">
+    
+    <thead>
+				<tr class="slds-text-title">
+ 	
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Employee">Employee #</div>
+					</th>
+					
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Relation">Relation</div>
+					</th>
+					
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Date Of Birth">Date Of Birth</div>
+					</th>
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Age">Age</div>
+					</th>
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Rating Region">Rating Region</div>
+					</th>
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Tobacco Use in Member Rate">Tobacco Use in Member Rate</div>
+					</th>
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Rates">Rates</div>
+					</th>
+				
+					
+					</tr>
+			</thead>
+			<tbody>
+			
+                   <tr>
+                       <td class="slds-size--2-of-12"></td>
+                        <td class="slds-size--2-of-12"></td>
+                        <td class="slds-size--2-of-12"></td>
+                          <td class="slds-size--1-of-12"></td>
+                        <td class="slds-size--2-of-12"></td>
+                        <td class="slds-size--2-of-12"></td>
+                        <td class="slds-size--2-of-12"></td>
+                        
+                    </tr>
+			
+			</tbody>
+    </table>
+   </div>
+
+	</div>
+	
+	
+	
+	
+	
+	
+	
+</aura:component>

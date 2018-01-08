@@ -1,0 +1,16 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		<p>Example Description</p>
+		
+		<p> Usage               :  Tasks Detailed flow index , On selecting the one navigates to that component .
+     Parent Component           :  MemberServiceCmp
+     Events Fired               : registerEvent name="sendtoParent" type="sendCasetoParentEvt" typr of event="component" description="this event is used to get member details."
+     Events Handled             :  displays the names of tasks. 
+                                  
+     Dependent Child Components : MemberTaskChildCmp
+     Apex Class Name            :  
+        </p>
+	</aura:example>
+	
+</aura:documentation>

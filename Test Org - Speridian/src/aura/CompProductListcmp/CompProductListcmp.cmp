@@ -1,0 +1,86 @@
+<aura:component implements="force:appHostable"
+	controller="CompetitorProductDAOClass">
+	<!-- Imports & Declarations-->
+	<!--aura:attribute name="ProductList" type="BA_Group_Competitor_Product__c"/-->
+	<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+	<aura:attribute name="modalIsOpen" type="boolean" default="false" />
+	<aura:attribute name="groupId" type="string" />
+	<aura:attribute name="compId" type="string" />
+	<aura:attribute name="activeRow" type="Integer" />
+	<aura:attribute name="activeParentRow" type="Integer" />
+	<aura:attribute name="products" type="BA_Group_Competitor_Product__c[]" />
+	<aura:attribute name="product" type="BA_Group_Competitor_Product__c"
+		default="{ 'sobjectType': 'BA_Group_Competitor_Product__c',
+    		 'ba_ParentCompetitor_Row__c': '',
+             'unknown_custom_field':'',
+             'unknown_custom_field':'',
+             'unknown_custom_field': '',
+             'unknown_custom_field': '',
+             'unknown_custom_field': '',
+             'ba_RateTier__c' : '' ,
+             'unknown_custom_field':'',
+             'unknown_custom_field':'',
+             'ba_FinancialArrangement__c':''                                                                      
+              }" />
+	<aura:registerEvent name="activeCompProductChange"
+		type="c:ProductModifyEvt" />
+	<!--Handler For Event Triggered From CompProductFormcmp -->
+	<aura:handler name="saveProduct" event="c:ProductModifyEvt"
+		action="{!c.handleAddCompProduct}" />
+	<!--Handler For Event Triggered From CompProductListItemcmp -->
+	<aura:handler name="editProduct" event="c:ProductModifyEvt"
+		action="{!c.editProduct}" />
+	<aura:handler name="selectCompetitorProduct" event="c:ProductModifyEvt"
+		action="{!c.selectCompetitorProduct}" />
+	<!-- Exposed API For Communicating Change in Parent Context  -->
+	<aura:method name="parentRecordChanged" action="{!c.parentRecordChanged}" />
+	<!-- / Imports & Declarations-->
+	<!-- Wrapper SLDS -->
+	<div class="slds">
+		<!-- Component Title -->
+		<div
+			style="padding-top: 40px; padding-left: 20px; padding-bottom: 10px">Products</div>
+		<!-- / Component Title -->
+		<!-- Competitor Product List Item Table -->
+		<!--Add new Button -->
+		<div class="slds-form-element"
+			style="padding-top: 40px; padding-right: 40px; padding-bottom: 10px"
+			align="right">
+			<ui:button label="Add New" class="slds-button slds-button--brand"
+				press="{!c.addnew}" />
+		</div>
+		<c:CompProductListItemcmp aura:id="compProductListItemChld"
+			parentCompetitorId="{!v.compId}" products="{!v.products}" activeParentRow="{!v.activeParentRow}"/>
+		<!-- /  Competitor Product List Item Table -->
+
+		<!-- New Competitor Modal Component -->
+		<aura:if isTrue="{!v.modalIsOpen}">
+			<div role="dialog" tabindex="-1" aura:id="popupAddNew"
+				aria-labelledby="New Product" class="slds-modal slds-fade-in-open ">
+				<div class="slds-modal__container">
+					<button
+						class="slds-button slds-modal__close slds-button--icon-inverse"
+						title="Close" onclick="{!c.closeModel}">
+						X <span class="slds-assistive-text" align="right">Close</span>
+					</button>
+					<h3 id="newcompheader" class="slds-text-heading--medium">New
+						Product</h3>
+
+					<div class="slds-modal__content slds-p-around--medium">
+						<c:CompProductFormCmp parentCompetitorId="{!v.compId}"
+							product="{!v.product}" />
+					</div>
+					<!--Modal footer-->
+					<div class="slds-modal__footer">
+						<button class="slds-button slds-button--neutral"
+							onclick="{!c.closeModel}">Cancel</button>
+					</div>
+				</div>
+			</div>
+			<div class="slds-backdrop slds-backdrop--open"
+				aura:id="popupProductNewBackground"></div>
+		</aura:if>
+		<!-- /  New Competitor Modal Component -->
+	</div>
+	<!-- / Wrapper SLDS -->
+</aura:component>

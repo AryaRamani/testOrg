@@ -1,0 +1,13 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+       <p> Usage                : Displays the Predefined Packages,Member information from Add census quote component.  
+     Parent Component           :  
+     Events Fired               : 
+     Events Handled             : 
+     Dependent Child Components :  
+     Apex Class Name            : 
+        </p>
+	</aura:example>
+</aura:documentation>

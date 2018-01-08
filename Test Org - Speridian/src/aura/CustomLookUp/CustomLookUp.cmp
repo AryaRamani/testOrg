@@ -1,0 +1,81 @@
+<aura:component controller="LookUpController" >
+   <!---Use Salesforce Lightning Design System CSS From Static resources-->   
+   <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+   
+    <!--declare attributes--> 
+   <aura:attribute name="selectedRecord" type="String" />
+   
+ <aura:attribute name="label" type="string"/>
+   <aura:attribute name="listOfSearchRecords" type="String[]" description="Use,for store the list of search records which returns from apex class"/>
+   <aura:attribute name="SearchKeyWord" type="string"/>
+   <aura:attribute name="Message" type="String" default="Search Result.."/>
+   <aura:attribute name="pcp" type="Boolean" default="False"/> <!-- lookup pcp change -->
+   <aura:attribute name="sicdetails" type="NewProspectClass.SICDetailsWrpClass[]" />
+    <aura:attribute name="selectedlist" type="String[]" />
+    <aura:attribute name="setSpinner" type="Boolean" default="false" />
+    <aura:attribute name="helptext" type="string"/>
+    
+     <aura:if isTrue="{!v.setSpinner}">
+    <lightning:spinner variant="brand" size="large"/>
+    </aura:if>
+    
+  
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+   <!--declare events hendlers-->  
+   <aura:handler name="zipcodeEvt" event="c:LookUpEvt" action="{!c.handleComponentEvent}"/>
+   <aura:registerEvent name="siccodeEvt" type="c:LookUpEvt"/>
+   <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+   <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+ 
+   <!-- https://www.lightningdesignsystem.com/components/lookups/ --> 
+ <div class="slds"> 
+        <div aura:id="searchRes" class="slds-lookup" data-select="single" data-scope="single" data-typeahead="true">
+            <!-- This is the Input form markup -->
+            <div class="slds-form-element">
+           
+           
+           
+                <label class="slds-form-element__label" for="lookup">{!v.label}<abbr class="slds-required" title="required">*</abbr>
+                
+                     <span style="float:right;padding-left:30px">  
+                         <aura:if isTrue="{!v.pcp}">
+                      <c:HelpTextCmp helptextmsg="{!v.helptext}"/>
+                    </aura:if>
+                      </span>
+                    
+                </label>
+   
+                <div class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+
+                  
+            
+                        <!-- This markup is for when an item is currently selected -->
+                   
+                    <!-- This markup is for when searching for a string -->
+                    <ui:inputText aura:id="lookup" value="{!v.SearchKeyWord}" class="slds-input" updateOn="keyup" keyup="{!c.keyPressController}" />
+                </div>
+            </div>
+          
+     
+      
+         <!--This part is for Display typehead lookup result List--> 
+         
+           
+         <div class="slds-lookup__menu slds" id="lookup-348" aura:id="resultid">
+            <div class="slds-lookup__item--label slds-text-body--small">{!v.Message}</div>
+            <center> <ui:spinner aura:id="spinner"/> </center>
+            <ul class="slds-lookup__list" role="listbox">
+               <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                  <c:CustomLookupResult zipcode="{!singleRec}"  />
+               </aura:iteration>
+            </ul>
+      
+      </div>
+      
+          
+    </div>
+    
+    </div>
+   
+</aura:component>

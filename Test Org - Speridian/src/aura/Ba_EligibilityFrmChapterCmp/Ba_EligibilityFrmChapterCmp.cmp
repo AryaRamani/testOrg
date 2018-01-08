@@ -1,0 +1,20 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+	<aura:attribute name="data" type="Object[]"  /> 
+	<aura:attribute name="BA_Eligiblity_Administration__c" type="BA_Eligiblity_Administration__c[]" />
+	
+	 <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+    <aura:attribute name="BA_Eligiblity_Administration__c" type="BA_Eligiblity_Administration__c[]" />
+    <aura:attribute name="data" type="Object"/> 
+    <aura:attribute name="navigate" type="Boolean" default="true"/> 
+    
+</aura:method>
+	
+	<div style="padding-bottom:5%" class="bounceInRight">
+	<c:ba_EligibilityFrmCmp BA_Eligiblity_Administration__c="{!v.BA_Eligiblity_Administration__c}" />
+	<div style="position:relative">
+	<c:Ba_GroupCensusListCmp aura:id='GroupCensus-id' data="{!v.data}" />
+	</div>
+	</div>
+</aura:component>

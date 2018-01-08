@@ -1,0 +1,10 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="CompetitorFormCmp" ref="CompetitorFormCmp" label="Label">
+		Usage:AddNewProspectFlow
+        Parent Component: CompetitorListCmp
+        Events Fired:saveCompetitor
+        Events Handled: n/a
+        Dependent Child Components:n/a
+	</aura:example>
+</aura:documentation>

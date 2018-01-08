@@ -1,0 +1,6 @@
+<aura:event access="global" type="APPLICATION" description="Event template" >
+<aura:attribute name="navigateto" type="String" /> 
+<aura:attribute name="group" type="Account" />
+<aura:attribute name="zip" type="BA_Zipcode_Admin__c" />
+<aura:attribute name="sicval" type="String" />
+</aura:event>

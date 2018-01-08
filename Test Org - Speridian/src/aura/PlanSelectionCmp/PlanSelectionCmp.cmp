@@ -1,0 +1,215 @@
+<aura:component controller="PlanSelectionClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+    <ltng:require scripts="/resource/lodash/lodash/lodash.js" />
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+
+    <aura:attribute name="packageInfo" type="Object[]" />  <!-- attribute to store predefined packages --> 
+    <aura:attribute name="productAttributes" type="PlanSelectionClass.ProductAttributes" /> <!-- to store filter information  -->
+    <aura:attribute name="Attributelist" type="PlanSelectionClass.ProductAttributes[]" /> <!-- to store filter selection -->
+    <aura:attribute name="packagelist" type="PlanSelectionClass.ProductAttributes[]" /> <!-- to store information about filters not selected -->
+    <aura:attribute name="producttype" type="Object[]" /> <!-- for product type filter -->
+    <aura:attribute name="productline" type="Object[]" /> <!-- for product line filter -->
+    <aura:attribute name="planfilters" type="String[]" /> <!-- displays filter names -->
+    <aura:attribute name="target" type="Integer" />  <!-- stores index value -->
+    <aura:attribute name="product" type="Boolean" default="true" /> <!-- boolean value if fillter is product -->
+
+    <!--Attributes for pagination on filter-->
+    <aura:attribute name="offset" type="integer" default="0" />
+    <aura:attribute name="next" type="boolean" default="true" />
+    <aura:attribute name="prev" type="boolean" default="true" />
+
+    <!--Attributes for pagination on filtered package-->
+    <aura:attribute name="off" type="integer" default="0" />
+    <aura:attribute name="Isnext" type="boolean" default="true" />
+    <aura:attribute name="Isprev" type="boolean" default="true" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <aura:registerEvent name="navigateback" type="c:NavigateBackEvt" /> <!-- Event fired on click of back button -->
+   <aura:registerEvent name="cmpEvent" type="c:QuoteLineSummaryEvent"/> <!-- Event for capturing Quote summary details -->
+
+    <div class="slds bounceInRight ">
+    
+    <!-- displays spinner -->
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner variant="brand" size="large" />
+        </aura:if>
+
+
+        <!-- Page header of the component -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:package" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Plan Information">Plan Selection</h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div aura:id="mainform" style="padding-top: 20px" class="slds-grid slds-wrap slds-card ">
+            <form class="slds-form--compound">
+            
+                <div class="slds-form-element__group">
+                    <div class="slds-form-element__row">
+                    <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-12 slds-large-size--1-of-12 slds-scrollable_y slds-box" style="height: 10rem; width: 12rem;">
+                         <!-- displays filter names -->  
+                            <ui:scrollerWrapper class="scrollerSize">
+                                <div class="demo-only">
+                                    <nav class="slds-nav-vertical" aria-label="Sub page">
+                                        <div class="slds-nav-vertical__section">
+                                            <ul>
+                                                <li aura:id='line1' onclick="{!c.getproductdetails}" class="slds-nav-vertical__item slds-is-active"><a href="javascript:void(0);" class="slds-nav-vertical__action" aria-describedby="entity-header" aria-current="page">Product Details</a></li>
+                                                <aura:iteration items="{!v.planfilters}" var="plan" indexVar="index">
+                                                    <li aura:id='line2' data-row-index="{!index}" onclick="{!c.getdetails}" class="slds-nav-vertical__item "><a href="javascript:void(0);" class="slds-nav-vertical__action" aria-describedby="entity-header" aria-current="page">{!plan}</a></li>
+                                                </aura:iteration>
+                                            </ul>
+
+                                        </div>
+                                    </nav>
+                                </div>
+                            </ui:scrollerWrapper>
+                        </div>
+
+
+                        <div class="slds-grid slds-col slds-size--1-of-1 slds-medium-size--10-of-12 slds-large-size--10-of-12" style='padding-left:20px'>
+                          
+                   <!-- table for filter display names -->       
+                          <table aura:id='deductible-id' class="slds-table slds-table--bordered slds-table--cell-buffer  hideContent">
+                                <thead>
+                                    <tr class="slds-text-heading--label">
+                                        <th class="slds-size--2-of-12"><span class="slds-truncate">Select </span></th>
+                                        <th class="slds-size--10-of-12" style="text-align:center"><span class="slds-truncate"> Display Values</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <aura:iteration items="{!v.productAttributes.productfilter}" var="deduct" indexVar="index">
+                                        <tr>
+                                            <th class="slds-size--2-of-12"><span class="slds-truncate"><lightning:input type="checkbox" label=" " name="line" checked="{!deduct.selected}" onchange="{!c.getchange}" variant="{!index}"/> </span></th>
+                                            <th class="slds-size--10-of-12" style="text-align:center"><span class="slds-truncate">{!deduct.displaynames}</span></th>
+                                        </tr>
+                                    </aura:iteration>
+                                </tbody>
+                            </table>
+                         
+                            
+                            <div aura:id='type-id' class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12  ">
+                       <!-- table for product type filter -->        
+                                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-border_left slds-border_right ">
+                                    <thead>
+                                        <tr class="slds-text-heading--label">
+                                            <th class="slds-size--1-of-4"><span class="slds-truncate">Select </span></th>
+                                            <th class="slds-size--3-of-4"><span class="slds-truncate">Product Type</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration items="{!v.producttype}" var="t">
+                                            <tr>
+                                                <th class="slds-size--1-of-4"><span class="slds-truncate"><lightning:input type="checkbox" label=" " name="type" checked="{!t.select}"/></span></th>
+                                                <th class="slds-size--3-of-4"><span class="slds-truncate">{!t.type}</span></th>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <div aura:id='line-id' class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12 ">
+                         <!-- table for product line -->       
+                                <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-border_right ">
+                                    <thead>
+                                        <tr class="slds-text-heading--label">
+                                            <th class="slds-size--1-of-4" scope="col"><span class="slds-truncate">Select </span></th>
+                                            <th class="slds-size--3-of-4" scope="col"><span class="slds-truncate">Product Line</span></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       <aura:iteration items="{!v.productline}" var="l">
+                                            <tr>
+                                                <th class="slds-size--1-of-4"><span class="slds-truncate"><lightning:input type="checkbox" label=" " name="line" checked="{!l.select}"/> </span></th>
+                                                <th class="slds-size--3-of-4">{!l.line}</th>
+                                            </tr>
+                                        </aura:iteration>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    
+             <!-- filter button -->       
+                    <div style="font-style:italic;padding-botton:10px">Select the filters from above</div>
+                    <lightning:button variant="brand" label="Filter" onclick="{!c.findpackage}" />
+                    
+               <!-- Back and next button for pagination -->     
+                    <div class="slds-grid slds-grid--align-center">
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.Previous}" disabled="{!v.prev}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronleft" />
+                <span class="slds-assistive-text">Previous</span>
+                            </span>
+                        </ui:button>
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.Next}" disabled="{!v.next}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronright" />
+                <span class="slds-assistive-text">Next</span>
+                            </span>
+                        </ui:button>
+                    </div>
+                </div>
+
+                <div style="padding-top:20px">
+                <!-- table for display package information -->
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" style="min-width:65rem">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Selection</span></th>
+                                <th class="slds-size--3-of-12" scope="col"><span class="slds-truncate">Business Package ID</span></th>
+                                <th class="slds-size--3-of-12" scope="col"><span class="slds-truncate">Product Component</span></th>
+                                <th class="slds-size--4-of-12" scope="col"><span class="slds-truncate">Predefined Package</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.packageInfo}" var="data" indexVar="index">
+                                <tr>
+                                    <th class="slds-size--2-of-12">
+                                        <lightning:input type="checkbox" label=" " name="line" checked="{!data.select}" /> </th>
+                                    <th class="slds-size--3-of-12">{!data.packageId}</th>
+                                    <th class="slds-size--3-of-12">{!data.packagecode}</th>
+                                    <th class="slds-size--4-of-12">{!data.packagename}</th>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+
+
+<!-- button for back and next in package pagination -->
+                    <div class="slds-grid slds-grid--align-center" style="padding-top:20px">
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.gotoPrevious}" disabled="{!v.Isprev}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronleft" />
+                <span class="slds-assistive-text">Previous</span>
+                            </span>
+                        </ui:button>
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.gotoNext}" disabled="{!v.Isnext}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronright" />
+                <span class="slds-assistive-text">Next</span>
+                            </span>
+                        </ui:button>
+                    </div>
+                </div>
+                
+               
+
+            </form>
+        </div>
+
+    </div>
+</aura:component>

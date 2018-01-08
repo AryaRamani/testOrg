@@ -1,0 +1,58 @@
+<aura:component controller="SearchControllerClass">
+
+    <aura:attribute name="contacts" type="Contact[]"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <aura:attribute name="pageSize" type="Integer" default="15"/>
+    <aura:attribute name="currentPage" type="Integer" default="1"/>
+
+    <!--
+
+     The handler is set up to execute the searchKeyChange() function in the controller
+
+    -->
+    <aura:handler event="c:SearchKeyChange" action="{!c.searchKeyChange}"/>
+
+    <aura:handler event="c:PageSizeChange" action="{!c.pageSizeChange}"/>
+    <aura:handler event="c:CurrentPageChange" action="{!c.currentPageChange}"/>
+
+
+    <table class='table table-bordered  table-striped'>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th id='name'  data-dir='asc'  onclick="{!c.sortColumn}">Name </th>
+                <th id='phone' data-dir='asc' onclick="{!c.sortColumn}">Phone</th>
+                <th id='email' data-dir='asc' onclick="{!c.sortColumn}">Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            <aura:iteration items="{!v.contacts}" var="contact">
+                <tr><td>
+                    <a href="{! '#contact/' + contact.Id }">
+                        <p>{!contact.Id}</p>
+                    </a>
+                    </td>
+                    <td>
+                        <p>{!contact.Name}</p>
+
+                    </td>
+                    <td>
+                        <p>{!contact.Phone}</p>
+
+                    </td>
+
+                    <td>
+                        <p>{!contact.Email}</p>
+
+                    </td>
+
+
+                </tr>
+            </aura:iteration>
+        </tbody>
+    </table>
+
+
+
+</aura:component>

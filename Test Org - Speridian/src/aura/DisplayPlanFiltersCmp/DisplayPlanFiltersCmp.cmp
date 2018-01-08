@@ -1,0 +1,4 @@
+<aura:component >
+	 <aura:attribute name="plan" type="BA_Product_Attribute__c[]" />
+	    <li aura:id='line2' onclick="{!c.getdetails}" class="slds-nav-vertical__item "><a href="javascript:void(0);" class="slds-nav-vertical__action" aria-describedby="entity-header" >{!v.plan.Name}</a></li>
+</aura:component>

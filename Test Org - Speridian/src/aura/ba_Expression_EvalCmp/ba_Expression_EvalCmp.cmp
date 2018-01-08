@@ -1,0 +1,14 @@
+<aura:component >
+    <!-- PUBLIC USER DEFINED ATTRIBUTES -->
+
+    <!-- INTERNAL ATTRIBUTES -->
+
+    <!-- HANDLERS AND EVENTS-->
+    
+    <!-- PUBLIC METHODS -->
+    <aura:method name="evalExpression" action="{!c.evalExpression}" description="Evaluates String Expression and Returns Result">
+        <aura:attribute name="baExpressionType" type="String" description="Output Type: Acceptable Values are : 'text','number','checkbox'" />
+        <aura:attribute name="baExpressionInput" type="String" description="String Expression to be Evaluated" />
+    </aura:method>
+
+</aura:component>

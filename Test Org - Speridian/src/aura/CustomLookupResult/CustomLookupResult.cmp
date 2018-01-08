@@ -1,0 +1,23 @@
+<aura:component >
+
+<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+    <aura:attribute name="zipcode" type="String" />
+    <aura:attribute name="sicValue" type="Boolean" default="false" />
+    
+  <!--Register the component level event-->
+    <aura:registerEvent name="zipcodeEvt" type="c:LookUpEvt"/>
+    <aura:registerEvent name="siccodeEvt" type="c:LookUpEvt"/>
+    
+    <li role="presentation">
+                        
+            <div class="slds-lookup__result-text slds-grid " style="padding-left:20px">
+                <a onclick="{!c.selectCode}">
+                    <span style="padding-right:15px">
+                            <lightning:icon iconName="standard:contact" size="small" />
+                    </span>
+                    {!v.zipcode}
+                   </a></div>
+         
+    </li>
+</aura:component>

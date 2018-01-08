@@ -1,0 +1,58 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+<aura:attribute name="showSpinner" type="Boolean" default="false" /> 
+<aura:attribute name="data" type="Object[]"  /> 
+
+<!--   <ltng:require scripts="/resource/CSVParser/PapaParse-4.3.2/papaparse.min.js" /> -->
+ <ltng:require scripts="/resource/lodash/lodash/lodash.js" />
+
+<ltng:require scripts="{!$Resource.d3}" afterScriptsLoaded="{!c.onInit}"/>
+
+
+ <aura:method name="validateFields" action="{!c.validateFields}" 
+  description="Validating fields" access="PUBLIC"> 
+    
+    <aura:attribute name="validate" type="Boolean" default="true"/>
+   
+</aura:method>
+ 
+        
+        
+<!-- Page header -->
+    <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+          <lightning:icon iconName="standard:report" size="small" alternativeText="Group Census Information"/>
+      
+      </span>
+            </div>
+            <div class="slds-media__body">
+                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Group Census">Group Census Information</h1>
+
+            </div>
+        </div>
+    </div>
+<!-- Page header ends -->
+
+<aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner variant="brand" size="large" />
+        </aura:if>
+
+<!-- Main body div -->
+<div class="scroll" style="width:100%">
+   <div style="padding-right:5%">
+   <!-- csv file  input -->
+       <lightning:input type="file" label="" name="Mapping" multiple="false" accept=".csv" onchange="{!c.readCSV}"/>
+       
+    </div>
+    <div style="width:960px" class="slds-scrollable" id="chart"></div>
+    
+    
+
+</div>
+
+
+<!--  -->
+
+</aura:component>

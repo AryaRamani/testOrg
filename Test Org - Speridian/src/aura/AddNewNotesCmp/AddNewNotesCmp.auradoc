@@ -1,0 +1,10 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="AddNewNotes" ref="AddNewNotesCmp" label="Label">
+		Usage:AddNewProspectFlow
+        Parent Component:
+        Events Fired:
+        Events Handled:AddNotesFormCloseEvnt(fired From CreateNoteFormCmp to close the same)
+        Dependent Child Components:CreateNoteFormCmp
+	</aura:example>
+</aura:documentation>

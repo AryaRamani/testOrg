@@ -1,0 +1,20 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		<p>Example Description</p>
+		
+		 <p> Usage              : This component is used to create a service request and navigates to generate service request on click of next button.
+     Parent Component           :  MemberServicesCmp 
+     Events Fired               : registerEvent name="sendtoParent" type="sendCasetoParentEvt" type of event="component" description="this event is used to  get the member details and set the params to  case details"
+                                  registerEvent name="gotoPrevious" type="sendtoMemberService" type of event="component" description="It navigate to previous component from current component"
+                                          
+     Events Handled             :No events handled
+                                  
+     Dependent Child Components :  
+     Apex Class Name            : CreateServiceRequestController
+        </p>
+		
+		
+	</aura:example>
+	
+</aura:documentation>

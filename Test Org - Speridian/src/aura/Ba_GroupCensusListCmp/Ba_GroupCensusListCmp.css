@@ -1,0 +1,15 @@
+.THIS .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.THIS .axis path {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.THIS .scroll{
+	overflow: auto;
+}

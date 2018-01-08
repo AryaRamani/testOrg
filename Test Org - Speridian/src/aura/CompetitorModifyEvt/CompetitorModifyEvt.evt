@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="competitor" type="BA_Group_Competitor__c"/>
+    <aura:attribute name="competitoridx" type="Integer"/>
+</aura:event>

@@ -1,0 +1,19 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		<p>Example Description</p>
+		
+		 <p> Usage              : This component is used to display the service request details of service request created and on submit creates a case .
+     Parent Component           :  MemberServicesCmp
+     Events Fired               : registerEvent name="sendtoParent" type="sendCasetoParentEvt" type of event="component" description="this event is used to get the member service  details of member and sets the params of sequence to BAMMemberService."
+                                  registerEvent name="gotoPrevious" type="sendtoMemberService" type of event="component" description="It navigates to previous component from current component"
+     Events Handled             :  No events handled
+                                  
+     Dependent Child Components :  
+     Apex Class Name            : 
+        </p>
+		
+		
+	</aura:example>
+	
+</aura:documentation>

@@ -1,0 +1,245 @@
+<aura:component controller="NewProspectClass"
+	implements="force:appHostable,flexipage:availableForAllPageTypes">
+
+	<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+	<aura:attribute name="group" type="Account"
+		default="{ 'sobjectType': 'Account',
+                'Name': '',
+                'ba_GroupStatus__c':'Prospect',
+                'ba_LegalEntityName__c': '',
+                'Phone': '',
+                  'ba_EffectiveDate__c':''                                       }" />
+	<!-- value attribute for store group -->
+
+	<aura:attribute name="zipdata" type="BA_Zipcode_Admin__c"
+		default="{ 'sobjectType': 'BA_Zipcode_Admin__c',
+                'ba_County__c': '',
+                'ba_City__c':'',
+                'ba_Zipcode__c': '',
+                                                }" />
+	<!--value attribute for county and city  -->
+
+	<aura:attribute name="sicCode" type="String" />
+	<!--value attribute for SIC code  -->
+	<aura:attribute name="index" type="Integer" />
+	<!--to store index of value selected in SIC pop-up  -->
+	<aura:attribute name="sicdetails"
+		type="NewProspectClass.SICDetailsWrpClass[]" />
+	<!--to store sic code and checkbox value  -->
+	<aura:attribute name="SearchKeyWord" type="String" />
+	<aura:attribute name="groupnameMsg" type="String" />
+	<!--To display validation error for groupname  -->
+	<aura:attribute name="sicCodeMsg" type="String" />
+	<!--To display validation error for SIC code   -->
+	<aura:attribute name="effectivedateMsg" type="String" />
+	<!--To display validation error for effective date   -->
+	<aura:attribute name="selectedCodeMsg" type="String" />
+	<!-- To display validation error for Zip code  -->
+	<aura:attribute name="showModal" type="Boolean" default="false" />
+	 <aura:attribute name="showSpinner" type="Boolean" default="false" /> <!-- attribute to display spinner -->
+
+
+
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+	<aura:registerEvent name="navigateProspectEvt"
+		type="c:navigateProspectEvt" />
+	<aura:handler name="zipcodeEvt" event="c:LookUpEvt"
+		action="{!c.getselectedCode}" />
+	<aura:handler name="siccodeEvt" event="c:LookUpEvt"
+		action="{!c.getSICdata}" />
+	<aura:handler name="sicCodeEvent" event="c:SicCodeEvt"
+		action="{!c.getsicvalue}" />
+
+	<div class="slds ">
+		<!-- Page header of the component -->
+		<div class="slds-page-header">
+			<div class="slds-grid">
+				<form class="slds-form--inline" style="padding-left: 5px">
+
+					<div class="slds-form-element">
+						<!-- using custom svg component for icons -->
+						<lightning:icon class="slds-button__icon--large"
+							iconName="utility:people" />
+
+					</div>
+					<div class="slds-form-element" style="margin-top: 5px">
+						<div class="slds-col slds-has-flexi-truncate">
+							<h1 class="slds-text-heading--medium slds-truncate"
+								title="Prospect Information">Prospect Information</h1>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		 <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner variant="brand" size="large" />
+        </aura:if>
+        
+		<div
+			style="padding-top: 40px; padding-left: 20px; padding-bottom: 10px">Please
+			Enter the Prospect Summary</div>
+
+		<div aura:id="mainform" style="padding-top: 20px; padding-left: 40px; height:100%; width: 100%"
+			class="slds-grid slds-wrap slds-scrollable ">
+			<form class="slds-form--compound">
+
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4">
+
+							<lightning:input name="Group Name" label="Group Name"
+								aura:id="nameid" value="{!v.group.Name}" required="true" />
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input name="Group Status" label="Group status"
+								aura:id="statusid" value="{!v.group.ba_GroupStatus__c}"
+								required="true" disabled="true" />
+						</div>
+					</div>
+				</div>
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-top: 20px">
+
+							<!-- Focus event populates the name from group name -->
+							<lightning:input type="Text" name="entity Name"
+								aura:id="entityid" label="Legal Entity Name"
+								value="{!v.group.ba_LegalEntityName__c}"
+								onfocus="{!c.populatename}" />
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-top: 20px; padding-left: 40px">
+
+							<lightning:input type="tel" name="phone" aura:id="phoneid"
+								label="Phone" value="{!v.group.Phone}"
+								pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" />
+						</div>
+					</div>
+				</div>
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-top: 20px">
+							<c:CustomLookUp SearchKeyWord="{!v.zipdata.ba_Zipcode__c}" />
+							<!-- Custom lookup component -->
+							<div aura:id="msg4-id" class="hideContent">
+								<span style="color: red"> {!v.selectedCodeMsg}</span>
+							</div>
+						</div>
+
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-top: 20px; padding-left: 40px">
+
+							<div aura:id="searchRes" class="slds-lookup" data-select="single"
+								data-scope="single" data-typeahead="true">
+								<!-- This is the Input form markup -->
+								<div class="slds-form-element">
+									<label class="slds-form-element__label" for="sicid">SIC
+										Code<abbr class="slds-required" title="required">*</abbr>
+									</label>
+									<div
+										class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+										<div onclick="{!c.getsicdetails}">
+											<c:svg class="slds-input__icon"
+												xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#search">
+
+											</c:svg>
+										</div>
+
+										<ui:inputText aura:id="sicid" value="{!v.sicCode}"
+											class="slds-input" />
+										<div aura:id="msg2-id" class="hideContent">
+											<span style="color: red"> {!v.sicCodeMsg}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-top: 20px;min-width:45%">
+
+							<lightning:input name="County" aura:id="countyid" label="County"
+								value="{!v.zipdata.ba_County__c }" required="true" />
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+							style="padding-top: 20px; padding-left: 40px;min-width:45%">
+							<lightning:input type="date" label="Effective Date" name="date" required="true"/>
+						
+								<div aura:id="msg3-id" class="hideContent">
+									<span style="color: red"> {!v.effectivedateMsg}</span>
+								</div>
+							
+						</div>
+					</div>
+				</div>
+				<div
+					class="slds-col slds-size--1-of-2 slds-medium-size--3-of-6 slds-large-size--2-of-4"
+					style="padding-top: 20px">
+
+					<lightning:input name="City" aura:id="cityid" label="City"
+						value="{!v.zipdata.ba_City__c}" disabled="true" />
+				</div>
+
+				<div aria-hidden="false" aura:id="popUpSICId" role="dialog"
+					class="slds-modal slds-fade-in-open hideContent">
+					<div class="slds-modal__container">
+						<div class="slds-modal__header">
+							<div
+								class="slds-button slds-button--icon-inverse slds-modal__close"
+								onclick="{!c.hideSICPopup}">
+								<c:svg aria-hidden="true"
+									class="slds-button__icon slds-button__icon--large"
+									xlinkHref="/resource/slds100/assets/icons/action-sprite/svg/symbols.svg#close"></c:svg>
+								<span class="slds-assistive-text">Close</span>
+							</div>
+							<h2>SIC DETAILS</h2>
+							<div aura:id="searchRes" class="slds-lookup" data-select="single"
+								data-scope="single" data-typeahead="true">
+								<div
+									class="slds-form-element__control slds-input-has-icon slds-input-has-icon--right">
+									<div onclick="{!c.searchsic}">
+										<c:svg class="slds-input__icon"
+											xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#search">
+
+										</c:svg>
+									</div>
+
+									<ui:inputText aura:id="sicid" value="{!v.SearchKeyWord}"
+										class="slds-input" />
+										
+								</div>
+							</div>
+							<c:ProspectSICSearchModal sicdetails="{!v.sicdetails}"/>
+						</div>
+				
+					</div>
+				</div>
+				<div class="slds-backdrop slds-backdrop--open hideContent"
+					aura:id="popUpBackgroundSICId"></div>
+			</form>
+		</div>
+	</div>
+
+
+</aura:component>

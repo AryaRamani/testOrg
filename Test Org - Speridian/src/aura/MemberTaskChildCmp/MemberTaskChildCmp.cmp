@@ -1,0 +1,20 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	 
+<aura:attribute name="section" type="String" />
+<aura:attribute name="index" type="Integer" />
+	 
+	 <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.sectionOne}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left ">
+            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large" style="margin-left:0.75rem">{!v.section}</div>
+      </section>
+    </div>
+      
+    <div class="slds-hide slds-p-around--medium" aura:id="articleOne">
+     <a  onclick="{!c.gotoSelected}">{!v.section}</a>
+    </div>
+       
+</aura:component>

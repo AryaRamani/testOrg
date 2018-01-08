@@ -1,0 +1,14 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+        <p> Usage               : Displays chapter section 
+     Parent Component           :  MemberTaskCmp
+     Events Fired               :  no events fired
+     Events Handled             :   no events handled
+                                  
+     Dependent Child Components :  
+     Apex Class Name            : 
+        </p>
+	</aura:example>
+</aura:documentation>

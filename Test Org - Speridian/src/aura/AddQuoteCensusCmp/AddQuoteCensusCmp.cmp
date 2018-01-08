@@ -1,0 +1,122 @@
+<aura:component controller="AddQuoteCensusClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+   
+    <ltng:require scripts="/resource/lodash/lodash.js" /> <!-- Static resource to use lodash -->
+    
+    
+    <aura:attribute name="cellinfo" type="Object[]" /> <!-- to display contact information in the table -->
+    <aura:attribute name="newinfo" type="Object" /> <!-- to create a new contact in pop up -->
+    <aura:attribute name="tobacco" type="Boolean" default="false" /><!-- to store tobacco values -->
+    <aura:attribute name="GroupId" type="String" default="0017F000007d3vaQAA" /> <!-- passing default Id -->
+    <aura:attribute name="alertMessage" type="String" /> <!-- display message if file is not selected -->
+    <aura:attribute name="Dependent" type="Object[]" /> <!-- to store dependent information of the selected contact -->
+    <aura:attribute name="AllDependent" type="Object[]" /> <!-- to store all the dependent information -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false" /> <!-- attribute to display spinner -->
+     <aura:attribute name="showModal" type="Boolean" default="false" />
+
+    <aura:registerEvent name="navigateback" type="c:NavigateBackEvt" /> <!-- Event fired to parent on back button -->
+    <aura:registerEvent name="sendtoParent" type="c:navigatetoParentEvt" /> <!-- event fired on parent on next button -->
+    
+    <aura:handler name="modalstate" event="c:Ba_ModalStateEvt" action="{!c.handleModal}"/>
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    <div class="slds bounceInRight ">
+    
+      <!-- to display spinner -->
+        <aura:if isTrue="{!v.showSpinner}">
+            <lightning:spinner variant="brand" size="large" />
+        </aura:if>
+        
+        <!-- Page header of the component -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:people" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Census Information">Quote Census Information</h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+        <!-- Table to display Member Information -->
+        <div aura:id="mainform" style="padding-top: 20px" class="slds-grid slds-wrap slds-card ">
+            <form class="slds-form--compound">
+            <!-- button for CSV file upload -->
+                <div style="text-align:right">
+                    <lightning:input type="file" label="" name="Mapping" multiple="true" accept=".csv" onchange="{! c.readCSV }"></lightning:input>
+                </div>
+                
+                <!-- display all the buttons -->
+                <div style="padding-bottom:20px">
+                    <lightning:buttonGroup >
+                        <lightning:button iconName="utility:delete" label="Delete All" onclick="{! c.deleteinfo }" />
+                        <lightning:button iconName="utility:people" label="Select All Active Members" onclick="{!c.getmembers}" />
+                        <lightning:button iconName="utility:adduser" label="Create a Member" onclick="{!c.createmembers}" />
+                    </lightning:buttonGroup>
+                </div>
+                
+               <!-- table to display employee information -->
+                <div>
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Delete</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Employee Number</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Last Name</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">First Name</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Date of Birth</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Tobacco Used in last 12 months</span></th>
+                            </tr>
+                        </thead>
+                        <tbody aura:id="body-id">
+                            <aura:iteration items="{!v.cellinfo}" var="data" indexVar="index">
+                                <tr aura:id="row-id" onclick="{!c.getdependents}" data-row-index="{!index}">
+                                    <td class="slds-size--2-of-12">
+                                        <lightning:button type="{!index}" class="button" variant=" " label=" " onclick="{! c.getdelete }">
+                                            <lightning:icon class="icon" iconName="utility:delete" /> </lightning:button>
+                                    </td>
+                                    <td class="slds-size--2-of-12">{!data.ID}</td>
+                                    <td class="slds-size--2-of-12">{!data.LastName}</td>
+                                    <td class="slds-size--2-of-12">{!data.FirstName}</td>
+                                    <td class="slds-size--2-of-12">{!data.Date}</td>
+                                    <td class="slds-size--2-of-12">
+                                        <lightning:input aura:id="check-id" type="checkbox" disabled="true" name="value" checked="{!data.CheckVal}" />
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                  </div>
+                
+               
+               <!-- table to display dependent information based on the member selected -->
+                <div aura:id="dep-id" style="padding-top:30px">
+                 <c:DependentDetailsCmp Dependent="{!v.Dependent}"/>  
+                </div>
+
+              
+              <!-- to display modal to create new member -->
+              <div aria-hidden="false" aura:id="popUpId" role="dialog" class="slds-modal slds-fade-in-open hideContent">
+                <c:Ba_AddQuoteCensusModalCmp newinfo="{!v.newinfo}" tobacco="{!v.tobacco}"/>
+                  </div>
+              <div class="slds-backdrop slds-backdrop--open hideContent" aura:id="popUpBackgroundId"></div>
+              
+              <!-- to display footer -->
+                <footer class="slds-p-around--large">
+                    <div class="slds-grid slds-grid--align-center">
+                        <lightning:button aura:id="previous-id" variant="brand" label="Previous" class="slds-button slds-button--neutral" onclick="{!c.moveback}" />
+                        <lightning:button aura:id="next-id" variant="brand" label="Next" class="slds-button slds-button--neutral" onclick="{!c.movenext}" />
+                    </div>
+                </footer>
+            </form>
+        </div>
+
+    </div>
+</aura:component>

@@ -1,0 +1,15 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+         <p> Usage              : Search for the value in lookup on keyup.
+     Parent Component           :  CustomLookUp.
+     Events Fired               : registerEvent name="zipcodeEvt" type="c:LookUpEvt" description=" This event to pass the selected zip code to customLookUpCmp in pcpchange component"
+                                  registerEvent name="siccodeEvt" type="LookUpEvt"  description="This event to pass the selected sic code to customLookUpCmp in insertprospect component."
+     Events Handled             : No events handled
+                                  
+     Dependent Child Components :  
+     Apex Class Name            : 
+        </p>
+	</aura:example>
+</aura:documentation>

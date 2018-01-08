@@ -1,0 +1,17 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+        
+        <p>Example Description</p>
+		
+		<p> Usage               :  This component is used to Provide Tasks in the flow, On selecting  navigates to that component .
+     Parent Component           :  MemberServiceCmp                               
+     Events Fired               : registerEvent name="sendtoParent" type="c:sendCasetoParentEvt" type of event="component" description="This event is used to get the PCPchange task which displays in the flow to navigate to that component.  "
+     Events Handled             : NO events handled
+                                  
+     Dependent Child Components : 
+     Apex Class Name            :  
+        </p>
+	</aura:example>
+    
+</aura:documentation>

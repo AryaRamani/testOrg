@@ -1,0 +1,29 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+
+ <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Description of icon when needed">
+          <lightning:icon iconName="standard:" size="small" alternativeText="Member Plans"/>
+      
+      </span>
+            </div>
+            <div class="slds-media__body">
+                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Member Plans">Member Plans</h1>
+
+            </div>
+        </div>
+    </div>
+<!-- Page header ends -->
+
+
+ <div style="padding-right:5%">
+   <!-- csv file  input -->
+       <lightning:input type="file" label="" name="Mapping" multiple="false" accept=".csv" onchange="{!c.readCSV}"/>
+       
+    </div>
+
+
+	
+</aura:component>

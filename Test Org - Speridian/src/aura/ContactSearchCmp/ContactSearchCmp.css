@@ -1,0 +1,15 @@
+.THIS.adjwidth{
+    width:15% !important;
+}
+.THIS.hideContent{
+   display:none !important;
+}
+.THIS input[type="text"] {
+    width:15% !important;
+}
+.THIS select{
+    width:15% !important;
+}
+.THIS.adjustwidth{
+    width:50% !important;
+}

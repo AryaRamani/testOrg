@@ -1,0 +1,54 @@
+<aura:component >
+	
+	 <aura:attribute name="newinfo" type="Object" /> <!-- to create a new contact in pop up -->
+	  <aura:attribute name="tobacco" type="Boolean" default="false" /><!-- to store tobacco values -->
+	  
+	      <aura:registerEvent name="modalstate" type="c:Ba_ModalStateEvt"/>
+	  
+	
+	
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__header">
+                            <div class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hidePopup}">
+                                <c:svg aria-hidden="true" class="slds-button__icon slds-button__icon--large" xlinkHref="/resource/slds100/assets/icons/action-sprite/svg/symbols.svg#close"></c:svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </div>
+                            <h2>INSERT NEW MEMBER</h2>
+                        </div>
+                        <div class="slds-modal__content " style="padding:40px">
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4">
+                                        <lightning:input name="Employee Number" label="Employee Number" aura:id="numberid" value="{!v.newinfo.ID}" required="true" />
+                                    </div>
+                                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4" style="padding-left: 40px">
+                                        <lightning:input name="First Name" label="First Name" aura:id="fnameid" value="{!v.newinfo.FirstName}" required="true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4">
+                                        <lightning:input name="Last Name" label="Last Name" aura:id="lnameid" value="{!v.newinfo.LastName}" required="true" />
+                                    </div>
+                                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4" style="padding-left: 40px">
+                                        <lightning:input type="date" label="Date of Birth" name="date" value="{!v.newinfo.Date}" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slds-form-element__group">
+                                <div class="slds-form-element__row">
+                                    <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-6 slds-large-size--4-of-4">
+                                        <lightning:input type="checkbox" label="Tobacco Used in last 12 months" name="value" checked="{!v.tobacco}" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="slds-modal__footer" style="padding-top: 20px">
+                            <lightning:button aura:id="okbtn" class="slds-button slds-button--brand buttontype" label="Insert" onclick="{!c.showMember}" />
+                            <lightning:button aura:id="Cancel" label="Cancel" class="slds-button slds-button--brand buttontype" onclick="{!c.hidePopup}" />
+                        </div>
+                    </div>
+              
+</aura:component>

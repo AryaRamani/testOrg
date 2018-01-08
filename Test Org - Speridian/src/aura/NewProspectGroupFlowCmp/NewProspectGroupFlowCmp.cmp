@@ -1,0 +1,53 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+	controller="TaskflowAdminDAOClass">
+	<!-- Imports & Declarations-->
+	<aura:attribute name="currentTaskFlow" type="string"
+		default="BANewProspectGroup" />
+	<aura:attribute name="taskDisplayName" type="String"
+		default="Add New Prospect" />
+	<aura:attribute name="currentChapterSequence" type="Integer"
+		default="-1" />
+	<aura:attribute name="activeChapter" type="String" />
+	<aura:attribute name="childChapterInits" type="String[]" />
+	<aura:attribute name="taskChapters" type="BA_Task_Chapter__c[]" />
+	<aura:attribute name="IsSpinner" type="Boolean" default="false" />
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+	<aura:attribute name="firstChapter" type="Boolean" default="true" />
+	<aura:attribute name="lastChapter" type="Boolean" default="false" />
+	<!--Handlers For Navigation Events Triggered From c:NavigateFlowCmp -->
+	<aura:handler name="navigateNextEvt" event="c:NavigateFlowEvt"
+		action="{!c.handleNavigateNext}" />
+	<aura:handler name="navigatePreviousEvt" event="c:NavigateFlowEvt"
+		action="{!c.handleNavigatePrevious}" />
+	<aura:handler name="flowPauseEvt" event="c:NavigateFlowEvt"
+		action="{!c.handleFlowPause}" />
+	<aura:handler name="flowCancelEvt" event="c:NavigateFlowEvt"
+		action="{!c.handleFlowCancel}" />
+	<aura:handler name="ChapterInitCmpEvt" event="c:ChapterInitCmpEvt"
+		action="{!c.childInitComplete}" />
+	<!-- / Imports & Declarations-->
+	<div class="slds-grid slds-wrap">
+		<div
+			class="slds-col slds-size--2-of-5 slds-small-size--0-of-1 slds-medium-size--1-of-3">
+			<c:TaskChapterCmp aura:id="TaskChapterCmp"
+				taskChapters="{!v.taskChapters}"
+				taskDisplayName="{!v.taskDisplayName}"
+				activeChapter="{!v.activeChapter}" />
+		</div>
+		<div
+			class="slds-col slds-size--3-of-5 slds-small-size--1-of-1 slds-medium-size--2-of-3">
+			<div class="slds-form-element__group" aura:id="taskFormContainer">
+			</div>
+			<footer role="contentinfo" class="slds-p-around--large slds-hide"
+				aura:id="navfooter">
+				<c:NavigateFlowCmp aura:id="NavigateFlowCmp"
+					currentFlow="{!v.currentTaskFlow}" firstChapter="{!v.firstChapter}"
+					lastChapter="{!v.lastChapter}" />
+			</footer>
+		</div>
+		<aura:if isTrue="{!v.IsSpinner}">
+			<lightning:spinner variant="brand" size="large"
+				alternativeText="Page Loading..." />
+		</aura:if>
+	</div>
+</aura:component>

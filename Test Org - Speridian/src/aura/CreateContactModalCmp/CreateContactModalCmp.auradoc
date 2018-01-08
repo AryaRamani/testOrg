@@ -1,0 +1,10 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="CreateContactModal" ref="CreateContactModalCmp" label="Label">
+ Usage : AddNewProspectdFlow
+ Parent Components: ContactSearchCmp
+ Events Fired: CloseContactModalEvnt(fired on click of "Save" button)
+ Events Handled: 
+ Dependent Child Components:CreateContactModalCmp 
+</aura:example>
+</aura:documentation>

@@ -1,0 +1,23 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+	
+	
+	<aura:attribute name="group" type="Object"/>
+	
+	
+	<div class="slds-page-header">
+  <div class="slds-media" style="padding-left:10%">
+    <div class="slds-media__figure">
+      <span class="slds-icon_container slds-icon" title="Description of icon when needed">
+            <lightning:icon iconName="action:new_group" size="small" alternativeText="Group"/>
+        
+      </span>
+    </div>
+    <div class="slds-media__body" style="padding-top:5px;padding-left:5px" >
+      <span class="slds-page-header__title slds-truncate slds-align-middle" title="Group Name">  {!v.group.Name}</span>
+     
+    </div>
+  </div>
+</div>
+
+
+</aura:component>

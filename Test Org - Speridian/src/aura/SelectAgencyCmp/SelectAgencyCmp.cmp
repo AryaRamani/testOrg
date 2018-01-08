@@ -1,0 +1,33 @@
+<aura:component implements="force:appHostable">
+	<!-- Imports & Declarations-->
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <aura:attribute name="modalIsOpen" type="boolean" default="false" />
+    <aura:attribute name="groupId" type="string" default="0017F000008bbfDQAQ" />
+    <!-- / Imports & Declarations-->
+    <!-- Wrapper SLDS -->
+    <div class="slds">
+        <!-- Page Header -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+                    <!-- Header People Icon -->
+                    <div class="slds-form-element">
+                        <c:svg aria-hidden="true" class="slds-button__icon--large" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#people"> </c:svg>
+                    </div>
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Add new Prospect Add Agency/Producer Details"> Add new Prospect Add Agency/Producer Details </h1>
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- / Page Header -->
+
+    </div>
+    <!-- / Wrapper SLDS -->
+
+</aura:component>

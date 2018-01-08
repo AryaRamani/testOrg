@@ -1,0 +1,75 @@
+.THIS #accordion label {
+	background: #f7f9fb;
+	border-radius: 4px;
+	cursor: pointer;
+	display: block;
+	margin-bottom: 2px;
+	padding: 4px 16px;
+	z-index: 20;
+    border:1px solid #eef2f6;
+}
+
+
+.THIS ul {
+    list-style: none;
+    margin: 10px;
+    padding: 0;
+    color: #999;
+}
+
+.THIS li {
+    overflow: hidden;
+    position: relative;
+    padding: 0 0 40px 30px;
+}
+
+.THIS li::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 9px;
+    width: 0;
+    height: 100%;
+    border: 2px solid #0070d2;
+    border-width: 0 0 0 2px;
+}
+
+.THIS li:last-child::before {
+    border-width: 2px 0 0;
+}
+
+.THIS li::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 16px;
+    height: 16px;
+    background: #fff;
+    border: 2px solid #0070d2;
+    border-radius: 100%;
+}
+	
+.THIS li.current {
+    color: #0070d2	;
+    font-weight: bolder;
+}
+
+.THIS li.passed {
+    color: #000;
+}
+
+.THIS li.current::before {
+    border-top-color: #0070d2;
+}
+
+.THIS li.current::after {
+    border-color: #0070d2;
+        background: #0070d2;
+}
+
+.THIS li.passed::before,
+.THIS li.passed::after {
+    border-color: #0070d2;
+
+}

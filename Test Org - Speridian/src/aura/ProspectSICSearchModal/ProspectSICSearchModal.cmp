@@ -1,0 +1,49 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+	
+	<aura:attribute name="sicdetails"
+		type="NewProspectClass.SICDetailsWrpClass[]" />
+	<aura:attribute name="index" type="Integer" />
+	    <aura:registerEvent name="sicCodeEvent" type="c:SicCodeEvt"/>
+	
+	
+			<div class="slds-modal__content ">
+							<div class="demo-only slds-grid"
+								style="background: rgb(244, 246, 249); padding: 1rem;">
+								<div
+									class="slds-panel slds-grid slds-grid_vertical slds-nowrap slds-scrollable_y">
+									<table
+										class="slds-table slds-table--bordered slds-table--cell-buffer">
+										<thead>
+											<tr class="sslds-text-heading--label">
+												<td class="slds-size--1-of-3"></td>
+												<th class="slds-size--2-of-3" scope="col"><span
+													class="slds-truncate">SIC Code</span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<aura:iteration items="{!v.sicdetails}" var="sic"
+												indexVar="index">
+												<tr>
+													<td class="slds-size--1-of-3"><ui:inputCheckbox aura:id="addcheckboc" click="{!c.selectsic}"
+															value="{!sic.selected}" class="slds-checkbox"
+															text="{!index}" /></td>
+													<td class="slds-size--2-of-3">{!sic.sicCode}</td>
+												</tr>
+											</aura:iteration>
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+
+						<div class="slds-modal__footer" style="padding-top: 20px">
+							<lightning:button aura:id="okbtn"
+								class="slds-button slds-button--brand buttontype" label="OK"
+								onclick="{!c.getsicvalue}" />
+							<lightning:button aura:id="Cancel" label="Cancel"
+								class="slds-button slds-button--brand buttontype"
+								onclick="{!c.hideSICPopup}" />
+						</div>
+</aura:component>

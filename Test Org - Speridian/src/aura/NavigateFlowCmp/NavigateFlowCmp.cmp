@@ -1,0 +1,41 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+	<!-- Imports & Declarations-->
+	<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+	<aura:attribute name="currentFlow" type="string" />
+	<aura:attribute name="Selection" type="string" />
+	<aura:attribute name="firstChapter" type="Boolean" default="true" />
+	<aura:attribute name="lastChapter" type="Boolean" default="false" />
+
+	<aura:registerEvent name="navigateNextEvt" type="c:NavigateFlowEvt" />
+	<aura:registerEvent name="navigatePreviousEvt" type="c:NavigateFlowEvt" />
+	<aura:registerEvent name="flowPauseEvt" type="c:NavigateFlowEvt" />
+	<aura:registerEvent name="flowCancelEvt" type="c:NavigateFlowEvt" />
+	<aura:registerEvent name="flowSubmitEvt" type="c:NavigateFlowEvt" />
+	
+	<aura:registerEvent name="flowEvt" type="c:ba_navigationAttAppEvt" />
+	
+  <aura:handler event="c:ba_navigationAttAppEvt"
+		action="{!c.handleNavigateAction}" />
+
+	<!--  Exposed API To Set Active Chapter -->
+	<aura:method name="setNavActions" action="{!c.setNavActions}" />
+	<!-- / Imports & Declarations-->
+	<div class="slds-grid slds-grid--align-center">
+		<lightning:button aura:id="prevBtn"
+			class="lds-button slds-button--brand buttontype" label="Previous"
+			onclick="{!c.navigatePrevious}" />
+		<lightning:button aura:id="nextBtn" label="Next"
+			class="slds-button slds-button--brand buttontype"
+			onclick="{!c.navigateNext}" />
+		<lightning:button aura:id="SubmitBtn" label="Submit"
+			class="slds-button slds-button--brand buttontype slds-hide"
+			onclick="{!c.flowSubmit}" />
+		<lightning:button aura:id="pauseBtn"
+			class="slds-button slds-button--brand buttontype" label="Pause"
+			onclick="{!c.flowPause}" />
+		<lightning:button aura:id="cancelBtn" label="Cancel"
+			class="slds-button slds-button--brand buttontype"
+			onclick="{!c.flowCancel}" />
+	</div>
+</aura:component>

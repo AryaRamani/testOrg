@@ -1,0 +1,17 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+        
+        <p>Example Description</p>
+		
+		<p> Usage               :  Displays the Toast message.
+     Parent Component           :   memberverificationcmp                            
+     Events Fired               : 
+     Events Handled             : 
+                                  
+     Dependent Child Components : 
+     Apex Class Name            :  
+        </p>
+	</aura:example>
+    
+</aura:documentation>

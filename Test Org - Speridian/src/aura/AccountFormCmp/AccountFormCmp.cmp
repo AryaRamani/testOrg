@@ -1,0 +1,34 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller='AccountListViewClass' >
+    <aura:attribute name="Account" type="Account" default="{'sobjectType':'Account'}"></aura:attribute>
+    <aura:attribute name='parentGroupId' type='String'/>	
+    <aura:registerEvent name="EditRcd"
+		type="c:AccountViewEditEvent" />
+    <aura:attribute name='Accounts' type='String'/>
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+     <form>
+     <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="Name" label="Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.Account.Name}" required="true" />
+        </div>
+    </div>
+         
+<div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="Account Site" label="Account Site" class="slds-input" labelClass="slds-form-element__label" value="{!v.Account.Site}" />
+        </div>
+    </div>
+        
+        <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="Phone" label="Phone" class="slds-input" labelClass="slds-form-element__label" value="{!v.Account.Phone}" />
+        </div>
+    </div>
+         
+
+    <div class="slds-form-element">
+        <ui:button label="Save" class="slds-button slds-button--brand" press="{!c.submitForm}" />
+    </div>
+
+    </form>
+</aura:component>

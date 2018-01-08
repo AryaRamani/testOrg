@@ -1,0 +1,111 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Ba_QuoteClassPackageAssociationDAOClass" >
+ <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+ <aura:attribute name="ClsId" type="String[]" default="a0M7F000000ZJj2UAG"></aura:attribute>
+ <aura:attribute name="data1" type="Object"></aura:attribute>
+ <aura:attribute name="showSpinner" type="Boolean" default="false" />
+ <aura:attribute name="Spinner" type="Boolean" default="false" />
+ <aura:attribute name="modalIsOpen" type="Boolean" default="false" />
+ <aura:attribute name="selectedlst" type="Object[]"/>
+ <aura:attribute name="Classpackagelist" type="Object[]"/>
+    <aura:attribute name="ClsIndx" type="String" />    
+<aura:attribute name="Indx" type="String" />   
+     <aura:attribute name="lngth" type="integer"  /> 
+    <aura:attribute name="selectedId" type="List[]" />
+    <aura:attribute name="ClassId" type="String[]" />
+     <aura:attribute name="QRCP" type="ba_QuoteRequestClassPackage__c[]" />
+     <aura:attribute name="data" type="Object"/>
+   <!-- <aura:handler event="c:Ba_DataTableModalSaveEvt" action="{!c.EditEvent}"/> -->
+    <aura:handler event="c:Ba_Strike_RowCmpEvt" action="{!c.setAttributeValue}"/> 
+     
+     <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.Strike}"/>
+     <aura:handler event="c:Ba_StrikenonParentselectionEvnt" action="{!c.StrikeNonParent}"/> 
+    
+    <aura:handler name="change" value="{!v.selectedlst}" action="{!c.strChanged}"/> 
+    
+  
+    
+    
+    
+    
+    
+    <!-- to show/hide spinner --> 
+    	 <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+	
+    <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <!-- Header People Icon -->
+                    <div class="slds-form-element">
+                       
+                    </div>
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            
+                            
+                            
+                            <h1 class="slds-text-heading--small slds-truncate" title="Quote Line Items">Plan
+                            </h1>
+                            
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+     <ui:button label="Add" class="slds-button slds-button--brand" press="{!c.Add}" />
+     <ui:button label="Remove" class="slds-button slds-button--brand" press="{!c.Remove}" />
+     <div>{!v.body}</div>
+    
+    
+    
+     
+    <aura:if isTrue="{!v.modalIsOpen}">
+            <!--###### MODAL BOX Start From Here ######-->
+            <div role="dialog" tabindex="-1" aura:id="popupContactNew" aria-labelledby="New Competitor" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container" min-width="50%" height="107%">
+                    
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="newcompheader" class="slds-text-heading--medium">Predefined Packages</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                    <c:DataTableCmp selectedlst="{!v.selectedlst}"  aura:id="data-id" 
+	fieldnames="[{value:'Name', hide: true},
+					
+					{value:'Ba_PackageName__c',hide:true},
+                {value:'ba_ProductLine__c',hide:true},
+                {value:'Product_Category__c',hide:true},
+                {value:'ba_ProductType__c',hide:true}
+                
+               
+					
+					 ]"
+	fieldlabel="['Name','Benefit Package','ba_ProductLine__c','Product_Category__c','ba_ProductType__c']"
+	objectName="Ba_Product_Flat__c"
+                                    
+	showSelection="true"
+                                    
+	/>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}">Ok</button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-backdrop slds-backdrop--open" aura:id="popupCompetitorNewBackground"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+    
+    
+</aura:component>

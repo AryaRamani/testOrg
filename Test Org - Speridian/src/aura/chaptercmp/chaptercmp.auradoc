@@ -1,0 +1,8 @@
+<aura:documentation>
+    <aura:description>
+        <p>An <code>np:chaptercmp</code> component represents the expandable subgroups in the component.</p>
+    </aura:description>
+    <aura:example name="chaptercmpexample" ref="np:chaptercmpexample" label="Using the np:chaptercmp Component">
+	<p>This example shows a simple setup of <code>chaptercmp</code>.</p>
+    </aura:example>
+</aura:documentation>

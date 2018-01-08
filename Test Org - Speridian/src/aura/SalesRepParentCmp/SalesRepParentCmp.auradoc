@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="SalesRepParent" ref="SalesRepParentCmp" label="Label">
+ Usage : AddNewProspectFlow
+ Parent Components: 
+ Events Fired:
+ Events Handled: 
+ Dependent Child Components:SalesRepListCmp,SalesRepDetailsListCmp
+
+	</aura:example>
+</aura:documentation>

@@ -1,0 +1,186 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller='Ba_BillingProfileDAOClass' >
+    <aura:attribute name="BP" type="Ba_Billing_Profile__c" 
+                    default="{'sobjectType':'Ba_Billing_Profile__c',
+                            'Name':'' }"></aura:attribute>
+    <aura:attribute name="Address" type="Sobject"></aura:attribute>
+    
+    <aura:attribute name="Email" type="String"></aura:attribute>
+    <aura:attribute name='GroupId' type="String"/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <!-- to show/hide spinner -->
+	
+    	
+	 <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+   
+
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    
+     <!-- Page header -->
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon size="small" iconName="standard:pricebook" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Billing Profile">Install Small Group Billing Profile</h1>
+                      
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Page header ends -->
+    <div aura:id="mainform" style="padding-top: 20px; " class="slds-grid slds-wrap slds-form--compound ">
+       <div >
+            <span style="font-style:italic; padding-bottom:10px; padding-left: 40px">Please add the Billing Profile</span>
+        </div>
+        <div class="slds-form-element__group hideContent" style="padding-top:20px;width:100%">
+            <div class="slds-form-element__row">
+    <form class="slds-form--compound">
+
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6" style="padding-left: 40px">
+
+							<lightning:input name="Name" label="Name"
+								aura:id="Nameid" value="{!v.BP.Name}"/>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+							<lightning:input name="Address1" label="Address1"
+								aura:id="Address1Id" value="{!v.Address.ba_AddressLine_1__c}"
+								 disabled="true" />
+						</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+							<lightning:input name="Email" label="Email"
+								aura:id="Emailid" value="{!v.BP.Ba_Email__c}"/>
+						</div>
+					</div>
+				</div>
+     
+         
+
+       <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 " style="padding-left: 40px">
+
+							<ui:inputSelect change="{!c.onSingleSelectChange}" label="Bill Method"
+								aura:id="BMid" value="{!v.BP.billMethod}">
+    
+                        <ui:inputSelectOption text="" label=""/>
+                                
+    <ui:inputSelectOption text="Paper" label="Paper" />
+    <ui:inputSelectOption text="Electronic" label="Electronic"/>
+    </ui:inputSelect>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+							<lightning:input name="Address2" label="Address2"
+								aura:id="FAid" value="{!v.Address.ba_AddressLine2__c}"
+								 disabled="true" />
+						</div>
+                       
+					</div>
+				</div>
+        <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6" style="padding-left: 40px">
+
+							<lightning:input name="Bill Cycle" label="Bill Cycle"
+								aura:id="Ad2id" value="{!v.BP.ba_BillCycle__c}"/>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+							<lightning:input name="City" label="City"
+								aura:id="Cityid" value="{!v.Address.ba_City__c}"
+								 disabled="true" />
+						</div>
+                       
+					</div>
+				</div>
+        <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6" style="padding-left: 40px">
+
+							<lightning:input name="Next Due" label="Next Due"
+								aura:id="NDid" value="{!v.BP.ba_NextDue__c}"/>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+							<lightning:input name="State" label="State"
+								aura:id="STid" value="{!v.BP.Ba_State__c}"
+								 disabled="true" />
+						</div>
+                       
+					</div>
+				</div>
+        <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6" style="padding-left: 40px">
+
+							<lightning:input name="Grace Period" label="Grace Period"
+								aura:id="GPid" value="{!v.BP.ba_GracePeriod__c}"/>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+							<lightning:input name="Zip" label="Zip"
+								aura:id="STid" value="{!v.BP.Ba_ZipCode__c}"
+								 disabled="true" />
+						</div>
+                       
+					</div>
+				</div>
+         <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+														
+						</div>
+						
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6"
+							style="padding-left: 40px">
+
+														<lightning:input name="Country" label="Country"
+								aura:id="STid" value="{!v.BP.ba_County__c}"
+								 disabled="true" />
+						</div>
+                       
+					</div>
+				</div>
+
+    </form>
+    </div>
+        </div></div>
+</aura:component>

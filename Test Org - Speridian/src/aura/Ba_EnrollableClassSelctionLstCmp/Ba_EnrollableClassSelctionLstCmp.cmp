@@ -1,0 +1,79 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="Ba_GroupClassesDAOClass" >
+	<aura:attribute name="data" type="Object"/>
+    <aura:attribute name="group" type="BA_Group_Class_Administration__c" />
+    <aura:attribute name="GrpClass" type="BA_Classes__c" default="{'ba_Waive_Probationary__c':''}" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+     <aura:attribute name="enrollselectedlst" type="Object[]" /> 
+    <!--Handler -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+  <!--  <aura:handler name="init1" value="{!this}" action="{!c.Val}"/> -->
+  
+     <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+    <aura:attribute name="enrollselectedlst" type="Object[]"/> 
+    <aura:attribute name="GrpClass" type="BA_Classes__c" />
+    <aura:attribute name="navigate" type="Boolean" default="true"/>
+   
+</aura:method>
+   
+    <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+	
+    
+    
+<div style="width 100% !important"> <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+  <h1 class="slds-text-heading--medium slds-truncate" title="Producers">Group Classes </h1>
+                        </div>
+                    <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Display STRIKE DATAGRID -->
+<!--    <c:strike_dataGrid data="{!v.data}" />	-->
+     <c:DataTableCmp selectedlst="{!v.enrollselectedlst}"  aura:id="data-id" fieldnames="[{value:'Name', hide: true},
+					{value:'ba_Class_Description__c',hide:true},{value:'ba_Class_Type__c',hide:true},{value:'ba_EnrollableClass__c',hide:true},{value:'Id',hide:false}]"
+					
+	
+	fieldlabel="['Name','Class Description','Group Class List Type','Enrollable Class']"
+	objectName="BA_Group_Class_Administration__c"
+	
+	showSelection="true"
+	/>
+    
+    <br/>
+    <br/>
+    <br/>
+     <div class="slds-p-top_medium" style="width 100% !important">
+   
+        <div class="slds-col slds-has-flexi-truncate" style="width 100% !important">
+            <h2 class="slds-section-title--divider">Please select the Probationary Period </h2>
+        </div>
+         
+    </div>
+    
+     <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <!--Picklist-->
+          
+             <ui:inputSelect aura:id="select-id" label="Probationary Period" value="{!v.GrpClass.ba_ProbationaryPeriod__c}" change="{!c.onSelectChange}">
+        <ui:inputSelectOption text="None" label="None" value="true"/>
+       <ui:inputSelectOption text="FOMF 60 Days" label="FOMF 60 Days"/>
+    <ui:inputSelectOption text="FOMF 90 Days" label="FOMF 90 Days"/>
+    <ui:inputSelectOption text="FOMF DOH" label="FOMF DOH"/>
+    </ui:inputSelect>
+        </div>
+    </div> 
+    <div class="slds-p-vertical_medium">
+ <ui:inputCheckbox aura:id="checkbox" label="Waive Probationary Period For Open Enrollment :  " change="{!c.onCheck}" value="{!v.GrpClass.ba_Waive_Probationary__c}"/>
+ </div>
+</aura:component>

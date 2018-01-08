@@ -1,0 +1,90 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="SelectProducerClass" >
+   <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+   
+    <aura:attribute name="Producer" type="Contact"/>
+    <aura:attribute name="parentGroupId" type="String" /> <!--sept6 -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <div class="slds">
+
+  <div aria-hidden="true" role="dialog" class="slds-modal slds-modal--large slds-fade-in-hide" aura:id="modaldialog">
+  </div>
+  
+  
+  
+  
+    
+ <div style="width 100% !important"> <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+                    <!-- Header People Icon -->
+                    
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Producers">Producers </h1>
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div><p style="font-size:16px">Select a Producer associated with Agency</p><br></br>
+         
+        
+        
+  
+        
+       	
+    <table  class="slds-table slds-table_bordered slds-table_cell-buffer" id="tbl">
+  <thead>
+    <tr class="slds-text-title_caps">
+      <th scope="col">
+        <div class="slds-truncate" title="Select">Select</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="First Name">First Name</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Last Name">Last Name</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Producer Id">Producer Id</div>
+      </th>
+	  <th scope="col">
+        <div class="slds-truncate" title="Producer Status">Producer Status</div>
+      </th>
+	 
+      
+       </tr>
+      
+         
+
+      
+      
+  </thead>
+  <tbody>
+     <aura:iteration items="{!v.Producer}" var="contact1" >
+    
+<tr id="{!contact1.Id}" onclick="{!c.clickEvent}">
+   
+    <td data-label="Select" ><div class="slds-truncate" id="{!contact1.Id}"><ui:InputCheckbox aura:id="chkbx" value="false" click="{!c.clickbox}" text="{!index}"></ui:InputCheckbox></div></td>
+    <td data-label="First Name" ><div class="slds-truncate" >{!contact1.FirstName}</div></td>
+    <td data-label="Last Name" ><div class="slds-truncate">{!contact1.LastName}</div></td>
+    <td data-label="Producer Id" ><div class="slds-truncate">{!contact1.id}</div></td>
+    <td data-label="Producer Status" ><div class="slds-truncate">{!contact1.cleanstatus}</div></td>
+	
+    
+    </tr>
+             </aura:iteration>
+  </tbody>
+  </table>
+  <br></br>
+  <br></br>   
+  <br></br>   
+   <br></br>   
+   <br></br>   
+   </div>
+       
+  </div>
+    
+</aura:component>

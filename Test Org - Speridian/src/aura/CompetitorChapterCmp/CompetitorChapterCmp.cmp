@@ -1,0 +1,11 @@
+<aura:component >
+	<!-- Imports & Declarations-->
+    <aura:registerEvent name="ChapterInitCmpEvt" type="c:ChapterInitCmpEvt" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <!--Handler For Event Triggered From CompetitorListCmp -->
+    <aura:handler name="activeCompetitorChange" event="c:CompetitorModifyEvt" action="{!c.activeCompetitorChange}" />
+    <aura:attribute name="activeRow" type="Integer" />
+    <!-- / Imports & Declarations-->
+    <c:CompetitorListCmp aura:id="competitorListCmp" />
+    <c:CompProductListcmp aura:id="compProductListcmp" activeParentRow="{!v.activeRow}" />
+</aura:component>

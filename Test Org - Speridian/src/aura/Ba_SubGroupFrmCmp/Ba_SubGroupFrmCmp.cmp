@@ -1,0 +1,164 @@
+<aura:component controller="Ba_SubGroupFrmClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+
+
+
+    <aura:attribute name="GroupId" type="String" />
+    <aura:attribute name="subgroup" type="Object"  />
+    <!-- for sub group info -->
+    <aura:attribute name="AddressList" type="Id[]" />
+    <!-- address info -->
+    <aura:attribute name="Rating" type="BA_Zipcode_Admin__c[]" />
+    <aura:attribute name="groupregion" type="String" />
+    <aura:attribute name="PrimaryAddrid" type="Id" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+  <!--    <aura:handler event="c:ba_navigationAttAppEvt"
+		action="{!c.handleNavigateAction}" />
+    <aura:registerEvent name="navCompFlow" type="c:Ba_NavigationFlowCompEvt"/> -->
+
+ <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+
+
+    <!-- Page header -->
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon size="small" iconName="utility:adduser" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Sub group Creation">Sub Group Creation</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Page header ends -->
+
+    <div aura:id="mainform" style="padding: 10px; background-color:whitesmoke" class="slds-grid slds-wrap ">
+
+
+
+        <div class="slds-grid slds-wrap " style="width:100%">
+
+            <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-3 slds-large-size--2-of-3 slds-form--compound" style="padding-right:50px">
+                <span style="font-style:italic; padding-bottom:10px">Please enter/modify the information below to create a  subGroup</span>
+
+                <div class="slds-form-element__group" style="padding-top:20px;width:100%">
+                    <div class="slds-form-element__row">
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" style="padding-right:20px">
+                            <lightning:input label="Sub Group Name" name="name" value="{!v.subgroup.Name}" required="true"/>
+
+
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12">
+                            <lightning:input label="Sub Group Number" name="number" value="{!v.subgroup.Number}" />
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="slds-form-element__group" style="padding-top:10px;width:100%">
+                    <div class="slds-form-element__row">
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" style="padding-right:20px">
+                            <lightning:input label="Sub Group Type" name="type" value="{!v.subgroup.type}" disabled="true" />
+
+
+                        </div>
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12">
+                            <lightning:input label="Sub Group Status" name="status" value="{!v.subgroup.status}" disabled="true" />
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="slds-form-element__group" style="padding-top:10px;width:100%">
+                    <div class="slds-form-element__row">
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" style="padding-right:20px">
+                            <lightning:input label="Effective Date" name="eff-date" value="{!v.subgroup.ba_EffectiveDate__c}" disabled="true" />
+
+
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12">
+                            <lightning:input type="date" label="Renewal Date" name="renewal" value="{!v.subgroup.RenewalDate}" />
+
+
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+
+                <div class="slds-form-element__group" style="padding-top:10px;width:100%">
+                    <div class="slds-form-element__row">
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" style="padding-right:20px">
+                            <lightning:input type="month" label="Enter the ERISA Plan year Region Date Only if different than at the group level" name="erisa" value=" " />
+
+
+                        </div>
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" style="padding-top:18px">
+                            <lightning:input label="Enter the TIN/EIN if different from group" name="tin" value="{!v.subgroup.TIN_EIN__c }" />
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slds-form-element__group" style="padding-top:10px;width:100%">
+                    <div class="slds-form-element__row">
+
+
+                        <div class="slds-col slds-size--1-of-1 slds-medium-size--6-of-12 slds-large-size--6-of-12" style="padding-right:20px">
+                            <lightning:select name="rating" label="Rating Region" value="{!v.subgroup.groupregion}">
+
+                                <aura:iteration items="{!v.Rating}" var="region">
+                                    <option value="{!region.Id}" text="{!region.Name}"></option>
+                                </aura:iteration>
+                            </lightning:select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="slds-col slds-size--1-of-1 slds-medium-size--1-of-3 slds-large-size--1-of-3" style="padding-top:30px;padding-left:30px">
+           <!-- strike component: extra attributes used primaryId(Id of the primary address), searchId(Id of the address related to group) -->
+                <c:strike_multiLookup label="Address Details"
+                 object="BA_Address__c"
+                 selectedOptionTiles="{!v.subgroup.Address}" 
+                 searchField="Name" 
+                 searchId="{!v.AddressList}" 
+                 primaryId="{!v.PrimaryAddrid}"
+                 placeholder="Select an option" 
+                 iconName="standard:address" 
+                 subtitleField="ba_County__c" 
+                 order="Name" limit="5" 
+                 loadingMessage="Loading..."
+                    errorMessage="Invalid input"
+                    required="true" />
+            </div>
+
+        </div>
+
+    </div>
+
+
+</aura:component>

@@ -1,0 +1,53 @@
+<aura:component controller="TaskFlowClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	<aura:attribute name="currentTaskFlow" type="string" default="Employer Quote" />
+    
+     <aura:attribute name="Agency" type="Account[]"/>
+        <aura:attribute name="Producer" type="Contact[]"/>
+       <aura:attribute name="currentChapter" type="string" default="" />
+    <aura:attribute name="nextChapter" type="string" default="" />
+     <aura:attribute name="taskflow" type="string" default="" />
+      <aura:attribute name="activeChapter" type="String" />
+      <aura:attribute name="taskDisplayName" type="String"
+		default="" />
+    <aura:attribute name="currentChapterSequence" type="Integer" default="0" />
+    <aura:attribute name="childChapterInits" type="String[]" />
+    <aura:attribute name="taskChapters" type="BA_Task_Chapter__c[]" />
+    <aura:attribute name="StoredValues" type="Object" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="previousChapter" type="BA_Task_Chapter__c" default="{ 'sobjectType': 'BA_Task_Chapter__c',
+                
+                 }" />
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+     <aura:handler name="sendtoParent" event="c:navigatetoParentEvt" action="{!c.handleNavigation}" />
+  
+      <aura:handler name="navigateback" event="c:NavigateBackEvt" action="{!c.navigateBack}" />
+      
+     
+<div class="slds-grid slds-wrap">
+<aura:if isTrue="{!v.showSpinner}">
+<lightning:spinner variant="brand" size="large"/>
+</aura:if>
+		<div
+			class="slds-col slds-size--2-of-5 slds-small-size--0-of-1 slds-medium-size--1-of-5">
+			<c:chaptercmp aura:id="TaskChapterCmp"
+				taskChapters="{!v.taskChapters}"
+				taskDisplayName="{!v.currentTaskFlow}"
+				activeChapter="{!v.activeChapter}" />
+		</div>
+        <div class="slds-col slds-size--3-of-5 slds-small-size--1-of-1 slds-medium-size--4-of-5">
+        		<div class="slds-form-element__group slds bounceInRight" aura:id="taskFormContainer">   
+                {!v.body}
+            </div>
+        </div>
+    
+                     
+            <footer role="contentinfo" class="slds-p-around--large">
+               
+              
+            </footer>
+        </div>
+      
+    
+</aura:component>

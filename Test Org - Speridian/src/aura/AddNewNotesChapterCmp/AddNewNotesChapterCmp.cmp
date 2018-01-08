@@ -1,0 +1,5 @@
+<aura:component >
+    <aura:registerEvent name="ChapterInitCmpEvt" type="c:ChapterInitCmpEvt" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <c:AddNewNotesCmp />
+</aura:component>

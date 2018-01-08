@@ -1,0 +1,79 @@
+<aura:component >
+    <!-- Imports & Declarations-->
+    <aura:registerEvent name="saveProduct" type="c:ProductModifyEvt" />
+    <aura:attribute name="parentCompetitorId" type="String" required="true" />
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <aura:attribute name="product" type="BA_Group_Competitor_Product__c" />
+    <!-- / Imports & Declarations-->
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <!--Picklist-->
+            <ui:inputSelect aura:id="ProductCategory" label="Product Category" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}">
+                <option value='Nil'></option>
+                <option value='Medical'>Medical</option>
+                <option value='Dental'>Dental</option>
+            </ui:inputSelect>
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <!--Picklist-->
+            <!--ui:inputText aura:id="Lineofbusiness" label="Line Of Business" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.ba_LineOfBusiness__c }" required="true" /-->
+            <ui:inputSelect aura:id="LineofBusiness" label="Line Of Business" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}">
+                <option value='Individual'>Individual</option>
+                <option value='Small Group'>Small Group</option>
+                <option value='Mid Market'>Mid Market</option>
+                <option value='Large Group'>Large Group</option>
+            </ui:inputSelect>
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="ProductName" label="Product Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}" required="true" />
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputDate aura:id="EffectiveDate" label="Effective Date" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}" format="MM/dd/yyyy" displayDatePicker="true" />
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputDate aura:id="TerminationDate" label="Termination Date" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}" format="MM/dd/yyyy" displayDatePicker="true" />
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <!--Picklist-->
+            <!--ui:inputText aura:id="RateTier" label="Rate Tier" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.ba_RateTier__c }" required="true" /-->
+            <ui:inputSelect aura:id="RateTier" label="Rate Tier" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}">
+                <option value='Nil'></option>
+                <option value='1T'>1T</option>
+                <option value='2T'>2T</option>
+                <option value='3T'>3T</option>
+                <option value='4T'>4T</option>
+            </ui:inputSelect>
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputDate aura:id="RateEffectiveDate" label="Rate Effective Date" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}" format="MM/dd/yyyy" displayDatePicker="true" />
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputDate aura:id="RateTermDate" label="Rate Termination Date" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}" format="MM/dd/yyyy" displayDatePicker="true" />
+        </div>
+    </div>
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputSelect aura:id="FinancialArrangement" label="Financial Arrangement" class="slds-input" labelClass="slds-form-element__label" value="{!v.product.unknown_custom_field}">
+                <option value='Nil'></option>
+                <option value='Community Rated'>Community Rated</option>
+            </ui:inputSelect>
+        </div>
+    </div>
+    <div class="slds-form-element">
+        <ui:button label="Save" class="slds-button slds-button--brand" press="{!c.submitForm }" />
+    </div>
+</aura:component>

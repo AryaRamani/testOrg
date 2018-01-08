@@ -1,0 +1,74 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+    <aura:attribute name="preferedtpa" type="String" />
+    <aura:attribute name="hsatpa" type="String" />
+    <aura:attribute name="selectyes" type="Boolean" default="false" />
+    <aura:attribute name="selectno" type="Boolean" default="true" />
+     <aura:attribute name="selection" type="String"  />
+    
+    <aura:registerEvent name="navAttribute" type="c:ba_navigationAttAppEvt"/>
+
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon iconName="utility:info" size="small" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Administration Information">Group Administration Information</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div aura:id="mainform" style="padding-top: 20px; " class="slds-grid slds-wrap slds-form--compound slds-card ">
+        <div style="width:100%;padding:10px">
+            <div class="slds-section-title--divider" style="width:100%">
+                <div style="width:100%;padding-bottom:10px">
+                    <span style="font-style:italic; padding-bottom:10px">Additional Sub Group</span>
+                </div>
+            </div>
+            <div style="padding-top:10px"><span style="font-style:italic; padding-bottom:10px">Do you wish to create another standard Sub Group?</span>
+                <lightning:input type="radio" label="Yes" name="subgroup" value="{!v.selectyes}" checked="{!v.selectyes}" onchange="{!c.getselection}" />
+                <lightning:input type="radio" label="No" name="subgroup" value="{!v.selectno}" checked="{!v.selectno}" onchange="{!c.getselection}" />
+            </div>
+        </div>
+        <div aura:id="tpasection-id" class="hideContent" style="width:100%;padding:10px">
+            <div class="slds-section-title--divider" style="width:100%">
+                <div style="width:100%;padding-bottom:10px">
+                    <span class="section" style="padding-bottom:10px">Please specify TPA information.</span>
+                </div>
+                <div style="width:100%;padding-bottom:10px">
+                    <span style="font-style:italic; padding-bottom:10px">In case the Employer Group want to administer their own TPA, select No.</span>
+                </div>
+                <div>
+                    <span style="font-style:italic; padding-bottom:10px">The CORBA Sub Groups will be systematically created for Employer Group.</span>
+                </div>
+            </div>
+
+            <div style="width:25%;padding-top:10px">
+                <lightning:select name="AvMed" label="Administered by Carrier Prefered TPA" value="{!v.preferedtpa}">
+                    <option value="None">None</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </lightning:select>
+            </div>
+            <div style="width:25%;padding-top:10px">
+                <lightning:select name="hsa" label="HSA-Administered by third party Administrator" value="{!v.hsatpa}">
+                    <option value="None">None</option>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+
+                </lightning:select>
+
+            </div>
+        </div>
+
+
+    </div>
+
+</aura:component>

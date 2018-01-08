@@ -1,0 +1,46 @@
+<aura:component controller="TaskflowAdminDAOClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+ <aura:attribute name="currentTaskFlow" type="string" default="BAMMemberService" />
+
+    <aura:attribute name="currentChapter" type="string" default="" />
+    <aura:attribute name="nextChapter" type="string" default="" />
+    <aura:attribute name="previousChapter" type="string" default="" />
+    <aura:attribute name="currentChapterSequence" type="Integer" default="0" />
+    <aura:attribute name="childChapterInits" type="String[]" />
+    <aura:attribute name="taskChapters" type="BA_Task_Chapter__c[]" />
+    <aura:attribute name="IsSpinner" type="Boolean" default="false" />
+    <aura:attribute name="MemberData" type="MemberSearchController.Memberdetails"/>
+    <aura:attribute name="MemberDetails" type="MemberSearchController.Memberdetails"/>
+    <aura:attribute name="showSpinner" type="Boolean" />
+     
+  
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+
+ <aura:handler name="sendtoParent" event="c:sendCasetoParentEvt" action="{!c.getDetails}" />
+  <aura:handler name="navigateNextEvt" event="c:NavigateFlowEvt" action="{!c.handleNavigateNext}" />
+  
+<aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner variant="brand" size="large"/>
+   </aura:if>
+       
+   <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size--0-of-1 slds-small-size--1-of-3 slds-medium-size--1-of-5">
+          <c:MemberTaskCmp />
+        </div>
+        <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-3 slds-medium-size--4-of-5">
+        	<div class="slds-form-element__group" aura:id="taskFormContainer">   
+        		{!v.body}
+        	</div>         
+            <footer role="contentinfo" class="slds-p-around--large">
+               
+              
+            </footer>
+        </div>
+        <aura:if isTrue="{!v.IsSpinner}">
+            <lightning:spinner variant="brand" size="large" alternativeText="Page Loading..."/>
+        </aura:if>
+    </div>
+    
+    	
+</aura:component>

@@ -1,0 +1,8 @@
+<aura:component >
+
+
+
+
+<c:Ba_UploadAttachmentCmp parentfield="Member"/>
+	
+</aura:component>

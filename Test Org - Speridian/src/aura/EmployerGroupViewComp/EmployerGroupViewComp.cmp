@@ -1,0 +1,232 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global"  controller="AccountListViewClass">
+     
+    <!--	HANDLERS AND EVENTS-->
+        <aura:registerEvent name="editAccount" type="c:AccountModifyEvt" />
+	    <aura:registerEvent name="deleteAccount"
+		type="c:AccountModifyEvt" />
+	    <aura:registerEvent name="selectAccount"
+		type="c:AccountModifyEvt" />
+        <!--aura:registerEvent name="PassId"
+		type="c:EmployerGroupViewEvnt" /-->
+        <aura:registerEvent name="Task"
+		type="c:TaskButtonEvnt" />
+    <aura:registerEvent name="RelatedListPassId" type="c.EmployerGroupRelatedListEvt"/>
+    <!--INTERNAL ATTRIBUTES-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:AccountViewEditEvent" action="{!c.EditEvent}"/> 
+    <aura:attribute name="BtnName" type="String" default="Show Task"/>
+    <aura:attribute name="RltdBtnName" type="String" default="Show Related List"/>
+    <aura:attribute name="activeRow" type="Integer" />
+    <aura:attribute name="IdNum" type="Integer" default="7"/>
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="Name1" type="String" />
+    <aura:attribute name="Value1" type="String" />
+     <aura:attribute name="groupId" type="ID[]"/>
+    <aura:attribute name="CntctId" type="ID[]"/>
+    <aura:attribute name="modalIsOpen" type="boolean" default="false"></aura:attribute>
+    <aura:attribute name="AccountsNew" type="Account"/>
+    <aura:attribute name="AccountId" type="String"/>
+    <aura:attribute name="Accounts" type="Account[]"/>
+    <aura:attribute name="Account" type="Account" default="{ 'sobjectType': 'Account',
+                    'Name': '',
+                    'Site': '',
+                    'Phone': '',
+              		'Fax': ''
+                          
+              }" />
+   <aura:attribute name="page" type="integer" description="using for store page Number"/>
+   <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+   <aura:attribute name="total" type="integer" description="total records count store "/>
+ 
+           <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <!-- Header People Icon -->
+                    <div class="slds-form-element">
+                     <lightning:icon size="small" iconName="utility:groups" />   
+                    </div>
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Employer Group">Employer Group
+                            </h1>
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+ 
+    <br/>
+     
+         
+        
+          <div aura:id="recordSize" label="Display Record Per Page: " value='7'/>
+              
+      <div class="slds-form--compound" style="padding-bottom:10px">
+        <div class="slds-form-element__group" style="padding-top:20px;width:100%">
+            <div class="slds-form-element__row">
+                 <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-12 slds-large-size--2-of-12">  
+           <ui:inputSelect aura:id="Name1" class="slds-input">
+       
+     <ui:inputSelectOption text="--select--" label="--select--"/>
+    <ui:inputSelectOption text="FirstName" label="Name"/>
+    <ui:inputSelectOption text="Id" label="Id"/>
+           </ui:inputSelect>   
+                </div>
+                 <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-12 slds-large-size--2-of-12" style="padding-left:20px">  
+         <ui:inputText aura:id="Value1" value="{!v.Value1}" class='adjwidth'></ui:inputText>
+                </div>
+                 <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12" style="padding-left:20px">  
+           <ui:button label='Search' class="slds-button slds-button--brand"  press="{!c.SrchRecord}"></ui:button>
+           
+           <ui:button aura:id="ShowTsk" label='{!v.BtnName}' class="slds-button slds-button--brand"  press="{!c.TaskPane}"></ui:button>
+                </div>
+    </div>
+      
+          </div>
+    </div>
+
+      
+      <div class="slds-scrollable">
+   <div class="container">
+		<table
+			class="slds-table slds-table--bordered slds-max-medium-table--stacked-horizontal"
+			id="dataTable">
+			<thead>
+				<tr class="slds-text-title_caps">
+					<th scope="col">
+						<div class="slds-truncate" title="Account Name">Group
+							Name</div>
+					</th>
+                    <th scope="col">
+						<div class="slds-truncate" title="Customer Number">Customer Number</div>
+					</th>
+                    <th scope="col">
+						<div class="slds-truncate" title="Legal Entity">Legal Entity Name</div>
+					</th>
+                    <th scope="col">
+						<div class="slds-truncate" title="Renewal Month">Renewal Month</div>
+					</th>
+                    <th scope="col">
+						<div class="slds-truncate" title="Termination Date">Termination Date</div>
+					</th>
+                    <th scope="col">
+						<div class="slds-truncate" title="Effective Date">Effective Date</div>
+					</th>
+                
+                    
+                    
+					<th scope="col">
+						<div class="slds-truncate" title="Action Menu"></div>
+					</th>
+					
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.Accounts}" var="Account"
+					indexVar="idx">
+					<tr data-data="{!idx}" id="{!Account.Id}" onclick="{!c.handleRowSelect}">
+						<td data-label="Account Name" data-data="divCol">
+							<div class="slds-truncate" title="Account Name"
+								data-data="divData">
+								<ui:outputText value="{!Account.Name}" />
+							</div>
+						</td>
+						
+                        <td data-label="Phone" data-data="divCol">
+							<div class="slds-truncate" title="Account Number"
+								data-data="divData">
+								<ui:outputNumber value="{!Account.AccountNumber}" />
+							</div>
+						</td>
+                        <td data-label="LegalEntity" data-data="divCol">
+							<div class="slds-truncate" title="Legal Entity Name"
+								data-data="divData">
+								<ui:outputText value="{!Account.bc_LegalEntity_Name}" />
+							</div>
+						</td>
+                        <td data-label="Renewal Month" data-data="divCol">
+							<div class="slds-truncate" title="Renewal Month"
+								data-data="divData">
+								<ui:outputDate value="{!Account.ba_RenewalMonth__c
+}" />
+							</div>
+						</td>
+                        <td data-label="Termination Date" data-data="divCol">
+							<div class="slds-truncate" title="Termination Date"
+								data-data="divData">
+								<ui:outputDate value="{!Account.ba_TermindationDate__c
+
+}" />
+							</div>
+						</td>
+                        <td data-label="Effective Date" data-data="divCol">
+							<div class="slds-truncate" title="Effective Date"
+								data-data="divData">
+								<ui:outputDate value="{!Account.ba_EffectiveDate__c
+
+
+}" />
+							</div>
+						</td>
+                         
+						
+						<td data-label="Lightning Menu" data-data="divCol"><lightning:buttonMenu iconName="utility:settings"
+								onselect="{! c.AccountMenuSelect }">
+								<lightning:menuItem label="Edit"
+									value="{!'EditAccount_' + idx}" />
+								<lightning:menuItem label="Delete"
+									value="{!'DeleteAccount_' + idx}" />
+							</lightning:buttonMenu></td>
+					</tr>
+				</aura:iteration>
+			</tbody>
+		</table>
+
+		<div class="slds-align--absolute-center">
+             
+           
+            <aura:if isTrue="{!v.page &gt; 1}">
+               <ui:button press="{!c.previousPage}" label="Previous Page"/>
+            </aura:if>
+            <aura:if isTrue="{!v.page &lt; v.pages}">
+               <ui:button aura:id="nextbtn" press="{!c.nextPage}" label="Next Page"/>
+            </aura:if>
+         </div>
+
+	</div>
+          </div>
+     
+     <aura:if isTrue="{!v.modalIsOpen}">
+            <!--###### MODAL BOX Start From Here ######-->
+            <div role="dialog" tabindex="-1" aura:id="popupAccountNew" aria-labelledby="New Competitor" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container" min-width="50%" height="107%" style="padding-top:8rem">
+                    
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="newcompheader" class="slds-text-heading--medium">New Account</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                    <force:recordEdit aura:id="edit" recordId="{!v.Account.Id}"/>
+                       <ui:button label="Save" press="{!c.save}"/>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}">Cancel</button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-backdrop slds-backdrop--open" aura:id="popupCompetitorNewBackground"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+
+    
+   
+</aura:component>
