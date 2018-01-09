@@ -3,6 +3,9 @@
     <aura:attribute name="AccTeam" type="String" />
     <aura:attribute name="AccTeam1" type="String" />
     <aura:attribute name="AccTeam2" type="String" />
+    <aura:attribute name="error" type="Boolean" default="false" />
+    
+    <aura:attribute name="errorMessage" type="String"  />
     
     <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
   description="Sample method with parameters"> 
@@ -33,13 +36,13 @@
     </div>                    
                             
     <div class="slds-col slds-size_1-of-2 slds-p-around_small">
-                <c:strike_lookup value="{!v.AccTeam}" label="Account Manager" object="User" searchField="Name" placeholder="Name" iconName="action:new_accountmanager" subtitleField="Name" order="Name" limit="" loadingMessage="Loading..." errorMessage="Invalid input" />
+                <c:strike_lookup value="{!v.AccTeam}" label="Account Manager" object="User" searchField="Name" placeholder="Name" iconName="action:new_accountmanager" subtitleField="Name" order="Name" limit="" loadingMessage="Loading..." errorMessage="Invalid input" filter="UserType='Standard'" />
             </div>
 <div class="slds-col slds-size_1-of-2 slds-p-around_small">
-                <c:strike_lookup value="{!v.AccTeam1}" label="Sales Director" object="User" searchField="Name" placeholder="Name" iconName="action:new_salesdirector" subtitleField="Name" order="Name" limit="" loadingMessage="Loading..." errorMessage="Invalid input" />
+                <c:strike_lookup value="{!v.AccTeam1}" label="Sales Director" object="User" searchField="Name" placeholder="Name" iconName="action:new_salesdirector" subtitleField="Name" order="Name" limit="" loadingMessage="Loading..." errorMessage="Invalid input" filter="UserType='Standard'" />
             </div>
     <div class="slds-col slds-size_1-of-2 slds-p-around_small">
-                <c:strike_lookup value="{!v.AccTeam2}" label="Underwriter" object="User" searchField="Name" placeholder="Name" iconName="action:new_underwriter" subtitleField="Name" order="Name" limit="" loadingMessage="Loading..." errorMessage="Invalid input" />
+                <c:strike_lookup value="{!v.AccTeam2}"  label="Underwriter" object="User" error="{!v.error}" searchField="Name" placeholder="Name" iconName="action:new_underwriter" subtitleField="Name" order="Name" limit="" loadingMessage="Loading..." errorMessage="Please input Underwriter" required="true" filter="UserType='Standard'" />
             </div>
 	
 </aura:component>
