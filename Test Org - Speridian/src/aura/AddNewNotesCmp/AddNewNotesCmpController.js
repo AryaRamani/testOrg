@@ -27,9 +27,15 @@
         $A.enqueueAction(getTaskChptrAction);
         }
     },
+    
+    Strike: function(component){
+      component.set("v.Rowdata1",event.getParam('data1'));
+    },
+    
     Showmodal: function(component, event, helper) {
         component.set("v.modalIsOpen", true)
     },
+    
     closeModel: function(component, event, helper) {
         component.set("v.modalIsOpen", false)
     },
@@ -52,7 +58,13 @@
         component.set("v.Notes",notelst);
         
         component.set("v.NewNotes",eventValue1);
-
+        var notelist=component.get("v.MemberNoteslist");
+        var NotesObj={
+            'MemberId' : component.get("v.Rowdata1").Id,
+            'Notes' : notelst
+        }
+        notelist.push(NotesObj);
+        component.set("v.MemberNoteslist",notelist);
     },
     Save: function(component, event, helper) {
         var Value = component.get("v.Notes[0].Title");

@@ -190,14 +190,14 @@ public class Ba_AttachmentUploadClass {
  }
     
     @AuraEnabled
-    public static CorrespondenceWrp createcorrespondence(Id groupId, String fileName, String typeinfo, String status, String Parentfield) {
+    public static CorrespondenceWrp createcorrespondence(Id groupId, String fileName, String typeinfo, String status, String Parentfield, String MemberId) {
         
         ContentDocumentLink link=[Select id,ContentDocumentId from ContentDocumentLink where LinkedEntityId =: groupId limit 1 ];
         BA_Correspondence__c corres=new BA_Correspondence__c();
         corres.Name=fileName;
         corres.Document_Status__c = typeinfo;
         corres.ba_DocumentType__c = status;
-        
+        corres.ba_Group__c = groupId;
         corres.ba_CreatedDate__c =System.today();
         insert corres;
         
@@ -224,6 +224,7 @@ public class Ba_AttachmentUploadClass {
         
  wrp.fileId=ver.Id;
  wrp.coresp=corres;
+ wrp.MemberId = MemberId;
         system.debug('Response'+wrp);
         return wrp;
           //  delete ver;
@@ -238,6 +239,11 @@ public class Ba_AttachmentUploadClass {
         
         @AuraEnabled
        public BA_Correspondence__c coresp;
+       
+        @AuraEnabled
+       public String MemberId;
+       
+       
     }
    
 

@@ -206,14 +206,19 @@
     
     createcorresp : function(component, event, helper){
         var att=component.get("v.pAttlist");
+        var Wrplist = component.get("v.AttachmentList");
+        if(Wrplist==undefined){
+        	Wrplist =[];
+        }
         alert('In correspondance');
          var action = component.get("c.createcorrespondence");
 			action.setParams({
-            'groupId': component.get("v.ParentId"),
+            'groupId': component.get("v.parentId"),
             'fileName': component.get("v.fileName"),
             'typeinfo': component.get("v.selectedType"),
             'status': component.get("v.selectedStatus"),
-            'Parentfield' : component.get("v.parentfield")
+            'Parentfield' : component.get("v.parentfield"),
+            'MemberId': component.get("v.Rowdata1").Id,
         });
 
         action.setCallback(this, function(response) {
@@ -221,6 +226,10 @@
             var state = response.getState();
             if (state === "SUCCESS") {
             component.set("v.showSpinner",false);
+           
+            Wrplist.push(response.getReturnValue());
+            component.set("v.AttachmentList",Wrplist);
+             alert('Result'+JSON.stringify(component.get("v.AttachmentList")));
                 att.push(response.getReturnValue().coresp);
                 console.log('Response'+JSON.stringify(response.getReturnValue()));
                       var uniqueItems = _.orderBy(att, function(x) {
@@ -278,7 +287,7 @@
                 var att = component.get("v.pAttlist");
                 var action = component.get("c.createdoccurl");
                 action.setParams({
-                    'groupId': component.get("v.ParentId"),
+                    'groupId': component.get("v.parentId"),
                     'documenturl': component.get("v.docclink"),
                     'typeinfo': component.get("v.selectedType"),
                     'status': component.get("v.selectedStatus"),

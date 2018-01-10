@@ -9,6 +9,10 @@
     <aura:attribute name="GroupId" type="String"  />
     <aura:attribute name="modalIsOpen" type="boolean" default="false" />
     <aura:attribute name="parentfield" type="String" default="Group" />
+    <aura:attribute name="MemberNoteslist" type="Object[]" />
+    <aura:attribute name="Rowdata1" type="Object" />
+    
+    <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.Strike}"/>
   
     <!-- / Imports & Declarations-->
     <div class="slds-page-header">

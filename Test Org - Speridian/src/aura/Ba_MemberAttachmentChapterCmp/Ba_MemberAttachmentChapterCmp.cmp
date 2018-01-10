@@ -1,8 +1,9 @@
-<aura:component >
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
 
+    <aura:attribute name="MemberData" type="Object" />
+    <aura:attribute name="AttachmentList" type="Object[]" />
 
+    <c:Ba_MemberListCmp MemberData="{!v.MemberData}" />
+    <c:Ba_UploadAttachmentCmp parentfield="Member"  AttachmentList="{!v.AttachmentList}" />
 
-
-<c:Ba_UploadAttachmentCmp parentfield="Member"/>
-	
 </aura:component>

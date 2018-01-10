@@ -11,6 +11,12 @@
         helper.getstatus(component);
         helper.gettype(component);
     },
+    
+    Strike: function(component, event, helper) {
+   
+		alert(JSON.stringify(event.getParam('data1')));
+		component.set("v.Rowdata1",event.getParam('data1'));
+    },
 
     handleFilesChange: function(component, event, helper) {
         var fileName = 'No File Selected..';

@@ -3,7 +3,7 @@
     <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
     <ltng:require scripts="/resource/lodash/lodash/lodash.js" />
 
-    <aura:attribute name="parentId" type="String"  />
+    <aura:attribute name="parentId" type="String" default="0017F00000KktWeQAJ"  />
     <aura:attribute name="fileName" type="String"  />
     <aura:attribute name="attlist" type="Object[]" />
     <aura:attribute name="GroupId" type="String" />
@@ -30,12 +30,16 @@
     <aura:attribute name="sort2" type="String" default="down" />
     <aura:attribute name="sort3" type="String" default="down" />
     <aura:attribute name="sort4" type="String" default="down" />
-     <aura:attribute name="myRecordId" type="String" default="0017F00000AujuYQAR" description="Record to which the files should be attached" />
+     <aura:attribute name="myRecordId" type="String" default="0017F00000KktWeQAJ" description="Record to which the files should be attached" />
     
-  
+     <aura:attribute name="Rowdata1" type="Object" />
+      <aura:attribute name="AttachmentList" type="Object[]" />
+     
     <aura:attribute name="parentfield" type="String" default="Group"/>
     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
     <aura:handler name="upload" event="c:Ba_AttachmentUploadCompEvt" action="{!c.handleModalAction}"/>
+    <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.Strike}"/>
+    
     
     <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
   description="Sample method with parameters"> 

@@ -21,11 +21,12 @@ License: BSD 3-Clause License*/
         if(component.get("v.parent")=="parent"){
         var eventValue= event.getParam("Indx");
         var data= component.get("v.data");
-        console.log("new"+JSON.stringify(data.rows[eventValue]));
+       // alert("new"+JSON.stringify(data.rows[eventValue]));
        // data.rows[eventValue];
         var setEvent = $A.get("e.c:Ba_Strike_GridCmpEvt");
         setEvent.setParams({'data1':data.rows[eventValue]});
         setEvent.fire();
+       // alert(setEvent.getParam('data1'));
      // console.log("nw");
     }
     }

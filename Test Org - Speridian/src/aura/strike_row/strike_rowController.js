@@ -31,11 +31,11 @@ License: BSD 3-Clause License*/
         console.log(parent);
    //     if(parent=="parent"){
        //var id = component.get("v.fields.id");
-        console.log("id"+id);
+        //alert("id"+id);
         var setEvent = $A.get("e.c:Ba_Strike_RowCmpEvt");
         setEvent.setParams({'Indx':event.currentTarget.id});
         setEvent.fire();
-       console.log(setEvent.getParam('Indx'));
+      // alert(setEvent.getParam('Indx'));
   //  } 
     }
 })
