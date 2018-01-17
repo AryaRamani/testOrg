@@ -1,0 +1,63 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="ba_EligiblityadministrationDAOClass">
+    <!-- PUBLIC USER DEFINED ATTRIBUTES -->
+    <aura:attribute name="GroupId" type="String" />
+    <!-- INTERNAL ATTRIBUTES -->
+    <aura:attribute name="BA_Eligiblity_Administration__c" type="BA_Eligiblity_Administration__c[]" />
+    <aura:attribute name="ba_Eligiblity_Map" type="Map" default="{'':0}" />
+    <!-- HANDLERS AND EVENTS-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="onchange" event="c:strike_evt" action="{!c.strikeInputChanged}" />
+    <!-- PUBLIC METHODS -->
+
+    <aura:registerEvent name="navigationEvt" type="c:Ba_NavigateEvt" />
+    
+    <aura:method name="getSelectedLst" action="{!c.getSelectedLst}" access="global">
+    </aura:method>
+    
+    <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" description="Sample method with parameters">
+        <aura:attribute name="navigate" type="Boolean" default="true" />
+    </aura:method>
+
+    <div class="slds">
+        <!-- Page header -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon size="small" iconName="standard:drafts" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Eligibility Information">Eligibility Information</h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Page header ends -->
+        <!--slds changes-->
+        <div style="padding-top:2%; padding-left:2%;padding-bottom:2%;padding-right:2%;font-style:italic">Please Enter the Eligibility Information</div>
+        <form class="slds-form--compound">
+            <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-3 slds-large-size--2-of-3">
+                <div aura:id="eligiblityQuestionPlaceholder">
+                    <aura:iteration items="{!v.BA_Eligiblity_Administration__c}" var="eligiblityQstn" indexVar="idx">
+                        <div class="slds-form-element__group" style="padding-top:2%">
+                            <div class="slds-form-element__row">
+                                <aura:if isTrue="{!eligiblityQstn.Data_Type__c == 'checkbox'}">
+                                    <c:strike_input aura:id="strike_input" type="{!eligiblityQstn.Data_Type__c}" name="{!eligiblityQstn.Field_Name__c}" label="{!eligiblityQstn.ba_Eligiblity_Question__c}" readonly="{!eligiblityQstn.ba_Calculated__c}" checked="{!eligiblityQstn.ba_Default_Value__c}"
+                                    />
+                                    <aura:set attribute="else">
+                                        <c:strike_input aura:id="strike_input" type="{!eligiblityQstn.Data_Type__c}" name="{!eligiblityQstn.Field_Name__c}" label="{!eligiblityQstn.ba_Eligiblity_Question__c}" readonly="{!eligiblityQstn.ba_Calculated__c}" value="{!eligiblityQstn.ba_Default_Value__c}"
+                                        />
+                                    </aura:set>
+                                </aura:if>
+
+                            </div>
+                        </div>
+                    </aura:iteration>
+                </div>
+            </div>
+        </form>
+        <c:ba_Expression_EvalCmp aura:id="ExpressionEvalCmp" />
+    </div>
+</aura:component>

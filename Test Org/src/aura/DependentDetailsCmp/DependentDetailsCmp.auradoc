@@ -1,0 +1,14 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+         <p> Usage              : Dispalys the Details of Dependent Record Type in contacts.   
+     Parent Component           :  
+     Events Fired               : 
+     Events Handled             : 
+     Dependent Child Components :  
+     Apex Class Name            : DependentDetailsClass
+        </p>
+		
+	</aura:example>
+</aura:documentation>

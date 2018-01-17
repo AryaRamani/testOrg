@@ -1,6 +1,6 @@
 <aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="ba_EligiblityadministrationDAOClass">
     <!-- PUBLIC USER DEFINED ATTRIBUTES -->
-    <aura:attribute name="groupId" type="String" />
+    <aura:attribute name="GroupId" type="String" />
     <!-- INTERNAL ATTRIBUTES -->
     <aura:attribute name="BA_Eligiblity_Administration__c" type="BA_Eligiblity_Administration__c[]" />
     <aura:attribute name="ba_Eligiblity_Map" type="Map" default="{'':0}" />

@@ -1,0 +1,46 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes">
+	<!-- Imports & Declarations-->
+	<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+	<aura:attribute name="taskChapters" type="BA_Task_Chapter__c[]" />
+	<aura:attribute name="taskDisplayName" type="String" />
+	<aura:attribute name="activeChapter" type="String" />
+	<!--  Exposed API To Set Active Chapter -->
+	<aura:method name="setActiveSelection" action="{!c.setActiveChapter}" />
+	<!-- / Imports & Declarations-->
+	<div class="slds ">
+		<!-- Page Header -->
+		 <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:work_order_type" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Plan Information">Task Chapters</h1>
+                        </div>
+                    </div>
+                </form>	
+            </div>
+        </div>
+		
+		<!-- / Page Header -->
+		<!-- Task Chapters Body -->
+		<div class="slds-m-around--medium">
+			<div class="slds-form-element"
+				style="margin-top: 5px; margin-botton: 5px">
+				<div class="slds-col slds-has-flexi-truncate">
+					<h1 class="slds-text-heading--small slds-truncate"
+						title="Task Chapter Name">{!v.taskDisplayName}</h1>
+				</div>
+			</div>
+			<ul>
+			
+				<aura:iteration items="{!v.taskChapters}" var="taskChapter">
+					<li aura:id="task-id">{!taskChapter.ba_Display_Name__c}</li>
+				</aura:iteration>
+			</ul>
+		</div>
+		<!-- / Task Chapters Body -->
+	</div>
+</aura:component>

@@ -1,0 +1,43 @@
+<aura:component controller="Ba_GroupSummaryClass" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" >
+    
+    <aura:attribute name="group" type="Object" access="public"/> 
+    <aura:attribute name="options" type="List" />
+    <aura:attribute name="monthlist" type="List" />
+    <aura:attribute name="GroupType" type="String" default="Public"/>
+   <!--  <aura:attribute name="Opportunity" type="Opportunity" default="{ 'sobjectType': 'Opportunity' }" access="public"/>-->
+      <aura:attribute name="GroupId" type="String" description="Account Salesforce Id for the context Group" />
+      <aura:attribute name="Industrylist" type="String[]" />
+        
+    <!-- HANDLERS AND EVENTS -->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />   
+    
+    <div class="slds">
+
+   <div class="slds-section-title--divider" style="font-weight:bolder">
+             Additional Information
+        </div>
+        
+        <div class="slds-grid slds-wrap">
+           
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+               <ui:inputSelect aura:id="month" label="Renewal Month" value="{!v.group.ba_RenewalMonth__c}" >
+        <aura:iteration items="{!v.monthlist}" var="month">
+             <ui:inputSelectOption text="{!month}" label="{!month}"/>
+        </aura:iteration>
+    </ui:inputSelect>
+            </div>
+                                   
+             <!-- Picklist field -->        
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+              <ui:inputSelect aura:id="industry" label="Industry" value="{!v.group.Industry}" change="{!c.onSelectChange}">
+        <aura:iteration items="{!v.Industrylist}" var="industry">
+             <ui:inputSelectOption text="{!industry}" label="{!industry}"/>
+        </aura:iteration>
+    </ui:inputSelect>
+            </div> 
+            
+            <!-- Business segment field missing --> 
+                     
+        </div>    
+    </div>
+</aura:component>

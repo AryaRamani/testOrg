@@ -1,0 +1,107 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" controller="TaskViewClass">
+    <!-- Imports & Declarations-->
+ 
+    <aura:attribute name="taskName" type="BA_Task_Flow__c[]" />
+    <aura:attribute name="pauseflow" type="Pause_Task__c[]" />
+    <aura:attribute name="taskDisplayName" type="String" />
+    <aura:attribute name="activeChapter" type="String" />
+    <aura:attribute name="taskMsg" type="String" />
+    <aura:attribute name="modalIsOpen" type="boolean" default="true"></aura:attribute>
+    <aura:attribute name="TaskEntity" type="String" default="Employer Group"></aura:attribute>
+    <aura:attribute name="ParentId" type="String" />
+    <aura:attribute name="sectiondisplay" type="Boolean" default="true" />
+
+
+    <!--  Exposed API To Set Active Chapter -->
+    <aura:method name="setActiveSelection" action="{!c.setActiveChapter}" />
+
+
+
+    <aura:registerEvent name="HideCmp" type="c:EmployerGroupViewHideEvnt" />
+    <aura:handler event="c:EmployerGroupRelatedListEvt" action="{!c.handleid}" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+
+
+    <!-- / Imports & Declarations-->
+    <aura:if isTrue="{!v.modalIsOpen}">
+        <div class="slds">
+            <!-- Page Header -->
+            <aura:if isTrue="{!v.sectiondisplay}">
+                <div class="slds-page-header ">
+                    <div class="slds-grid">
+                        <form class="slds-form--inline" style="padding-left: 5px">
+                            <!-- Header People Icon -->
+                            <div class="slds-form-element">
+                                <c:svg aria-hidden="true" class="slds-button__icon--large" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#work_order_type">
+                                </c:svg>
+                            </div>
+                            <!-- / Header People Icon -->
+                            <!-- Chapter Title -->
+                            <div class="slds-form-element" style="margin-top: 5px">
+                                <div class="slds-col slds-has-flexi-truncate">
+                                    <h1 class="slds-text-heading--medium slds-truncate" title="Task Name">Task Flows</h1>
+                                </div>
+                                <!-- / Chapter Title -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- / Page Header -->
+                <!-- Task Chapters Body -->
+                <div class="slds-m-around--medium ">
+                    {!v.taskMsg}
+                    <ul class="Bgcl">
+                        <aura:iteration items="{!v.taskName}" var="taskName">
+                            <div>
+                                <ui:outputURL label="{!taskName.ba_Display_Name__c}" value="" click="{!c.StartTask}" title="{!taskName}" class="slds-truncate" />
+                            </div>
+                        </aura:iteration>
+                    </ul>
+                </div>
+            </aura:if>
+            <div style="padding-top:20px">
+                <!-- / Paused Task -->
+                <div class="slds-page-header">
+                    <div class="slds-grid">
+                        <form class="slds-form--inline" style="padding-left: 5px">
+                            <!-- Header People Icon -->
+                            <div class="slds-form-element">
+                                <lightning:icon size="small" iconName="utility:pause" />
+                            </div>
+                            <!-- / Header People Icon -->
+                            <!-- Chapter Title -->
+                            <div class="slds-form-element" style="margin-top: 5px">
+                                <div class="slds-col slds-has-flexi-truncate">
+                                    <h1 class="slds-text-heading--medium slds-truncate" title="Task Name">Paused Tasks</h1>
+                                </div>
+                                <!-- / Chapter Title -->
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+           
+            <div class="slds-m-around--medium ">
+
+                <ul class="Bgcl">
+                    <aura:iteration items="{!v.pauseflow}" var="pauseName" indexVar="index">
+                        <div class="slds-col slds-has-flexi-truncate slds-truncate">
+                            <!--      <li onclick ="{!c.ResumeTask}"><a href="javascript:void(0);">{!pauseName.Name}</a></li> -->
+                            <ui:outputURL label="{!pauseName.Name}" value="" click="{!c.ResumeTask}" title="{!pauseName}" class="slds-truncate" />
+                        </div>
+                    </aura:iteration>
+                </ul>
+        
+            </div>
+            <!-- / Task Chapters Body -->
+        </div>
+        <aura:set attribute="else">
+            <div>
+                {!v.body}
+            </div>
+
+        </aura:set>
+    </aura:if>
+
+
+</aura:component>

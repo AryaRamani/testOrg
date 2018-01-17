@@ -1,0 +1,104 @@
+<aura:component controller="Ba_GroupSummaryClass" implements="force:appHostable,flexipage:availableForAllPageTypes,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+
+    <!-- PUBLIC USER DEFINED ATTRIBUTES -->
+    <aura:attribute name="GroupId" type="String" description="Account Salesforce Id for the context Group" />
+    <aura:attribute name="group" type="Object" />
+    <aura:attribute name="address" type="BA_Address__c" />
+    <aura:attribute name="ZipCodes" type="BA_Zipcode_Admin__c[]" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Errormessage" type="String[]" />
+    <!-- INTERNAL ATTRIBUTES -->
+
+    <!-- HANDLERS AND EVENTS-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!-- <aura:handler name="onchange" event="c:strike_evt" action="{!c.strikeInputChanged}" /> -->
+    <aura:handler name="change" value="{!v.group.zipcode}" action="{!c.handlezipcode}" />  
+ <!--   <aura:registerEvent name="navigationEvt" type="c:Ba_NavigateEvt" /> by me-->
+
+    <aura:method name="validateFields" action="{!c.validateFields}" description="Validating fields" access="PUBLIC">
+
+        <aura:attribute name="validate" type="Boolean" default="true" />
+
+    </aura:method>
+
+
+
+    <!-- PUBLIC METHODS -->
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+
+    <div class="slds">
+        <!-- Page header of the component -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon iconName="utility:people" size="small" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Group Summary">Member Enrollment  Group Summary Info</h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input aura:id='name-id' value="{!v.group.Name}" type="text" name="Name" label="Group Name" readonly="true"/>
+            </div>
+           
+            
+            
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.group.ba_GroupStatus__c}" type="text" name="ba_GroupStatus__c" label="Group Status" errorMessage="Invalid Group Status" readonly="true" />
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.group.AccountNumber}" type="text" name="AccountNumber" label="Customer Number" errorMessage="Invalid Customer Number" readonly="true" />
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.group.Ownership}" type="text" name="Ownership" label="Group Type" errorMessage="Invalid input" readonly="true"/>
+                   
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.group.ba_LegalEntityName__c}" type="text" name="ba_LegalEntityName__c" label="Legal Entity Name" errorMessage="Invalid Legal Entity Name" readonly="true" />
+            </div>
+            
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+            <c:strike_input value="{!v.group.ba_EmailAddress__c}" type="text" name="ba_EmailAddress__c" label="Email Address" errorMessage="Invalid Group Status" readonly="true" />
+            </div>
+            
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.group.Fax}" type="text" name="Fax" label="Fax" errorMessage="Invalid Group Status" readonly="true"/>
+            </div>
+             <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.group.Website}" type="URL" name="Website" label="Website" readonly="true" />
+            </div>
+
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+
+                <c:ba_AddressFrmCmp address="{!v.address}" />
+            </div>
+            
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <div class="slds-grid slds-wrap">
+                    <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                        <legend class="slds-form-element__label slds-text-title--caps">Rating Information</legend>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                        <c:strike_lookup value="{!v.group.zipcode}" label="Zipcode" object="BA_Zipcode_Admin__c" searchField="ba_Zipcode__c" placeholder="Enter Zipcode" iconName="standard:address" subtitleField="Name" order="ba_Zipcode__c" limit="5" loadingMessage="Loading..."
+                            errorMessage="Invalid input" />
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                        <c:strike_input value="{!v.group.ba_RatingCounty__r.Name}" type="text" name="ba_RatingCounty__c" label="Rating County" errorMessage="Invalid Rating County" readonly="true" />
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</aura:component>

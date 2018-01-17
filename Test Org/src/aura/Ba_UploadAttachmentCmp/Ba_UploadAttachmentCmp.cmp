@@ -1,0 +1,228 @@
+<aura:component controller="Ba_AttachmentUploadClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <ltng:require scripts="/resource/lodash/lodash/lodash.js" />
+
+    <aura:attribute name="parentId" type="String" default="0017F00000KktWeQAJ"  />
+    <aura:attribute name="fileName" type="String"  />
+    <aura:attribute name="attlist" type="Object[]" />
+    <aura:attribute name="GroupId" type="String" />
+    <aura:attribute name="selectedType" type="String" />
+    <aura:attribute name="typeoptions" type="String[]" />
+    <aura:attribute name="selectedStatus" type="String" />
+    <aura:attribute name="statusoptions" type="String[]" />
+    <aura:attribute name="uploadfile" type="String" default="file" />
+    <aura:attribute name="uploadurl" type="String" default="url" />
+    <aura:attribute name="docclink" type="String" />
+    <aura:attribute name="selectedoption" type="String" />
+    <aura:attribute name="searchvalue" type="String" default="All" />
+    <aura:attribute name="searchtext" type="String" />
+    
+    <aura:attribute name="pageSize" type="Integer" default="5"/>
+<aura:attribute name="masterlistSize" type="Integer"/>
+<aura:attribute name="startPosn" type="Integer" default="0"/>
+<aura:attribute name="endPosn" type="Integer"/>
+ <aura:attribute name="pAttlist" type="Object[]" />
+ <aura:attribute name="showSpinner" type="Boolean" default="true"/>
+ 
+
+    <aura:attribute name="sort1" type="String" default="down" />
+    <aura:attribute name="sort2" type="String" default="down" />
+    <aura:attribute name="sort3" type="String" default="down" />
+    <aura:attribute name="sort4" type="String" default="down" />
+     <aura:attribute name="myRecordId" type="String" default="0017F00000KktWeQAJ" description="Record to which the files should be attached" />
+    
+     <aura:attribute name="Rowdata1" type="Object" />
+      <aura:attribute name="AttachmentList" type="Object[]" />
+     
+    <aura:attribute name="parentfield" type="String" default="Group"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="upload" event="c:Ba_AttachmentUploadCompEvt" action="{!c.handleModalAction}"/>
+    <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.Strike}"/>
+    
+    
+    <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+    <aura:attribute name="pAttlist" type="Object[]"/> 
+    <aura:attribute name="navigate" type="Boolean" default="true"/>
+   
+</aura:method>
+    
+
+    <div class="slds-form--compound" aura:id="att-id" style="width:100%">
+    
+
+       
+        <div class="slds-page-header">
+        <div class="slds-media">
+            <div class="slds-media__figure">
+                <span class="slds-icon_container" title="Attachment">
+          <lightning:icon iconName="utility:attach" size="small" alternativeText="Attachment"/>
+      
+      </span>
+            </div>
+            <div class="slds-media__body">
+                <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Attachment">Attachment</h1>
+
+            </div>
+        </div>
+    </div>
+         <aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner variant="brand" size="large" class="slds-spinner_container "/>
+   </aura:if>
+
+        <div class="slds-form-element__group" style="padding-top:20px">
+            <div class="slds-form-element__row">
+                <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+
+                    <lightning:select name="selectItem" label="Filter Search: " onchange="{!c.getsearchValue}" value="{!v.searchvalue}">
+                        <option value="All">All</option>
+                        <option value="Title">Title</option>
+                        <option value="type">Type</option>
+                        <option value="Status">Status</option>
+                    </lightning:select>
+                </div>
+                <div style="padding-left:10px;padding-top:4px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+                    <lightning:input label="" name="search" value="{!v.searchtext}" />
+                </div>
+                <div style="padding-left:10px; padding-top:24px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+                <lightning:button variant="brand" label="Search" onclick="{!c.getsearchresults}" >
+                 <!--    <lightning:icon iconName="utility:search" size="small" /> -->
+
+                </lightning:button>
+                </div>
+                <div style="padding-left:10px; padding-top:20px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+            <lightning:button variant="brand" label="New Attachments" onclick="{!c.openModal}" />
+
+        </div>
+
+            </div>
+
+        </div>
+
+      
+
+
+<div style="padding-top:30px">
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+            <thead>
+                <tr class="slds-text-title">
+                    <th class="slds-size--4-of-12" scope="col">
+                        <span class="slds-truncate" title=" Name">Title</span>
+                        <div class="slds-icon_container" title="Sort Column" onclick="{!c.sortByName}">
+
+                            <aura:if isTrue="{!v.sort1 == 'down'}">
+
+                                <lightning:icon iconName="utility:arrowdown" size="xx-small" />
+
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:arrowup" size="xx-small" />
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+
+                    </th>
+                    <th class="slds-size--3-of-12" scope="col">
+                        <span class="slds-truncate" title="status">Status</span>
+                        <div class="slds-icon_container" title="Sort Column" onclick="{!c.sortByStatus}">
+
+                            <aura:if isTrue="{!v.sort2 == 'down'}">
+
+                                <lightning:icon iconName="utility:arrowdown" size="xx-small" />
+
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:arrowup" size="xx-small" />
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+                    </th>
+                    <th class="slds-size--3-of-12" scope="col">
+                        <span class="slds-truncate" title="type">Type</span>
+                        <div class="slds-icon_container" title="Sort Column" onclick="{!c.sortByType}">
+
+                            <aura:if isTrue="{!v.sort3 == 'down'}">
+
+                                <lightning:icon iconName="utility:arrowdown" size="xx-small" />
+
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:arrowup" size="xx-small" />
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+
+                    </th>
+                    <th class="slds-size--2-of-12" scope="col">
+                        <span class="slds-truncate" title="correspondance">Created date</span>
+                        <div class="slds-icon_container" title="Sort Column" onclick="{!c.sortByDate}">
+
+                            <aura:if isTrue="{!v.sort4 == 'down'}">
+
+                                <lightning:icon iconName="utility:arrowdown" size="xx-small" />
+
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:arrowup" size="xx-small" />
+                                </aura:set>
+                            </aura:if>
+
+                        </div>
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.attlist}" var="att" indexVar="index">
+                    <tr>
+                        <td class="slds-size--4-of-12">{!att.Name}</td>
+                        <td class="slds-size--3-of-12">{!att.Document_Status__c}</td>
+                        <td class="slds-size--3-of-12">{!att.ba_DocumentType__c}</td>
+                        <td class="slds-size--2-of-12">{!att.ba_CreatedDate__c}</td>
+                       
+
+                    </tr>
+                </aura:iteration>
+            </tbody>
+
+
+
+        </table>
+        
+ 
+</div>
+
+<div class="slds-grid slds-grid--align-center" style="padding-top:20px">
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.previous}" disabled="{!v.startPosn == 0}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronleft" />
+                <span class="slds-assistive-text">Previous</span>
+                            </span>
+                        </ui:button>
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.next}" disabled="{!v.endPosn+1 >= v.pAttlist.length}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronright" />
+                <span class="slds-assistive-text">Next</span>
+                            </span>
+                        </ui:button>
+                    </div>
+                
+
+        <div aria-hidden="false" aura:id="popUpId" role="dialog" class="slds-modal slds-fade-in-open hideContent" style="padding-top:7rem">
+            <div class="slds-modal__container">
+                <div class="slds-modal__header">
+                    <div class="slds-button slds-button--icon-inverse slds-modal__close" onclick="{!c.hidePopup}">
+                        <c:svg aria-hidden="true" class="slds-button__icon slds-button__icon--large" xlinkHref="/resource/slds100/assets/icons/action-sprite/svg/symbols.svg#close"></c:svg>
+                        <span class="slds-assistive-text">Close</span>
+                    </div>
+                    <h2 style="font-weight:bolder;font-size:1rem">Insert New Attachment</h2>
+
+                </div>
+
+               <c:Ba_UploadAttachmentModalCmp typeoptions="{!v.typeoptions}" statusoptions="{!v.statusoptions}" myRecordId="{!v.parentId}"/>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open hideContent" aura:id="popUpBackgroundId"></div>
+    </div>
+
+</aura:component>

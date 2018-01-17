@@ -1,0 +1,18 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		<p>Example Description</p>
+		
+		 <p> Usage              : Search for the value in lookup on keyup.
+     Parent Component           :  PCPChangeCmp.
+     Events Fired               :  registerEvent name="siccodeEvt" type="LookUpEvt" type of event="component" description="This event is used to get the Sic code values in 'insertprospect' component ."
+     Events Handled             :  handler name="zipcodeEvt" event="LookUpEvt" action="handleComponentEvent" description="This is used to  get the member name values in pcpchange component "
+                                   handler event="aura:waiting" action="showSpinner" description="This is used to show the spinner when component is waiting for response to a server request. "
+                                   handler event="aura:doneWaiting" action="hideSpinner" decription="This is used to hide the spinner when component had response to a server request "
+     Dependent Child Components :  HelpTextCmp,CustomLookupResult.
+     Apex Class Name            : LookUpController.
+        </p>
+		
+		
+	</aura:example>
+</aura:documentation>

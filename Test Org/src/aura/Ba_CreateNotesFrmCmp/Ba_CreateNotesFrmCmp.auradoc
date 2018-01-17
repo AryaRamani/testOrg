@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+	    Usage : AddNewProspectFlow
+        Parent Components: Ba_NotesFrmCmp
+        Events Fired:Ba_NotesCloseCmpEvt(to close the component)
+        Events Handled:
+        Dependent Child Components:
+
+	</aura:example>
+</aura:documentation>

@@ -1,0 +1,13 @@
+<aura:event type="COMPONENT" description="Event template">
+    <aura:attribute name="CaseDetails" type="Object" />
+    <aura:attribute name="ServiceDetails" type="Object" />
+    <aura:attribute name="memberdetails" type="MemberSearchController.Memberdetails" />
+    <aura:attribute name="type" type="String" />
+    <aura:attribute name="task" type="String" />
+    <aura:attribute name="spinner" type="Boolean" />
+    <aura:attribute name="sequence" type="String" />
+    <aura:attribute name="pcpCase" type="Case" />
+    <aura:attribute name="pcp" type="PCPChangeController.Memberdetails" />
+    <aura:attribute name="waiting" type="Boolean"/>
+    <aura:attribute name="service" type="Case"/>
+</aura:event>

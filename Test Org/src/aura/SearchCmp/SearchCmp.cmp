@@ -1,0 +1,77 @@
+<aura:component controller="DisplaySearchClass" implements="force:appHostable">   
+    
+   <!--### declared attributes ###-->
+           <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <aura:attribute name="searchResult" type="List" description="use for store and display account list return from server"/>
+   <aura:attribute name="searchKeyword" type="String" description="use for store user search input"/>
+   <aura:attribute name="Message" type="boolean" default="false" description="use for display no record found message"/>
+      <aura:attribute name="details" type="contact[]" description="use for store and display contact list return from server"/>
+    <aura:attribute name="index" type="Integer" /> <!--to store index of value selected in contact index -->
+    <aura:attribute name="prodname" type="String" /> 
+  <aura:attribute name="contacts" type="contact[]" /> <!--store the contacts -->
+
+    
+    
+    <div class="slds-m-around--large">
+      <form class="slds-form--inline">
+         <div class="slds-form-element">
+            <label class="slds-form-element__label" for="search"></label>
+            <div class="slds-form-element__control">
+               <ui:inputText aura:id="searchId" class="slds-input" value="{!v.searchKeyword}" required="true" placeholder="search here..."/>
+            </div>
+         </div>
+         <div class="slds-form-element">
+            <button type="button" onclick="{!c.Search}" class="slds-button slds-button--brand">Search</button>
+         </div>
+      </form>               
+       
+      <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+         <thead>
+
+            <tr class="slds-text-title--caps">
+               <th scope="col">
+                  <div class="slds-truncate" >Id</div>
+               </th>
+               <th scope="col">
+                  <div class="slds-truncate" title="contact Name">contact Name</div>
+               </th>
+               
+            </tr>
+         </thead>
+       
+         <tbody>
+            <aura:if isTrue="{!v.Message}">
+               <div class="slds-text-color--error"> No Result Found...</div>
+            </aura:if>
+            
+           
+             
+              <aura:iteration items="{!v.details}" var="con">
+            <tr>
+               <td scope="row" class="slds-text-align--right" style="width:3.25rem;">
+                  <div class="slds-form-element">
+                     <div class="slds-form-element__control">
+                        <label class="slds-checkbox">
+                           <ui:inputCheckbox text="{!index}" aura:id="boxPack" value="" change="{!c.selectcontact}"/>
+                           <span class="slds-checkbox--faux"></span>
+                           <span class="slds-form-element__label text"></span>
+                        </label>
+                     </div>
+                  </div>
+               </td>
+                <td>
+                     <div class="slds-truncate">{!con.Id}</div>
+                  </td>
+               <td scope="row">
+                  <div class="slds-truncate" title="{!con.Name}">{!con.Name}</div>
+               </td>
+              
+            </tr>
+         </aura:iteration>
+             
+             
+             
+         </tbody>
+      </table>
+   </div>
+</aura:component>

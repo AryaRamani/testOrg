@@ -1,0 +1,85 @@
+<aura:component controller="AccountPageClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	    
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    
+        <aura:attribute name="accountdetails" type="account[]"/>
+    <aura:attribute name="total" type="integer"/>
+    <aura:attribute name="buttonsort" type="account[]"/>
+    
+         
+         <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+        <!--Page Header-->
+    <div class="slds  slds-grid">
+   <div class=" slds-col slds-page-header " role="banner" style="margin-top:15px; padding-left:20px">
+              <lightning:icon class="slds-button__icon--large"	iconName="standard:account" />
+
+       <ol class="slds-breadcrumb slds-list--Vertical">
+           <li  class="slds-truncate">
+           <p class="slds-truncate">  Accounts   </p>
+               </li>
+          
+              <span>
+                 <span class="slds-page-header__title"> Recently Viewed</span>
+               <lightning:buttonMenu aura:id=" button-id" alternativeText="More options"  onselect="{! c.displayselected }">
+                     <lightning:menuItem label="Recently Viewed"   value="1" />
+                     <lightning:menuItem label="All Accounts"   value="2" />
+                     <lightning:menuItem label="My Acccounts" value="3" />
+                     <lightning:menuItem label="New This Week"  value="4" disabled="true" />
+              </lightning:buttonMenu>
+               </span>
+             
+           </ol>
+         
+       
+    </div>
+        <div  class="slds-col slds-page-header" style="float:right;padding-right:30px;padding-top:50px">
+                <lightning:button variant="brand" label="Flows" onclick="{! c.OpenModal }" />
+
+        </div>
+                 
+        
+        </div>
+    
+    
+   <!--table to display account details-->
+    	<div class="container" style="padding-left:15px;padding-right:15px">
+    <table class="slds-table slds-table--bordered slds-table--striped slds-max-medium-table--stacked-horizontal">
+    
+    <thead>
+				<tr class="slds-text-title">
+ 	
+					<th  class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="Last Name">ACCOUNT NAME</div>
+					</th>
+					
+					<th class="slds-size--1-of-12" scope="col">
+						<div class="slds-truncate" title="First Name">ACCOUTN SITE</div>
+					</th>
+					
+					
+					</tr>
+			</thead>
+      
+			 <tbody>
+                 <aura:iteration items="{!v.accountdetails}" var="acc" indexVar="index" >
+
+                   <tr>
+                        <td class="slds-size--2-of-12">{!acc.Name}</td>
+                        <td class="slds-size--2-of-12">{!acc.Site}</td>
+                        
+                    </tr>
+                 </aura:iteration>
+            </tbody>
+   		
+        
+    
+    </table>
+    
+   
+   </div>
+   
+   
+   
+   
+</aura:component>

@@ -1,0 +1,17 @@
+<aura:component controller="ContactController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+
+    <aura:attribute name="mydata" type="Object"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    <aura:attribute name="sortedBy" type="String"/>
+    <aura:attribute name="sortedDirection" type="String"/>
+    
+    <aura:handler name="init" value="{! this }" action="{! c.init }"/>
+    <lightning:datatable data="{! v.mydata }" 
+        columns="{! v.mycolumns }" 
+        keyField="Id"
+        
+        sortedBy="{!v.sortedBy}"
+        onrowselection="{!c.getSelectedName }"
+   		onsort="{!c.updateColumnSorting}"                />
+	
+</aura:component>

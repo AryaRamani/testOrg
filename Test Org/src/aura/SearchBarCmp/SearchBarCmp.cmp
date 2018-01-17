@@ -1,0 +1,10 @@
+<aura:component >
+
+    <!--This component search when the user types a character (onKeyUp),searchKeyChange() 
+function is executed in the component's client-side controller
+    -->
+    <input type="text" class="form-control"
+           onkeyup ="{!c.searchKeyChange}"
+           placeholder="Search"/>
+
+</aura:component>

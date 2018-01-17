@@ -1,0 +1,7 @@
+<aura:component controller="dataGridController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" >
+	<aura:attribute name="data" type="Object"/>
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+	
+	<c:strike_dataGrid data="{!v.data}" />
+	
+</aura:component>

@@ -1,0 +1,82 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller='Ba_QuoteLineItemReviewClass' >
+      <!--PUBLIC USER DEFINED ATTRIBUTES -->
+    <aura:attribute name="QLI" type="QuoteLineItem" default="{'sobjectType':'QuoteLineItem'}"></aura:attribute>
+    <aura:attribute name='parentGroupId' type='String'/>
+    <aura:attribute name='QLIId' type='String' default='0QL7F000000Y1m1WAC'/>
+    <aura:attribute name='QuoteLine' type='String'/>
+    <aura:attribute name='EntroleeCount' type='Integer'/>
+    <aura:attribute name='MonthlyRate' type='Integer'/>
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <!-- to show/hide spinner -->
+    <!--HADLERS AND EVENTS-->
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.StrikeEvent}"/>
+    
+     <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+    
+    <form class="slds-form--compound">
+
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4">
+
+							<lightning:input name="Service Data" label="Effective Date"
+								aura:id="EffctiveDateid" value="{!v.QLI.ServiceDate}" disabled="true"/>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input name="Financial Arrangement" label="Financial Arrangement"
+								aura:id="FAid" value="{!v.QuoteLine}"
+								 disabled="true" />
+						</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input name="Entrolee Count" label="Entrolee Count"
+								aura:id="FAid" value="{!v.EntroleeCount}"
+								 disabled="true" />
+						</div>
+					</div>
+				</div>
+     
+         
+
+       <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4">
+
+							<lightning:input name="Termination Date" label="Termination Date"
+								aura:id="EffctiveDateid" value="{!v.QLI.ba_TerminationDate__c}" disabled="true"/>
+
+						</div>
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input name="Rating Method" label="Rating Method"
+								aura:id="FAid" value="{!v.QLI.ba_RatingMethodology__c}"
+								 disabled="true" />
+						</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input name="Monthly Rate" label="Monthly Rate"
+								aura:id="FAid" value="{!v.MonthlyRate}"
+								 disabled="true" />
+						</div>
+					</div>
+				</div>
+
+    </form>
+</aura:component>

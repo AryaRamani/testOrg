@@ -1,0 +1,10 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ContactInfo" ref="ContactInfoCMP" label="Label">
+ Usage : AddNewProspectdFlow
+ Parent Components: AddNewPrspctContactParentCmp
+ Events Fired: AddContactInfoEvent
+ Events Handled: ContactPopupCloseEvnt(to close Search Component),ContactSearchEvent(to get selected contact from Search component)
+ Dependent Child Components:
+	</aura:example>
+</aura:documentation>

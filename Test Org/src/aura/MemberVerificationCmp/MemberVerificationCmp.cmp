@@ -1,0 +1,140 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="MemberDAOClass">
+   <aura:attribute name="MemberDetails"  type="MemberSearchController.Memberdetails"/>
+    <aura:attribute name="alertMessage" type="String" />
+  <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <!--Handler-->
+<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+<aura:handler name="init" value="{!this}" action="{!c.doinit}"/>
+   <aura:registerEvent name="sendtoParent" type="c:sendCasetoParentEvt"/>
+  
+   <aura:if isTrue="{!v.showSpinner}">
+    <lightning:spinner variant="brand" size="large"/>
+   </aura:if>
+
+           
+  
+      <div   class="slds bounceInRight">
+  <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+
+                    <div class="slds-form-element">
+
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:user" />
+
+                    </div>
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Member Verification"> Member Verification </h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>        
+  
+ 
+  
+ 
+ <div class="slds-form-element__control" style="padding-left:40px" >
+ <h1>Please validate all the items.Check the items that you have verified and click Finish</h1> 
+     
+          </div>
+ <!-- <aura:iteration items="{!v.MemberDetails}" var="obj"> -->   
+          
+          
+           <div  aura:id="verifyform-id" style="padding-top:15px; padding-left:40px" class="slds-grid slds-wrap " >
+        <form class="slds-form--stacked  slds-form--compound" style="padding-left:15px">
+         <!--<div aura:id="msg-id" class="hideContent"><span style="color:red"> {!v.alertMessage}</span></div> -->
+     <div aura:id="msg-id" class="slds-notify_container hideContent " style="position:relative">
+  <div class="slds-notify slds-notify--alert slds-theme--error slds-theme--alert-texture" role="alert">
+   
+    <span class="slds-assistive-text">Error</span>
+      
+    <h2><c:svg aria-hidden="true" class="slds-icon slds-icon--small slds-m-right--x-small"
+       xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#warning">
+      </c:svg>{!v.alertMessage} </h2>
+  </div>
+</div>
+            
+            <div class="slds-form-element__group" style="padding-top:20px">
+                <div class="slds-form-element__row">
+                    <div class="  slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 ">
+                    <p class="slds-truncate">Contact Name:</p>
+                    </div>
+                     <div class="slds-col " style="padding-left:15px;padding-top:5px" >
+                    <ui:inputCheckbox required="True" aura:id="check1" onError="{!c.handleError}" onClearErrors="{!c.handleClearError}"/>
+                    </div>
+                     <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" >
+                     <ui:inputText value="{!v.MemberDetails.MemberName}" disabled="true"/>
+                     </div>
+                </div>
+            </div>
+            
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class="  slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 ">
+                                    <p class="slds-truncate">DOB:</p>
+                    </div>
+                     <div class="slds-col" style="padding-left:15px;padding-top:5px" >
+                     <ui:inputCheckbox required="True" aura:id="check2" onError="{!c.handleError}" onClearErrors="{!c.handleClearError}"/>
+                    </div>
+                     <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                    <ui:inputDate value="{!v.MemberDetails.BirthDate}" disabled="true"/> 
+                     </div>
+                </div>
+            </div>
+            
+             <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class="  slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 ">
+                                     <p class="slds-truncate">Address:</p>
+                    </div>
+                     <div class="slds-col" style="padding-left:15px;padding-top:5px">
+                     <ui:inputCheckbox required="True" aura:id="check3" onError="{!c.handleError}" onClearErrors="{!c.handleClearError}"/>
+                    </div>
+                     <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" style="padding-down:40px">
+                     <ui:inputText value="{!v.MemberDetails.Address1}" disabled="true"/>
+                         </div>
+                   
+                </div>
+            </div>
+            
+             <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class="  slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 ">
+                    </div>
+                    <div class="  slds-col " style="padding-left:15px;padding-top:5px"></div>
+            <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" style="padding-left:20px">
+                    <ui:inputText value="{!v.MemberDetails.Address2}" disabled="true" />
+                     </div>
+                 </div>
+            </div>
+            
+             <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class="  slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 ">
+                                    <p class="slds-truncate"> Phone:</p>
+                    </div>
+                     <div class="slds-col" style="padding-left:15px;padding-top:5px">
+                     <ui:inputCheckbox required="True" aura:id="check4" onError="{!c.handleError}" onClearErrors="{!c.handleClearError}"/>
+                    </div>
+                     <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" >
+                     <ui:inputText value="{!v.MemberDetails.Phone}" disabled="true"/>
+                     </div>
+                </div>
+            </div>
+            
+               </form>
+          </div>
+         
+   <!--   </aura:iteration> -->
+    
+    </div>
+
+    <!--Have to add finish button-->
+     <footer role="contentinfo" class="slds-p-around--large">
+       <div class="slds-grid slds-grid--align-center">
+     <ui:button label="Finish" class="slds-button slds-button--brand" press="{!c.doAction}"/>
+     </div>
+    </footer>
+</aura:component>

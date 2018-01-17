@@ -1,0 +1,50 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes"
+	access="global" controller="SalesRepListclass">
+    <!--HANDLERS AND EVENTS--> 
+	<aura:handler event="c:Ba_SalesRepSetAttributeEvt"
+		action="{!c.setAttributeValue}" />
+	<aura:handler event="c:Ba_SalesRepSaveEvt" action="{!c.setId}" />
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <!--INTERNAL ATTRIBUTES-->
+    <aura:attribute name="Detl" type="BA_Assignment_Skillset__c" />
+	<aura:attribute name="myvalue" type="String" />
+	<aura:attribute name="GroupId" type="String" />
+	<div style="">
+		<div class="slds-form-element"
+			style="padding-top: 40px; padding-left: 20px; padding-bottom: 10px">Sales Representative Details</div>
+		<table style="height:"
+			class="slds-table slds-table_bordered slds-table_cell-buffer"
+			id="tbl">
+			<thead>
+				<tr class="slds-text-title_caps">
+					<th scope="col">
+						<div class="slds-truncate" title="Line of Business">Line of
+							Business</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Service Region">Service
+							Region</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Group Size">Group Size</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="Effective Date">Effective
+							Date</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.Detl}" var="Detl1">
+					<tr>
+						<td data-label="Line of Business"><div class="slds-truncate">{!Detl1.Line_of_Business__c}</div></td>
+						<td data-label="Service Region"><div class="slds-truncate"
+								id='val'>{!Detl1.Service_Region__c}</div></td>
+						<td data-label="Group Size"><div class="slds-truncate">{!Detl1.Group_Size__c}</div></td>
+						<td data-label="Effective Date"><div class="slds-truncate">{!Detl1.Effective_Date__c}</div></td>
+					</tr>
+				</aura:iteration>
+			</tbody>
+		</table>
+	</div>
+</aura:component>

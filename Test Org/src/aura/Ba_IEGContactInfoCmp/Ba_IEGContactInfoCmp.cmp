@@ -1,0 +1,153 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="QuoteContactSearchClass">
+   
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+
+   
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:attribute name="Indx" type="String" />
+    <aura:attribute name="AccountID" type="String[]" />
+    <aura:attribute name="GroupId" type="String"  />
+    <aura:attribute name="contact" type="Contact[]" />
+    <aura:attribute name="CntctId" type="ID[]" />
+    <aura:attribute name="modalIsOpen" type="boolean" default="false" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="contactsNew" type="Contact" default="{ 'sobjectType': 'Contact',
+                    'FirstName': '',
+                    'LastName': '',
+                    'Phone': '',
+              		'Fax': '',
+              		'Email': '',
+              		'Account.Name' : '',
+                       'Id':''                                                                              
+              }" />
+
+    <aura:attribute name="ContactId" type="String" />
+    <aura:attribute name="Contacts" type="Contact[]" />
+    <!-- <aura:attribute name="Con" type="Contact[]"/> -->
+    <aura:registerEvent name="sendtoParent" type="c:navigatetoParentEvt" />
+    <aura:registerEvent name="navigateback" type="c:NavigateBackEvt" />
+    <!--to close the Search Component-->
+    <aura:handler event="c:ContactPopupCloseEvent" action="{!c.setAttributeValue}" />
+    <!--to get the selected Contact from Search Component-->
+    <aura:handler event="c:ContactSearchEvent" action="{!c.GetRcd}" />
+
+   <!--for Add Contact Button-->
+    <aura:registerEvent name="AddContactInfoEvent" type="c:AddContactInfoEvent" />
+
+     
+    
+    <!--Handler For Event Triggered From CompetitorListItmCmp -->
+    <aura:handler name="selectContact" event="c:ContactModifyEvt" action="{!c.selectContact}" />
+    
+    <aura:method name="getSelectedLst" action="{!c.getSelectedLst}" >
+        <aura:attribute name="selectionlist" type="Object[]" />
+    </aura:method>
+    
+    
+    <!-- auar:method to pass data to master flow component -->
+    <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" description="Sample method with parameters">     
+        <aura:attribute name="navigate" type="Boolean" default="true" />
+    </aura:method>
+    
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+
+    <div class="slds bounceInRight">
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+                    <!-- Header People Icon -->
+						<div class="slds-form-element">
+                    <lightning:icon size="small" iconName="standard:contact" />
+                </div>
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Contact Info"> Install Small Group Primary Contact Information</h1>
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div><br></br>
+        <p style="font-size:15px;font-style:italic">Contact Information</p>
+        <br/>
+        <div style="padding-top:15px">
+        <ui:button label='Add' class="slds-button slds-button--brand" press="{!c.AddContact}"></ui:button>
+        <ui:button label='Delete' class="slds-button slds-button--brand" press="{!c.DeleteContact}"></ui:button>
+        </div>
+        <br/>
+
+
+        <table class="slds-table slds-table_bordered slds-table_cell-buffer" id="tbl">
+            <thead>
+                <tr class="slds-text-title_caps">
+
+                    <th scope="col">
+                        <div class="slds-truncate" title="First Name">First Name</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Last Name">Last Name</div>
+                    </th>
+                   
+                    <th scope="col">
+                        <div class="slds-truncate" title="Phone">Phone</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Fax">Fax</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Email">Email</div>
+                    </th>
+
+                </tr>
+
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.Contacts}" var="contact1" indexVar="index">
+
+                    <tr id="{!index}" data-data="{!index}" onclick="{!c.clickEvent}">
+
+                        <td data-label="First Name" data-data="divCol">
+                            <div class="slds-truncate" title="First Name" data-data="divData">
+                                <ui:outputText value="{!contact1.FirstName}" />
+                            </div>
+                        </td>
+                        <td data-label="Last Name" data-data="divCol">
+                            <div class="slds-truncate" title="Last Name" data-data="divData">
+                                <ui:outputText value="{!contact1.LastName}" />
+                            </div>
+                        </td>
+                       
+                        <td data-label="Phone" data-data="divCol">
+                            <div class="slds-truncate" title="Phone" data-data="divData">
+                                <ui:outputNumber value="{!contact1.Phone}" />
+                            </div>
+                        </td>
+                        <td data-label="Fax" data-data="divCol">
+                            <div class="slds-truncate" title="Fax" data-data="divData">
+                                <ui:outputText value="{!contact1.Fax}" />
+                            </div>
+                        </td>
+                        <td data-label="Email" data-data="divCol">
+                            <div class="slds-truncate" title="Email" data-data="divData">
+                                <ui:outputText value="{!contact1.Email}" />
+                            </div>
+                        </td>
+
+
+
+                    </tr>
+                </aura:iteration>
+
+            </tbody>
+        </table>
+        <br/> <br/> <br/> <br/> <br/>
+        
+    </div>
+</aura:component>

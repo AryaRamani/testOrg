@@ -19,27 +19,32 @@ public with sharing class InstallationFlowAdminClass {
 		system.debug('Info' + info);
 		Map < String, Object > objlist = (Map < String, Object > ) JSON.deserializeUntyped(info);
 		system.debug('Eligibility' + objlist);
-		
+		system.debug(objlist.get('enrollselectedlst'));
 		//to update group info
 		Object groupdata= objlist.get('group');
 		Map < String, Object > groupinfo = (Map < String, Object > ) groupdata;
 		Account acc=new Account(Id=(String)groupinfo.get('Id'));
 		acc.Name=(String)groupinfo.get('Name');
 		acc.AccountNumber=(String)groupinfo.get('AccountNumber');
-		BA_SicCode__c code=[Select id,ba_SICCode__c from BA_SicCode__c where id=:(string)groupinfo.get('groupsic') ];
+		system.debug('SIC'+(string)groupinfo.get('Sic') );
+		BA_SicCode__c code=[Select id,ba_SICCode__c from BA_SicCode__c where ba_SICCode__c=:(string)groupinfo.get('Sic') ];
 		acc.Ownership=(String)groupinfo.get('Ownership');
 		acc.Sic=code.ba_SICCode__c;
 		acc.ba_RatingCounty__c=(string)groupinfo.get('ba_RatingCounty__c');
+		if((string)groupinfo.get('zipcode')!=null){
 		BA_Zipcode_Admin__c admin=[Select ba_Zipcode__c,ba_City__c from BA_Zipcode_Admin__c  where id=:(string)groupinfo.get('zipcode')];
+		
 		acc.ba_RatingZipcode__c = admin.ba_Zipcode__c;
 		acc.ba_RatingZipcode__c = admin.ba_City__c;
+		}
 		acc.TIN_EIN__c=(Decimal)groupinfo.get('TIN_EIN__c');
-	
+	if(string.valueof(groupinfo.get('ba_EffectiveDate__c'))!=null){
 				List < String > effectivedate = string.valueof(groupinfo.get('ba_EffectiveDate__c'))
 					.split('-');
 				Date groupeffdate = Date.newInstance(Integer.valueOf(effectivedate[0]), Integer.valueOf(effectivedate[1]), Integer.valueOf(effectivedate[2]));
 				
 		acc.ba_EffectiveDate__c=groupeffdate;
+	}
 		update acc;
 
 		/* to insert eligibility information*/
@@ -53,6 +58,16 @@ public with sharing class InstallationFlowAdminClass {
 				eligible.ba_Status__c = 'Current';
 				eligible.ba_CreatedBy__c = System.now();
 				insert eligible;
+				list<BA_Group_Eligibilty__c> updatelist=new list<BA_Group_Eligibilty__c>();
+		list<BA_Group_Eligibilty__c> groupeligible=[Select id,ba_Status__c from  BA_Group_Eligibilty__c where ba_ParentGroup__c=:GroupId
+																									AND id !=: eligible.Id ];
+		
+		for(BA_Group_Eligibilty__c e:groupeligible){
+			e.ba_Status__c='History';
+			updatelist.add(e);
+		}	
+		
+		update updatelist;																			
 			}
 
 			list < BA_Group_Eligibility_Questions__c > questionlst = new list < BA_Group_Eligibility_Questions__c > ();
@@ -68,6 +83,8 @@ public with sharing class InstallationFlowAdminClass {
 		} catch (DMLException e) {
 			system.debug('Error');
 		}
+		
+		/* to insert 
 
 		/* TO insert Quote Line Items as Benefit package*/
 		try {
@@ -299,11 +316,12 @@ public with sharing class InstallationFlowAdminClass {
 		acc.ba_RatingCounty__c=(string)groupinfo.get('ba_RatingCounty__c');
 		acc.TIN_EIN__c=(Decimal)groupinfo.get('TIN_EIN__c');
 		
-		system.debug('@@@@@@@@@@Zip Code'+ (string)groupinfo.get('zipcode'));
-		if((string)groupinfo.get('zipcode')!=null){
-	    BA_Zipcode_Admin__c admin=[Select ba_Zipcode__c,ba_City__c from BA_Zipcode_Admin__c  where id=:(string)groupinfo.get('zipcode')];
+		system.debug('@@@@@@@@@@Zip Code'+ (string)groupinfo.get('ba_RatingCounty__c'));
+		if((string)groupinfo.get('ba_RatingCounty__c')!=null){
+	    BA_Zipcode_Admin__c admin=[Select ba_Zipcode__c,ba_City__c from BA_Zipcode_Admin__c  where id=:(string)groupinfo.get('ba_RatingCounty__c')];
+		system.debug('####'+admin);
 		acc.ba_RatingZipcode__c = admin.ba_Zipcode__c;
-		acc.ba_RatingZipcode__c = admin.ba_City__c;
+		acc.ba_RatingCity__c = admin.ba_City__c;
 		}
 	
 				List < String > effectivedate = string.valueof(groupinfo.get('ba_EffectiveDate__c'))
@@ -613,10 +631,15 @@ public with sharing class InstallationFlowAdminClass {
     
 		insert ratelist;
     
+		 Opportunity opp=new Opportunity();
 		
+		 List<Opportunity> opt=[Select id from Opportunity where ba_TargetEffectiveDate__c =:acc.ba_TermindationDate__c
+										AND ba_OpportunityStatus__c='Open' LIMIT 1 ];
 		
-		
-			Opportunity opp=new Opportunity();
+		if(opt.size()>0){
+			opp= opt[0];
+		}
+		else{
 			opp.ba_FinancialArrangement__c = 'Prospective';
 			opp.AccountId = GroupId;
 			opp.Name ='New Quote';
@@ -626,18 +649,18 @@ public with sharing class InstallationFlowAdminClass {
 			opp.ba_OpportunityStatus__c= 'open';
 			opp.ba_TargetEffectiveDate__c = acc.ba_TermindationDate__c;			
 			insert opp;
-			
+		}	
 			Quote q=new Quote();
-			
-RecordType objRecType = [SELECT Id,Name FROM RecordType where Name = 'New Quote Request' limit 1];
-q.RecordTypeId = objRecType.Id ;
+			system.debug('*******'+acc);
+			RecordType objRecType = [SELECT Id,Name FROM RecordType where Name = 'New Quote Request' limit 1];
+			q.RecordTypeId = objRecType.Id ;
 			q.OpportunityId=opp.Id;
 			q.Name='New Quote Request';
 			q.Status='Created';
-			q.ba_RatingRegion__c = acc.ba_RatingCounty__c;
+			q.ba_RatingRegion__c = acc.ba_RatingZipcode__c;
 			q.ba_EffectiveDate__c=acc.ba_EffectiveDate__c;
 			q.ba_TerminationDate__c = acc.ba_TermindationDate__c;
-			q.ba_RatingMethodology__c = 'Composite'; //needs to be discussed
+			//q.ba_RatingMethodology__c = 'Composite'; //needs to be discussed
 			insert q; 
 			
         	try {
@@ -814,6 +837,10 @@ q.RecordTypeId = objRecType.Id ;
            			 		quotepack.ba_PredefinedPackage__c= (String)packMap.get('Id');
            			 		quotepack.ba_ClassID__c= GrpClassMap.get(grp).Id;
            			 		quotepack.ba_Quote__c =q.Id;
+           			 		quotepack.ba_EffectiveDate__c=q.ba_EffectiveDate__c;
+           			 		quotepack.ba_RateEffectiveDate__c =q.ba_EffectiveDate__c;
+           			 		quotepack.ba_TerminationDate__c =q.ba_TerminationDate__c;
+           			 		quotepack.ba_RateTerminationDate__c = q.ba_TerminationDate__c;
            			 		Quotepacklist.add(quotepack);
            			 		
            			 	}

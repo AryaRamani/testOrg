@@ -1,0 +1,23 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="CompetitorListComponent" ref="CompetitorListCmp"
+		label="CompetitorListCmp">
+		<p>Competitor List</p>
+		<p>
+			Usage : Displays List Of Competitor with the Ability to Add and Modify Available List Items 
+			Events Fired : 
+			activeCompetitorChange
+			Triggers Row Change Event up the Component Chain
+			<!-- <aura:registerEvent name="activeCompetitorChange" type="c:CompetitorModifyEvt" />  -->
+			Events Handled : 
+			Handler For Triggered From CompetitorFormCmp -Handles updates/adds for competitors
+			<!-- <aura:handler name="saveCompetitor" event="c:CompetitorModifyEvt" action="{!c.handleAddCompetitor}" />-->
+			Handler For Event Triggered From CompetitorListItmCmp - Handles Modify Event triggers
+			<!-- 	<aura:handler name="editCompetitor" event="c:CompetitorModifyEvt"action="{!c.editCompetitor}" /> -->
+			Parent Component: CompetitorChapterCamp
+			Dependent Child Components : 
+			CompetitorListItmCmp- Table to store the record of productlist CompetitorFormCmp - content of Model box Apex
+			Class Name : CompetitorDAOClass
+		</p>
+	</aura:example>
+</aura:documentation>

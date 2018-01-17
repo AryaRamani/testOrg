@@ -1,0 +1,11 @@
+<aura:component controller="Ba_RelatedListClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    
+   <aura:attribute name="objectName" type="String" default="Account"/> <!--object name--> 
+    <aura:attribute name="SelectedObject" type="List" />
+    <aura:attribute name="RelatedObject" type="list" />
+   
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 	
+    
+
+
+</aura:component>

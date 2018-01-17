@@ -1,0 +1,95 @@
+<aura:component controller="CompetitorProductDAOClass">
+	<!--Declarations-->
+	<aura:registerEvent name="editProduct" type="c:ProductModifyEvt" />
+	<aura:registerEvent name="deleteProduct" type="c:ProductModifyEvt" />
+	<aura:registerEvent name="selectProduct" type="c:ProductModifyEvt" />
+	<aura:attribute name="activeRow" type="Integer" />
+	<aura:attribute name="activeParentRow" type="Integer" />
+	<aura:attribute name="parentCompetitorId" type="String" />
+	<aura:attribute name="products" type="BA_Group_Competitor_Product__c[]" />
+	<aura:attribute name="childProducts" type="BA_Group_Competitor_Product__c[]" />
+	<aura:attribute name="IsSpinner" type="Boolean" />
+	<aura:attribute name="truthy" type="Boolean" default="true"/>
+	<aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+	<aura:method name="refreshProductList" action="{!c.doInit}" />
+	<!--/declaration-->
+	<div class="container">
+		<table class="slds-table slds-table_bordered slds-table_cell-buffer">
+			<thead>
+				<tr class="slds-text-title_caps">
+					<!--th scope="col">
+                  <div class="slds-truncate" title="Seq#">Seq#</div>
+                  </th-->
+					<th scope="col">
+						<div class="slds-truncate" title="ProductCategory">Product
+							Category</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="LineOfBusiness">Line Of
+							Business</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="ProductName">Product Name</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="EffectiveDate">Effective
+							Date</div>
+					</th>
+					<th scope="col">
+						<div class="slds-truncate" title="TerminationDate">Termination
+							Date</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<aura:iteration items="{!v.products}" var="product" indexVar="idx">
+				<aura:if isTrue="{!product.ba_ShowRow__c}">
+					<tr data-data="{!idx}" onclick="{!c.handleRowSelect}">
+						<td data-label="Product Category" data-data="divCol">
+							<div class="slds-truncate" title="Product Category"
+								data-data="divData">
+								<!--Picklist-->
+								<ui:outputText value="{!product.ba_Product_Category__c}" />
+							</div>
+						</td>
+						<td data-label="Line Of Business" data-data="divCol">
+							<div class="slds-truncate" title="Line Of Business"
+								data-data="divData">
+								<!--Picklist-->
+								<ui:outputText value="{!product.Line_Of_Business__c}" />
+							</div>
+						</td>
+						<td data-label="Product Name" data-data="divCol">
+							<div class="slds-truncate" title="Product Name"
+								data-data="divData">
+								<ui:outputText value="{!product.ba_ProductName__c}" />
+							</div>
+						</td>
+						<td data-label="Effective Date" data-data="divCol">
+							<div class="slds-truncate" title="Effective Date"
+								data-data="divData">
+								<ui:outputDate value="{!product.ba_EffectiveDate__c}" />
+							</div>
+						</td>
+						<td data-label="Termination Date" data-data="divCol">
+							<div class="slds-truncate" title="Termination Date"
+								data-data="divData">
+								<ui:outputDate value="{!product.ba_TerminationDate__c}" />
+							</div>
+						</td>
+						<td data-label="Lightning Menu" data-data="divCol"><lightning:buttonMenu iconName="utility:settings" onselect="{!c.productMenuSelect}">
+								<lightning:menuItem label="Edit" value="{!'EditProduct_' + idx}" />
+								<lightning:menuItem label="Delete"
+									value="{!'DeleteProduct_' + idx}" />
+							</lightning:buttonMenu></td>
+					</tr>
+					</aura:if>
+				</aura:iteration>
+			</tbody>
+		</table>
+		<aura:if isTrue="{!v.IsSpinner}">
+			<lightning:spinner variant="brand" alternativeText="Page Loading..."
+				size="large" />
+		</aura:if>
+	</div>
+</aura:component>

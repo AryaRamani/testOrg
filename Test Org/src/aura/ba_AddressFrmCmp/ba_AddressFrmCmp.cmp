@@ -1,0 +1,41 @@
+<aura:component >
+    <!-- PUBLIC USER DEFINED ATTRIBUTES -->
+    <aura:attribute name="parentId" type="String" description="Address ParentRecord Id for the Address" />
+    <aura:attribute name="parentType" type="String" description="Address ParentRecord Type for the Address" />
+    <aura:attribute name="address" type="BA_Address__c" />
+    <!-- INTERNAL ATTRIBUTES -->
+    
+    <!-- HANDLERS AND EVENTS-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="onchange" event="c:strike_evt" action="{!c.strikeInputChanged}" />
+    <!-- PUBLIC METHODS -->
+
+    <div class="slds ">
+        <div class="slds-grid slds-wrap">
+            <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                <legend class="slds-form-element__label slds-text-title--caps">Principal Address</legend>
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                <c:strike_input value="{!v.address.ba_AddressLine_1__c}" type="text" name="ba_AddressLine_1__c" label="Street Address" errorMessage="Street Address is Required" required="true" />
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                <c:strike_input value="{!v.address.ba_AddressLine2__c}" type="text" name="ba_AddressLine2__c" label="Address Line 2" errorMessage="Invalid Address Line 2" />
+            </div>
+            <div class="slds-col slds-size_1-of-1 slds-p-around_small">
+                <c:strike_input value="{!v.address.ba_AddressLine2__c}" type="text" name="ba_AddressLine3__c" label="Address Line 2" errorMessage="Invalid Address Line 2" />
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_lookup value="{!v.address.ba_Zipcode__c}" label="Zipcode" object="BA_Zipcode_Admin__c" searchField="ba_Zipcode__c" placeholder="Enter Zipcode" iconName="standard:address" subtitleField="Name" order="ba_Zipcode__c" limit="5" loadingMessage="Loading..." errorMessage="Invalid input"/>
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.address.ba_City__c}" type="text" name="ba_City__c" label="City" errorMessage="Invalid City" />
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.address.ba_State__c}" type="text" name="ba_State__c" label="State" errorMessage="Invalid State" required="true" />
+            </div>
+            <div class="slds-col slds-size_1-of-2 slds-p-around_small">
+                <c:strike_input value="{!v.address.ba_County__c}" type="text" name="ba_County__c" label="County" errorMessage="Invalid County" />
+            </div>
+        </div>
+    </div>
+</aura:component>

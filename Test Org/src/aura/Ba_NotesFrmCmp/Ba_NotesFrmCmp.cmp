@@ -1,0 +1,98 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller='AddNewNotesClass'>
+   
+    <!--HANDLERS AND EVENTS-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler name="closeModal" event="c:Ba_NotesCloseCmpEvt" action="{!c.setAttributeValue}" />
+    <!--INTERNAL ATTRIBUTES-->
+    <aura:attribute name="Notes" type="AddNewNotesClass.ContentNoteDetails[]" />
+    <aura:attribute name="NewNotes" type="AddNewNotesClass.ContentNoteDetails[]" />
+    <aura:attribute name="GroupId" type="String"  />
+    <aura:attribute name="modalIsOpen" type="boolean" default="false" />
+    <aura:attribute name="parentfield" type="String" default="Group" />
+    <aura:attribute name="MemberNoteslist" type="Object[]" />
+    <aura:attribute name="Rowdata1" type="Object" />
+    
+    <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.Strike}"/>
+    
+      <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" description="Sample method with parameters">
+        <aura:attribute name="navigate" type="Boolean" default="true" />
+    </aura:method>
+  
+    <!-- / Imports & Declarations-->
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left:5px">
+                <!-- Header People Icon -->
+                <div class="slds-form-element">
+                    <lightning:icon iconName="standard:note" size="small" />
+                </div>
+                <!-- / Header People Icon -->
+                <!-- Chapter Title -->
+                <div class="slds-form-element" style="margin-top:5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Notes Info"> Add New Notes</h1>
+                    </div>
+                    <!-- / Chapter Title -->
+                </div>
+            </form>
+        </div>
+    </div>
+  
+    <div style="width 100% !important;padding-top:2%">
+        <ui:button class="slds-button slds-button--brand" label="Add Notes" press="{!c.Showmodal}" />
+        <div style="padding-top:2%">
+        <table style="height:" class="slds-table slds-table_bordered slds-table_cell-buffer" id="tbl">
+            <thead>
+                <tr class="slds-text-title_caps">
+
+                    <th scope="col">
+                        <div class="slds-truncate" title="Title">Title</div>
+                    </th>
+                    <th scope="col">
+                        <div class="slds-truncate" title="Notes">Notes</div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration items="{!v.Notes}" var="note">
+                    <tr>
+
+                        <td data-label="Type">
+                            <div class="slds-truncate" id='val'>{!note.title}</div>
+                        </td>
+                        <td data-label="Notes">
+                            <div class="slds-truncate">{!note.Content}</div>
+                        </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+     </div>  
+    </div>
+    <aura:if isTrue="{!v.modalIsOpen}">
+        <!--###### MODAL BOX Start From Here ######-->
+        <div role="dialog" tabindex="-1" aura:id="popupNotesNew" aria-labelledby="New Notes" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container" min-width="50%" height="107%">
+
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                    <h2 id="newcompheader" class="slds-text-heading--medium">New Note</h2>
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <c:Ba_CreateNotesFrmCmp />
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}">Cancel</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="slds-backdrop slds-backdrop--open" aura:id="popupNotesNewBackground"></div>
+        <!--###### MODAL BOX Part END Here ######-->
+    </aura:if>
+</aura:component>

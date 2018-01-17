@@ -1,0 +1,64 @@
+<aura:component controller="CopyCensusOptionClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+ 
+
+ <aura:attribute name="option" type="Boolean" default="true" />
+ <aura:attribute name="showSpinner" type="Boolean" default="false" />
+
+
+
+ <aura:registerEvent name="sendtoParent" type="c:navigatetoParentEvt"/>
+ <div>
+     <aura:if isTrue="{!v.showSpinner}">
+<lightning:spinner variant="brand" size="large"/>
+</aura:if>
+      <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:people" />
+                    </div>
+                    <div class="slds-form-element">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Census Option"></h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+  
+  
+   <div aura:id="option-id" style="padding-top:10px; padding-left:10px" class="slds-wrap ">
+
+                  <div class=" slds slds-form-element slds-form--stacked  slds-form--compound">
+                   <div class="slds-col slds-size--1-of-2 slds-medium-size--4-of-12 slds-large-size--4-of-12" style="padding-top:30px;padding-left:30px">
+                            <fieldset class="slds-form-element">
+                                <legend class="slds-form-element__legend slds-form-element__label">Do you want to import the census from existing quote ?
+                                </legend>
+                                <div class="slds-form-element__control">
+                                    <label class="slds-radio">
+     								 <ui:inputRadio aura:id="yes-id" name="options" text="yes" change="{!c.onSelection}" value="{!v.option}"    />
+      									<span class="slds-radio--faux"></span>
+     								 <span class="slds-form-element__label">Yes</span>
+    								</label>
+                                    <label class="slds-radio">
+      							<ui:inputRadio aura:id="no-id" name="options" text="no" change="{!c.onSelection}"  />
+      								<span class="slds-radio--faux"></span>
+      								<span class="slds-form-element__label">No</span>
+   								 </label>
+                                </div>
+                            </fieldset>
+
+                        </div>
+            </div>
+         </div>
+            <footer  class="slds-p-around--large">
+    <div class="slds-grid slds-grid--align-center">
+         <lightning:button aura:id="next-id" variant="brand" label="Next"  class="slds-button slds-button--neutral" onclick="{!c.movenext}"  />
+      <lightning:button aura:id="pause-id" variant="brand" label="Pause"  class="slds-button slds-button--neutral" onclick="{!c.pauseflow}"   />
+    </div>
+    </footer>
+    </div>    
+   
+   
+</aura:component>

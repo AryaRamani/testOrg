@@ -1,0 +1,262 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global"  >
+    <aura:attribute name="CEHealth" type="Ba_Claim_Experience__c" default="{}"></aura:attribute>
+    <aura:attribute name="CERx" type="Ba_Claim_Experience__c" default="{}"></aura:attribute>
+    <aura:attribute name='parentGroupId' type='String'/>
+   
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    
+    <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+   <aura:attribute name="CEHealth" type="Ba_Claim_Experience__c"></aura:attribute>
+    <aura:attribute name="CERx" type="Ba_Claim_Experience__c"></aura:attribute>
+    <aura:attribute name="navigate" type="Boolean" default="true"/>
+   
+</aura:method>
+    
+     <!-- Page header -->
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon size="small" iconName="utility:edit_form" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Claims Experience">Claims Experience</h1>
+                      
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Page header ends -->
+    <div aura:id="mainform" style="padding-top: 20px; " class="slds-grid slds-wrap slds-form--compound ">
+       <div >
+            <span style="font-style:italic; padding-bottom:10px;padding-left:40px">Summary</span>
+        </div>
+        <div class="slds-form-element__group hideContent" style="padding-top:20px;width:100%">
+            <div class="slds-form-element__row">
+    <form class="slds-form--compound" style="width:100%">
+
+				<div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1" style="padding-left: 120px;width:50%">
+
+							<lightning:input name="Number of high level claims" label="Number of high level claims"
+								aura:id="Nameid" value="{!v.CEHealth.Ba_Number_of_High_Level_Claims__c}"/>
+</div></div>
+						</div>
+          
+        <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--1-of-1 slds-large-size--1-of-1 "
+							style="padding-left: 120px;width:50%">
+
+							<lightning:input name="Current Polling Point" label="Current Polling Point"
+								aura:id="PPId" value="{!v.CEHealth.Ba_Current_Polling_Point__c}"
+								 />
+						</div>
+                        
+                    </div></div>
+        <div style="font-style:italic; padding-bottom:20px;padding-top:20px" >
+            <span style="font-style:italic; padding-bottom:40px;padding-left:40px;padding-top:40px">Health</span>
+              <span style="font-style:italic; padding-bottom:40px;padding-left:439px;padding-top:40px">Rx</span>
+        </div>
+        <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input type='Date' name="Experience Date From" label="Experience Date From"
+								aura:id="Eid" value="{!v.CEHealth.Ba_Experience_Date_From__c}"/>
+						</div>
+                        
+                         <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input type='Date' name="Experience Date From" label="To"
+								aura:id="Eid" value="{!v.CEHealth.Ba_Experience_Date_To__c}"/>
+						</div>
+                        
+                          <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input type='Date' name="Experience Date From" label="Experience Date From"
+								aura:id="Eid" value="{!v.CERx.Ba_Experience_Date_From__c}"/>
+						</div>
+                        
+                         <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4"
+							style="padding-left: 40px">
+
+							<lightning:input type='Date' name="Experience Date From" label="To"
+								aura:id="Eid" value="{!v.CERx.Ba_Experience_Date_To__c}"/>
+						</div>
+                        
+					</div>
+				</div>
+     
+         
+
+     <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input type='Currency' name="Claims" label="Claims"
+								aura:id="Claimid" value="{!v.CEHealth.Ba_Claims__c}"/>
+</div>
+         						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							
+</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Claims" label="Claims"
+								aura:id="Claimid" value="{!v.CERx.Ba_Claims__c}"/>
+</div>
+         
+         
+         </div>
+     </div>
+     
+            <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Capitation" label="Capitation"
+								aura:id="Capitationid" value="{!v.CEHealth.Ba_Capitation__c}"/>
+</div>
+         						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							
+</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Capitation" label="Capitation"
+								aura:id="Capitationid" value="{!v.CERx.Ba_Capitation__c}"/>
+</div>
+         
+         
+         </div>
+     </div>
+        
+        <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Average Entrollment" label="Average Entrollment"
+								aura:id="AEid" value="{!v.CEHealth.Ba_Average_Entrollment__c}"/>
+</div>
+         						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							
+</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Average Entrollment" label="Average Entrollment"
+								aura:id="AEid" value="{!v.CERx.Ba_Average_Entrollment__c}"/>
+</div>
+         
+         
+         </div>
+     </div>
+        
+         <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Average Entrolled Members" label="Average Entrolled Members"
+								aura:id="AEMid" value="{!v.CEHealth.Ba_Average_Entrolled_Members__c}"/>
+</div>
+         						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							
+</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Average Entrolled Members" label="Average Entrolled Members"
+								aura:id="AEMid" value="{!v.CERx.Ba_Average_Entrolled_Members__c}"/>
+</div>
+         
+         
+         </div>
+     </div>
+        
+        
+        
+                
+         <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="High Level Claims" label="High Level Claims"
+								aura:id="HLid" value="{!v.CEHealth.Ba_High_Level_Claims__c}"/>
+</div>
+         						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							
+</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="High Level Claims" label="High Level Claims"
+								aura:id="HLid" value="{!v.CERx.Ba_High_Level_Claims__c}"/>
+</div>
+         
+         
+         </div>
+     </div>
+
+        
+        
+       
+        
+        
+        
+                
+         <div class="slds-form-element__group">
+					<div class="slds-form-element__row">
+						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Billed Premium" label="Billed Premium"
+								aura:id="HLid" value="{!v.CEHealth.Ba_Billed_Premium__c}"/>
+</div>
+         						<div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							
+</div>
+                        <div
+							class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--1-of-4" style="padding-left: 40px">
+
+							<lightning:input name="Billed Premium" label="Billed Premium"
+								aura:id="HLid" value="{!v.CERx.Ba_Billed_Premium__c}"/>
+</div>
+         
+         
+         </div>
+     </div>
+    </form>
+    </div>
+        </div></div>
+</aura:component>

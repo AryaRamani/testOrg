@@ -1,0 +1,90 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+<aura:registerEvent name="sendtoParent" type="c:sendCasetoParentEvt"/>	 
+	 
+	 
+	 <div class="slds bounceInRight">
+        <!-- Page Header -->
+         <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+
+                    <div class="slds-form-element">
+
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:user" />
+
+                    </div>
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Task Selection"> Member Task Selection </h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>  
+       
+         <div class="slds-form-element__control"  style="padding-left:30px">
+ <h1>Please select a Member Task</h1>
+              </div>  
+ <div class="slds-p-around--large">
+    
+     <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.sectionOne}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left ">
+            <lightning:icon class="slds-show" aura:id="articleOne" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleOne" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">PCP Change</div>
+      </section>
+    </div>
+      
+    <div class="slds-hide slds-p-around--medium" aura:id="articleOne">
+     <a  onclick="{!c.gotoPCP}">PCP Change</a>
+    </div>
+      
+    <div class="slds-page-header" style="cursor: pointer;" onclick="{!c.sectionTwo}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left">
+            <lightning:icon class="slds-show" aura:id="articleTwo" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleTwo" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">COB Change</div>
+      </section>
+    </div>
+      
+    <div class="slds-hide slds-p-around--medium" aura:id="articleTwo">
+     COB Change
+    </div>
+      
+    <div class="slds-page-header"  style="cursor: pointer;" onclick="{!c.sectionThree}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left"> 
+            <lightning:icon class="slds-show" aura:id="articleThree" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleThree" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large"> Transport Request</div>
+      </section>
+    </div>
+      
+    <div aura:id="articleThree" class="slds-hide slds-p-around--medium">
+      Transport Request
+    </div>
+      
+    <div class="slds-page-header"  style="cursor: pointer;" onclick="{!c.sectionFour}">
+      <section class="slds-clearfix">
+        <div class="slds-float--left"> 
+            <lightning:icon class="slds-show" aura:id="articleFour" iconName="utility:add" size="x-small" alternativeText="Indicates add"/>
+            <lightning:icon class="slds-hide" aura:id="articleFour" iconName="utility:dash" size="x-small" alternativeText="Indicates dash"/>
+        </div>
+        <div class="slds-m-left--large">Grievances</div>
+      </section>
+    </div>
+      
+    <div aura:id="articleFour" class="slds-hide slds-p-around--medium">
+      Grievances
+    </div>  
+      
+  </div>
+   
+          
+    </div>
+</aura:component>

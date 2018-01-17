@@ -1,0 +1,16 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+				<p>Example Description</p>
+         <p> Usage              :Parent component that is used to display and navigates from one child component to another  child component.
+     Parent Component           :MemberServicesCmp 
+     Events Fired               :No events fired
+     Events Handled             :handlername="sendtoParent" event="sendCasetoParentEvt" action="getDetails" description="It is used to get the member details and pcp values." 
+                                 handlername="gotoPrevious" event="sendtoMemberService" action="navigateBack"  description=" It will navigate to previous component from current component"
+                                 handlername="navigateNextEvt" event="NavigateFlowEvt" action="handleNavigateNext" description="It will navigate to next component from current component"
+                                   
+     Dependent Child Components :  MemberTaskCmp,MemberVerificationCmp,MemberTaskSelectionCmp,MemberSearchCmp,PCPchangeCmp,CreateServiceRequestCmp,GenerateServiceRequestCmp.
+     Apex Class Name            : TaskflowAdminDAOClass
+        </p>
+	</aura:example>
+</aura:documentation>

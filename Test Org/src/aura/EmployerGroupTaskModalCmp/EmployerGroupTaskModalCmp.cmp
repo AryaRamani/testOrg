@@ -1,0 +1,23 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:TaskButtonEvnt" action="{!c.DisplayTask}"/> 
+    <aura:handler event="c:EmployerGroupViewHideEvnt" action="{!c.HideCmp}"/>  
+   <!-- <aura:handler event="c.EmployerGroupViewEvnt" action="{!c.DisplayRelatedList}"/>  -->
+    
+    <div class="slds-grid slds-wrap slds-card adwidth" style="padding-right:10px;padding-bottom:5%">
+        <div aura:id="Taskcmp" style="float:left;" class="" >
+              
+        </div>
+        
+        <div aura:id="taskFormContainer" class="slds-col slds-size--3-of-5 slds-small-size--1-of-1 slds-medium-size--2-of-3 slds-p-right_x-small slds-p-left_x-small adjustwidth"  >
+            <div class="slds-form-element__group slds-show" >
+                <c:EmployerGroupViewComp />
+            </div>
+            
+        </div>
+        <div aura:id="RltdListCmp" style="float:right;position:relative"  class="adwidth">
+          <c:RelatedListCmp /> 
+        </div>
+    </div>
+    
+</aura:component>

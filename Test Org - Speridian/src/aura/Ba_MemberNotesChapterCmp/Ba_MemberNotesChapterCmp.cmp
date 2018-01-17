@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+	<aura:attribute name="MemberData" type="Object" />
+    <aura:attribute name="Noteslist" type="Object[]" />
+    
+
+    <c:Ba_MemberListCmp MemberData="{!v.MemberData}" />
+    <c:Ba_NotesFrmCmp parentfield="Member"  MemberNoteslist="{!v.Noteslist}"  />
+    
+</aura:component>

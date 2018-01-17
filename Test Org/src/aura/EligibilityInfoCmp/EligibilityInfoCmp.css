@@ -1,0 +1,33 @@
+.THIS .iconButton-active{
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    
+    padding-left: 0.8rem;
+    line-height: 3;
+    width: 100%;
+    text-align: left;
+}
+
+.THIS .hideContent{
+   display:none
+}
+
+.THIS .buttontype{
+  
+    box-shadow: none;
+    font-weight: normal;
+}
+
+.THIS .buttontype .label{
+    color: white;
+    text-shadow: none;
+}
+
+.THIS .buttontype:hover{
+    background: #1D6FA5;
+}
+
+.THIS .th1{
+    text-align: center;
+}

@@ -1,0 +1,41 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" >
+    <aura:attribute name="Notes" type="String"/>
+    
+    <aura:attribute name="Type" type="String"/>
+   
+     <aura:attribute name="Nots" type="AddNewNotesClass.ContentNoteDetails" default="{'title':'',
+                            'Content':''
+                             }"/>
+    <aura:attribute name="Email" type="String"/>
+    <aura:attribute name="Phone" type="String"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="closeModal" type="c:Ba_NotesCloseCmpEvt"/>
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+     <form>
+    
+   
+
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="Type" label="Title" class="slds-input" labelClass="slds-form-element__label" value="{!v.Type}" required="true" />
+        </div>
+    </div>
+         
+<div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="Notes" label="Notes" class="slds-input" labelClass="slds-form-element__label" value="{!v.Notes}" />
+        </div>
+    </div>
+   
+    
+    <div class="slds-form-element">
+       
+    </div>
+
+    <div class="slds-form-element">
+        <ui:button label="Save" class="slds-button slds-button--brand" press="{!c.submitForm}" />
+    </div>
+
+    </form>
+   
+</aura:component>

@@ -1,0 +1,360 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+	 <ltng:require scripts="/resource/lodash/lodash/lodash.js" />
+    
+    <aura:attribute name="Competitorlist" type="Ba_PackageInfoListWrpClass[]"/>
+	         <aura:attribute name="packagelist" type="Ba_PackageInfoListWrpClass[]"  />
+	         <aura:attribute name="planName" type="String[]"  />
+	         <aura:attribute name="producttype" type="String[]"  />
+	          <aura:attribute name="productline" type="String[]"  />
+	         <aura:attribute name="hdhp" type="String[]"  />
+	           <aura:attribute name="productcategory" type="String[]"  />
+     <aura:attribute name="studentage" type="String[]"  />
+    
+    <aura:attribute name="productObj" type="Object" default="{'ba_HdhpOption__c':''}"/>
+	 <aura:attribute name="productlist" type="Object[]" /> 
+    <aura:attribute name="target" type="Integer"/>
+    <aura:attribute name="GrpCompetitor" type="Object[]"/>
+    <aura:attribute name="rateslist" type="Object[]"/>
+	    
+	   
+	   
+	    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+     <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+   <aura:attribute name="packagelist" type="Ba_PackageInfoListWrpClass[]"  />
+    <aura:attribute name="navigate" type="Boolean" default="true"/> 
+    
+</aura:method>
+	    
+	    
+	
+	<div style="padding-bottom:2%;max-width:100%">
+	 <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon iconName="utility:package" size="small" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Plans">Packages</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+	
+	
+    
+    <div style="padding-top:2%">
+    <lightning:button variant="brand" label="Add New" iconName="utility:add" iconPosition="left" onclick="{!c.AddNewRow }" />
+	</div>
+	
+	
+	<div style="padding-top:2%;width:100%" class="slds-scrollable">
+	
+	  <table class="slds-table slds-table--bordered slds-table--cell-buffer" style="min-width:65rem">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                 <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate"> </span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Carrier Name</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Plan Name</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Product Line</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Plan Type</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Product Category</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.packagelist}" var="data" indexVar="index">
+                                <tr aura:id="row-id">
+                                     <th class="slds-size--1-of-12">
+                                         <div   onclick="{!c.rowSelection}" data-row-index="{!index}">
+    <lightning:icon iconName="utility:side_list" size="small" alternativeText="Create Competitor product"/>
+
+                                         </div>
+                                        </th>
+                                    <th class="slds-size--2-of-12">
+                     <ui:inputText aura:id='text-id' value="{!data.CarrierName}" required="true"/>
+
+                     
+                                        </th>
+                                    <th class="slds-size--2-of-12">
+                   <ui:inputSelect aura:id="plan" label=" "  value="{!data.PlanName}">
+                    <ui:inputSelectOption text="None" label="None"/>
+        					<aura:iteration items="{!v.planName}" var="plan">
+        					
+             					<ui:inputSelectOption text="{!plan.value}" label="{!plan.label}"/>
+        					</aura:iteration>
+    				</ui:inputSelect></th>
+                                    <th class="slds-size--2-of-12">
+                  <ui:inputSelect aura:id="product" label=" "  value="{!data.Product}">
+                  <ui:inputSelectOption text="None" label="None"/>
+        					<aura:iteration items="{!v.productline}" var="line">
+             					<ui:inputSelectOption text="{!line.value}" label="{!line.label}"/>
+        					</aura:iteration>
+    				</ui:inputSelect></th>
+                                    <th class="slds-size--2-of-12">
+                        <ui:inputSelect aura:id="type" label=" "  value="{!data.Type}">
+                        <ui:inputSelectOption text="None" label="None"/>
+        					<aura:iteration items="{!v.producttype}" var="type">
+             					<ui:inputSelectOption text="{!type.value}" label="{!type.label}"/>
+        					</aura:iteration>
+    				</ui:inputSelect></th>
+    				           <th class="slds-size--2-of-12">
+                        <ui:inputSelect aura:id="category" label=" "   value="{!data.Category}">
+        					<ui:inputSelectOption text="None" label="None"/>
+        					<aura:iteration items="{!v.productcategory}" var="category">
+             					<ui:inputSelectOption text="{!category.value}" label="{!category.label}"/>
+        					</aura:iteration>
+    				</ui:inputSelect></th>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+	
+	</div>
+	
+	<div style="padding-top:20px">
+                   <div  class="slds-section-title--divider">
+                        <span class="slds-truncate" title="Section Title">Benefits Information</span>
+                 </div>
+                 </div>          
+	
+	<div aura:id='product-id' style="padding-top:2%" class="hideContent">
+       
+        
+			
+        	 	<div class="slds-form_compound" style="padding-top:2%">
+                   
+                     <div class="slds-form-element__group" style="padding-right:2%;padding-top:1%">
+        <div class="slds-form-element__row">
+          <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-right:1%">
+              <lightning:select name="hdhp"  aura:id="hdhp" label="HDHP Option" value="{!v.productObj.ba_HdhpOption__c}" >
+             		<option value="None" text="None"/>
+                     <aura:iteration items="{!v.hdhp}" var="hdhp">
+             					<ui:inputSelectOption text="{!hdhp.value}" label="{!hdhp.label}"/>
+        		</aura:iteration>
+              </lightning:select>
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1%">
+                <lightning:input label="PCP/SPC" name="pcp" value="{!v.productObj.ba_PcpSpcCopay__c}" />
+
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1%">
+               
+            <lightning:input label="Deductible" name="deductible" value="{!v.productObj.ba_Deductitble__c}" />
+		
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%">
+              
+         <lightning:input label="Inpatient Copay" name="copay" value="{!v.productObj.ba_InpatientCopay__c}" />
+
+            </div>
+            
+            
+                         </div>
+                    </div>
+                    
+                    
+             <div class="slds-form-element__group" style="padding-right:2%;padding-top:1%">
+        <div class="slds-form-element__row">
+          <div cclass="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-right:1%">
+              
+                  <lightning:input label="DME" name="dme" value="{!v.productObj.ba_Dme__c}" />
+
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1% ">
+
+      <lightning:input label="Emergency Room Copay" name="emergency" value="{!v.productObj.ba_EmergencyRoomCopay__c}" />
+
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1%" >
+               <lightning:select name="age" aura:id="age" label="Dependent/Student Age" value="{!v.productObj.ba_DependentStudentAge__c}" >
+             		<Option text="None" value="None"/>
+                    <aura:iteration items="{!v.studentage}" var="age">
+             					<ui:inputSelectOption text="{!age.value}" label="{!age.label}"/>
+        		</aura:iteration>
+                </lightning:select>
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%" >
+              
+                    <lightning:input label="Drug Options" name="drug" value="{!v.productObj.ba_DrugOptions__c}" />
+
+            </div>
+            
+            
+                         </div>
+                    </div>
+                             <div class="slds-form-element__group" style="padding-right:2%;padding-top:1%">
+        <div class="slds-form-element__row">
+          <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-right:1%">
+              
+                  <lightning:input label="Package Id" name="package" value="{!v.productObj.ba_PackageId__c}" />
+
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1% ">
+
+      <lightning:input label="Equipment Rider" name="rider" value="{!v.productObj.ba_EquipmentRider__c}" />
+
+            </div>
+            
+             <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1% ">
+
+
+            </div>
+             <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1% ">
+
+
+            </div>
+            
+            
+            
+            
+            
+            
+                         </div>
+                    </div>
+                    
+                    
+                  <div class="slds-form-element__group" style="padding-top:1%">
+        <div class="slds-form-element__row">
+          <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+              <ui:inputCheckbox label="Medical Benefits" name="benefits" value="{!v.productObj.ba_MedicalBenefits__c}" />
+           </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+           	  <ui:inputCheckbox label="Prescription Drugs Benefits" name="drugs" value="{!v.productObj.ba_PrescriptionDrugsBenefits__c}"/>
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+                <ui:inputCheckbox label="Religious Organization Exception" name="org" value="{!v.productObj.ba_ReligiousOrganizationException__c}" />
+
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+            <ui:inputCheckbox label="Incentive Program" value="{!v.productObj.ba_IncentiveProgram__c}" />
+
+            </div>
+            
+            
+                         </div>
+                    </div>
+             <div class="slds-form-element__group" style="padding-top:1%">
+        <div class="slds-form-element__row">
+          <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+            <ui:inputCheckbox label="Remove Domestic Partner" value="{!v.productObj.ba_RemoveDomesticPartner__c}" />
+           </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+           	   <ui:inputCheckbox label="Care Management"  value="{!v.productObj.ba_CareManagement__c}" />
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+               <ui:inputCheckbox label="Federal Mental Health"  value="{!v.productObj.ba_FederalMentalHealth__c}" />
+
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4">
+            
+
+            </div>
+            
+            
+                         </div>
+                    </div>
+                    
+           <div style="padding-top:20px">
+                   <div  class="slds-section-title--divider">
+                        <span class="slds-truncate" title="Section Title"> Rates Information</span>
+                 </div>
+                 </div>          
+                    
+             <div class="slds-form-element__group" style="padding-top:1%">
+        <div class="slds-form-element__row">
+          <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-right:1%">
+              <lightning:input type="date" label="Effective date" name="date" value="{!v.productObj.ba_RateEffectiveDate__c}"/>
+
+           </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1%">
+              <lightning:input type="date" label="Termination date" name="terdate" value="{!v.productObj.ba_RateTerminationDate__c}"/>
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1%">
+					<lightning:Select name="tier" aura:id="tier" label="Tier" value="{!v.productObj.ba_RateTier__c}" >
+             		<option value="None" text="None"/>
+             		<Option text="1T" value="1T"/>
+                 	<Option text="2T" value="2T"/>
+                 <Option text="3T" value="3T"/>
+                 <Option text="4T" value="4T"/>
+                </lightning:Select>
+            </div>
+            
+            <div class="slds-col slds-size--1-of-2 slds-medium-size--3-of-12 slds-large-size--1-of-4" style="padding-left:1%;padding-right:1%">
+             
+            </div>
+            
+            
+                         </div>
+                    </div>
+                    
+                    
+
+           
+                     <div style="padding-top:10px">
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer" >
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                 
+                                <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12" scope="col"><span class="slds-truncate"></span></th>
+                                <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12" scope="col"><span class="slds-truncate">Subscriber</span></th>
+                                <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12" scope="col"><span class="slds-truncate">Sub/Spouse</span></th>
+                                <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12" scope="col"><span class="slds-truncate">Sub/Children</span></th>
+                                <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12" scope="col"><span class="slds-truncate">Family</span></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.rateslist}" var="rates" indexVar="index">
+                                <tr>
+                                     <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+									{!rates.name}
+                                        </th>
+                                   
+                                    <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+                              	 <lightning:input type="number" name="number" disabled="{!rates.readonly}" label=" " value="{!rates.subscriber}" formatter="currency" onblur="{!c.calculate}"/>
+</th>
+                                    <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+                                          <lightning:input type="number" name="number" disabled="{!rates.readonly}" label=" " value="{!rates.spouse}" formatter="currency" onblur="{!c.calculate}"/>
+                 </th>
+                                    <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+                                         <lightning:input type="number" name="number" disabled="{!rates.readonly}" label=" " value="{!rates.children}" formatter="currency" onblur="{!c.calculate}"/>
+
+                        </th>
+    				           <th class="slds-col slds-size--1-of-2 slds-medium-size--2-of-12 slds-large-size--2-of-12">
+                                    <lightning:input type="number" name="number" label=" " disabled="{!rates.readonly}"  value="{!rates.family}" formatter="currency" onblur="{!c.calculate}"/>
+                       </th>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+                         
+                    </div> 
+                </div>
+        
+
+    </div>
+	
+	
+	</div>
+	
+	
+</aura:component>

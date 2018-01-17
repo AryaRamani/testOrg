@@ -1,0 +1,173 @@
+<aura:component controller="CreateServiceRequestController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+    <aura:attribute name="CaseDetails" type="Object" />
+    <!-- Replace with attribute of type case -->
+    <aura:attribute name="Area" type="String[]" />
+    <aura:attribute name="summary" type="String" />
+    <aura:attribute name="contactmethod" type="String[]" />
+    <aura:attribute name="priority" type="String[]" />
+    <aura:attribute name="status" type="String" default="Open" />
+    <aura:attribute name="type" type="String" default="PCP Change" />
+    <aura:attribute name="creator" type="String" default="DATAM" />
+    <aura:attribute name="department" type="String" default="Member Service Department" />
+    <aura:attribute name="MemberDetails" type="MemberSearchController.Memberdetails" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="createServiceobj" type="Object" />
+     <aura:attribute name="service" type="Case" default="{ 'sobjectType': 'Case',
+     'status': 'Open',
+     'Type' : 'PCP Change',
+     'Creator__c': 'DATAM',
+     'Department__c':'Member Service Department'
+                
+                 }"/>
+       <aura:attribute name="pcpCase" type="Case" default="{ 'sobjectType': 'Case'
+                
+                 }"/>
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:registerEvent name="sendtoParent" type="c:sendCasetoParentEvt" />
+    <aura:registerEvent name="gotoPrevious" type="c:sendtoMemberService" />
+
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+    <div class="slds bounceInRight">
+    
+     <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+
+                    <div class="slds-form-element">
+
+                        <lightning:icon class="slds-button__icon--large" iconName="utility:user" />
+
+                    </div>
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Create Service Request">Create Service Request </h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>  
+        
+    
+
+    <div aura:id="serviceform-id" style="padding-top:20px; padding-left:40px" class="slds-grid slds-wrap ">
+        <form class="slds-form--stacked  slds-form--compound" style="padding-left:15px">
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="status-id" label="Status" name="status" disabled="true" required="true" value="{!v.service.status}" />
+                    </div>
+                    <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+
+                        <lightning:select aura:id="priorityid" name="Priority" label="Priority" value="{!v.service.Priority}">
+                            <option value="" text="--Select--"></option>
+                            <aura:iteration items="{!v.priority}" var="p" indexVar="index">
+                                <option value="{!p.value}" text="{!p.label}"></option>
+                            </aura:iteration>
+
+                        </lightning:select>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="type-id" label="Type" name="type" value="{!v.service.Type}" disabled="true" />
+                    </div>
+
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="creator-id" label="Creator" name="creator" disabled="true" value="{!v.service.Creator__c}" />
+                    </div>
+                </div>
+            </div>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                       <lightning:select aura:id="area-id" name="area" label="Area" value="{!v.service.Area__c}">
+                            <option value="" text="--Select--"></option>
+                            <aura:iteration items="{!v.Area}" var="a" indexVar="index">
+                                <option value="{!a.value}" text="{!a.label}"></option>
+                            </aura:iteration>
+
+                        </lightning:select>
+						
+                    </div>
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+
+                        <lightning:select aura:id="prefer-id" name="PreferredContactMethod" label="Preferred Contact Method Plan" value="{!v.service.Contact_Method__c}">
+                            <option value="" text="--Select--"></option>
+                            <aura:iteration items="{!v.contactmethod}" var="con" indexVar="index">
+                                <option value="{!con.value}" text="{!con.label}"></option>
+                            </aura:iteration>
+
+                        </lightning:select>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="depart-id" label="Department" name="department" value="{!v.service.Department__c}" disabled="true" />
+                    </div>
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="provider-id" label="Provider Name" name="providername" disabled="true" value="{!v.pcpCase.ba_ProviderHospital__r.Name}" />
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="memlast-id" label="Member Name" name="membername" disabled="true" value="{!v.MemberDetails.MemberName}" />
+
+                    </div>
+
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="crm-id" label="CRM Provider ID" name="CRMproviderid" disabled="true" value="{!v.pcpCase.ba_ProviderHospital__r.Id}" />
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="text" aura:id="mem-id" label="Member ID" name="memberid" disabled="true" value="{!v.MemberDetails.MemberId}" />
+                    </div>
+                   
+
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-p-left--large slds-size--4-of-12" style="padding-left:10px">
+
+                        <lightning:textarea name="Summary" aura:id="summary-id" label="Summary" maxlength="100" value="{!v.service.Summary__c}" />
+                    </div>
+
+                </div>
+            </div>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                        <lightning:input type="checkbox" aura:id="notice-id" class="slds-checkbox" label="Notification Required" name="NotificationRequired" checked="false" />
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer role="contentinfo" class="slds-p-around--large">
+        <div class="slds-grid slds-grid--align-center">
+            <lightning:button aura:id="Next-id" variant="brand" label="Next" class="slds-button slds-button--neutral" onclick="{!c.createServiceDetails }" />
+
+            <lightning:button aura:id="previous-id" variant="brand" label="Previous" class="slds-button slds-button--neutral" onclick="{!c.gotoprevious }" />
+
+        </div>
+    </footer>
+        </div>
+</aura:component>

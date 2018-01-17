@@ -1,0 +1,13 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="MemberVerification" ref="MemberVerificationCmp" label="MemberVerificationCmp">
+	<p>Member Verification</p>	
+ <p> Usage                      :  This component is used to Verify the member details, on selecting all the checkboxes  and click on finish button will create a toast message and navigates to membertaskselection component.
+     Parent Component           :  MemberServicesCmp
+     Events Fired               : Eventname="sendtoParent" type="sendCasetoParentEvt" type of event="component" description="used to get the  MemberName,BirthDate,Address1,Address2,Phone from member details. "     
+     Events Handled             :  No event handlers.
+     Dependent Child Components :  
+     Apex Class Name            :  MemberDAOClass
+        </p> 
+	</aura:example>
+</aura:documentation>

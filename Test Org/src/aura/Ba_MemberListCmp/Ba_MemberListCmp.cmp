@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	
+	<aura:attribute name="MemberData" type="Object"/>
+	 <aura:attribute name="plan" type="Boolean"  />
+	 <aura:attribute name="NonPlanData" type="Object" />
+	
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}" /> <!-- testing.To be removed after chapter 2 -->
+	
+	 <aura:if isTrue="{!v.plan}">
+		<c:strike_dataGrid data="{!v.MemberData}" parent="parent"/>
+		
+		<aura:set attribute="else">
+    		<c:strike_dataGrid data="{!v.NonPlanData}" parent="parent"/>
+    	</aura:set>
+	</aura:if>
+	
+</aura:component>

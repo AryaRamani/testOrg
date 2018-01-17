@@ -1,0 +1,17 @@
+.THIS .hideContent{
+   display:none
+}
+
+.THIS .iconButton{
+ box-shadow: none;
+ font-weight: normal;
+}
+
+.THIS .slds-table thead th{
+   font-weight:bold;
+   font-size:medium;
+}
+
+.THIS .spinner{
+	position:relative
+}

@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="AddNewPrspctContactInfo" ref="AddNewPrspctContactInfoParentCmp" label="Label">
+ Usage : AddNewProspectFlow
+ Parent Components: 
+ Events Fired: 
+ Events Handled:ContactSearchEvent(to show ContactSearchCmp),AddContactInfoEvent(to show ContactInfoCmp)
+ Dependent Child Components:ContactInfoCmp,ContactSearchCmp
+
+	</aura:example>
+</aura:documentation>

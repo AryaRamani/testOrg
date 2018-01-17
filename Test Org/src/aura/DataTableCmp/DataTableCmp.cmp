@@ -1,0 +1,174 @@
+<aura:component controller="DataTableController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    
+    <aura:attribute name="fieldnames" type="String[]" default="['Name','Id','Account.Name']"/> <!--fields for displaying-->
+    <aura:attribute name="objectName" type="String" default="Contact"/> <!--object name-->
+    <aura:attribute name="recordnames" type="object[]"/> <!--records retrieved-->
+     <aura:attribute name="off" type="integer" default="0" /> <!--offset value-->
+    <aura:attribute name="next" type="boolean" default="true" /> <!--next value-->
+    <aura:attribute name="prev" type="boolean" default="true" /> <!--previous boolean value-->
+    <aura:attribute name="pagesize" type="Integer" default="5" /> <!--to hold the page size-->
+    <aura:attribute name="counter" type="Integer" default="1" /> <!--to hold the page number -->
+	<aura:attribute name="totalsize" type="Integer" default="1" /> <!--total number of pages-->
+    <aura:attribute name="sort1" type="String" default="down" /> <!--boolean value to store sorting-->
+     <aura:attribute name="index" type="Integer" default="0" /> <!--to sort selected field-->
+    <aura:attribute name="options" type="String[]" default="['Name','Id']" /> <!--filter based on search criteria -->
+    <aura:attribute name="searchvalue" type="String" /> <!--field to be searched based on search criteria-->
+    <aura:attribute name="searchtext" type="String" /> <!--text to be searched based on the field-->
+    <aura:attribute name="searchfield" type="String" />
+    <aura:attribute name="filtersearch" type="String" />
+    <aura:attribute name="retrieve" type="Boolean" default="true"/>
+      <aura:attribute name="sort" type="Boolean" default="true"/>
+    
+    <aura:attribute name="fieldlabel" type="String[]" default="['Name','Id','Account Name']"/>
+    
+    <aura:attribute name="showSelection" type="boolean" default="false"/>
+     <aura:attribute name="pageSelection" type="boolean" default="false"/>
+     <aura:attribute name="showfiltersearch" type="boolean" default="false"/>
+         <aura:attribute name="showSpinner" type="Boolean" default="false" />
+         <aura:attribute name="target" type="integer" default="0" />
+         
+        <aura:attribute name="selectedlst" type="Object[]" /> 
+        
+ <!--     <aura:method name="getSelectedLst" action="{!c.getSelectedLst}">
+        <aura:attribute name="GrpBenefitPackage" type="Object[]" />
+    </aura:method>  -->
+     
+   
+   <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+ <aura:handler event="c:DataTableEvt" action="{!c.handleDataTableEvent}"/> 
+  <aura:registerEvent name="navigateEvt" type="c:Ba_NavigateEvt" />
+
+    <!--  <aura:registerEvent name="rowselect" type="c:DataTableEvt"/> -->
+
+
+ <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+    
+    <div class="slds-form--compound">
+        <div class="slds-form-element__group" style="padding-top:20px;width:100%">
+            <div class="slds-form-element__row">
+                <aura:if isTrue="{!v.pageSelection}">
+    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12">   
+        <!--Page size for pagination-->
+         
+     <lightning:select aura:id='page-id' name="selectsize" label="Select page size" onchange="{!c.getpagesize}">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+    </lightning:select>   
+        </div>
+               
+                </aura:if>           
+         
+                <aura:if isTrue="{!v.showfiltersearch}">
+                  <div style="padding-left:30px" class="slds-col slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12">
+ <!--fields based on which search is filtered -->
+                    <lightning:select name="selectItem" label="Filter Search: "  value="{!v.searchvalue}">
+                        <aura:iteration items="{!v.options}" var="item">
+
+                      <option text="{!item}" value="{!item}" />
+
+         </aura:iteration>
+
+                    </lightning:select>
+                </div>
+                <!--to enter search text-->
+                 <div style="padding-left:10px" class="slds-col slds-size--1-of-1 slds-medium-size--3-of-12 slds-large-size--3-of-12">
+                     
+
+
+                     <lightning:input label="" name="search" value="{!v.searchtext}" />
+                </div>
+                <!--search on click of the icon-->
+                 <div onclick="{!c.getsearchresults}" style="padding-left:10px; padding-top:20px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+                    <lightning:icon iconName="utility:forward" size="small" />
+
+                </div>
+                </aura:if>
+            </div>
+               
+            </div>
+        <!--table to display the records -->
+    <div style="padding-top:20px">
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover">
+
+                    <thead>
+						
+                        <tr class="slds-text-heading--label">
+                        <aura:if isTrue="{!v.showSelection}">
+                        <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">
+                        </span></th>
+                       </aura:if>
+                            <aura:iteration items="{!v.fieldlabel}" var="field" indexVar="index">
+                              
+                            <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">{!field}</span>
+                            <aura:if isTrue="{!v.sort}">
+                                <div   data-row-index="{!index}" class="slds-icon_container" title="Sort Column" onclick="{!c.sortByField}">
+                                
+                                <aura:if isTrue="{!v.sort1 == 'down'}">
+
+                                <lightning:icon iconName="utility:arrowdown" size="xx-small" />
+
+                                <aura:set attribute="else">
+                                    <lightning:icon iconName="utility:arrowup" size="xx-small" />
+                                </aura:set>
+                            </aura:if>
+                                </div>
+                                </aura:if>
+                                </th>
+                            
+                            </aura:iteration>
+                            </tr>
+              
+                    </thead>
+                    <tbody aura:id="body-id">
+                    
+						<aura:iteration items="{!v.recordnames}" var="rec" indexVar="index">
+                        <tr aura:id="row-id" onclick="{!c.getselectedId}" data-row-index="{!index}">
+                         <aura:if isTrue="{!v.showSelection}">
+                             <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">                     
+                                 <lightning:input type="checkbox" label=" " name="select" onchange="{!c.getselection}" variant="{!index}" /></span></th>
+                                     </aura:if>
+                                 <aura:iteration items="{!v.fieldnames}" var="field">
+                           <aura:if isTrue="{!field.hide}">         
+                             <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate"><c:DataTableChild objecttype="{!rec}" fieldName="{!field.value}" objectName="{!v.objectName}" /></span></th>
+                          </aura:if>  
+                        </aura:iteration>
+                            </tr>
+                        
+                        </aura:iteration>
+                        
+                        
+                    </tbody>
+                </table>
+        </div>
+        <!--display the page number-->
+         <aura:if isTrue="{!v.pageSelection}">
+        <div style="text-align:right;padding-top:15px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6"> 
+        Page {!v.counter}  of  {!v.totalsize}
+        </div>
+        </aura:if>
+        <!--Previous and next buttton-->
+          <div class="slds-grid slds-grid--align-center" style="padding-top:20px">
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.gotoPrevious}" disabled="{!v.prev}">
+                            <span class="slds-icon slds-icon-text-default">
+                <lightning:icon iconName="utility:chevronleft" variant=" " size="x-small"/>
+
+                <span class="slds-assistive-text">Previous</span>
+                            </span>
+                        </ui:button>
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.gotoNext}" disabled="{!v.next}">
+                            <span class="slds-icon slds-icon-text-default">
+                <lightning:icon iconName="utility:chevronright" variant=" " size="x-small"/>
+                <span class="slds-assistive-text">Next</span>
+                            </span>
+                        </ui:button>
+                    </div>
+    
+    </div>
+    
+
+</aura:component>

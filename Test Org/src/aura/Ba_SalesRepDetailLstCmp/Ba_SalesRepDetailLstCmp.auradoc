@@ -1,0 +1,11 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="SalesRepDetailList" ref="SalesRepDetailListCmp" label="Label">
+ Usage : AddNewProspectFlow
+ Parent Components: SalesRepListCmp
+ Events Fired: 
+ Events Handled:SalesRepSetAttributeEvent (fired from SalesRepListCmp on click of each table row to show corresponding Details in the SalesRepDetailCmp),SalesRepSaveRecordEvent(fired on click of check box in SlaesRepListCmp)
+ Dependent Child Components:
+
+	</aura:example>
+</aura:documentation>

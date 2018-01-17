@@ -1,0 +1,143 @@
+<aura:component controller="ContactSearchClass">
+      <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <aura:registerEvent name="SelectContact" type="c:ContactSearchEvent"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <aura:attribute name="IdNum" type="Integer" default="7"/>
+    <aura:attribute name="index" type="Integer" />
+    <aura:attribute name="Name1" type="String" />
+    <aura:attribute name="Value1" type="String" />
+    <aura:attribute name="CntctId" type="ID[]"/>
+    
+     <aura:attribute name="modalIsOpen" type="boolean" default="false"></aura:attribute>
+    <aura:handler event="c:CloseContactModalEvnt" action="{!c.setAttributeValue}"/> 
+    
+   
+ 
+    
+  
+                                          <aura:attribute name="contactsNew" type="Contact"/>
+    
+    <aura:attribute name="ContactId" type="String"/>
+   <aura:attribute name="Contacts" type="Contact[]"/>
+    <aura:attribute name="Con" type="Contact[]"/>
+   <aura:attribute name="page" type="integer" description="using for store page Number"/>
+   <aura:attribute name="pages" type="integer" description="using for store All Pages page Number"/>
+   <aura:attribute name="total" type="integer" description="total records count store "/>
+ 
+          <div style="font-size:25px">Add Contacts</div>
+ 
+ 
+     
+         <div class="slds-align--absolute-center">
+             
+           
+            <aura:if isTrue="{!v.page &gt; 1}">
+               <ui:button press="{!c.previousPage}" label="Previous Page"/>
+            </aura:if>
+            <aura:if isTrue="{!v.page &lt; v.pages}">
+               <ui:button aura:id="nextbtn" press="{!c.nextPage}" label="Next Page"/>
+            </aura:if>
+         </div>
+         <p class="slds-page-header__title slds-truncate">{!v.total} Contacts • page {!v.page} / {!v.pages}</p>
+          <div aura:id="recordSize" label="Display Record Per Page: " value='7'/>
+              
+       <div width="15%">
+           <ui:inputSelect aura:id="Name1" class="slds-input">
+       
+     <ui:inputSelectOption text="--select--" label="--select--"/>
+    <ui:inputSelectOption text="FirstName" label="FirstName"/>
+    <ui:inputSelectOption text="LastName" label="LastName"/>
+    <ui:inputSelectOption text="Id" label="Id"/>
+           </ui:inputSelect>   
+         <ui:inputText class='adjwidth' aura:id="Value1" value="{!v.Value1}"></ui:inputText>
+    <ui:button label='Search' class="slds-button slds-button--brand"  press="{!c.SrchRecord}"></ui:button><ui:button label='Add' class="slds-button slds-button--brand" press="{!c.AddContact}"></ui:button></div>
+      
+      
+      
+      
+   <table  class="slds-table slds-table_bordered slds-table_cell-buffer" id="tbl">
+  <thead>
+    <tr class="slds-text-title_caps">
+      <th scope="col">
+        <div class="slds-truncate" title="Select">Select</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="First Name">First Name</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Last Name">Last Name</div>
+      </th>
+      <th scope="col">
+        <div class="slds-truncate" title="Group">Group</div>
+      </th>
+                                                <th scope="col">
+        <div class="slds-truncate" title="Phone">Phone</div>
+      </th>
+	  <th scope="col">
+        <div class="slds-truncate" title="Fax">Fax</div>
+      </th>
+	  <th scope="col">
+        <div class="slds-truncate" title="Email">Email</div>
+      </th>
+      
+       </tr>
+      
+         
+
+      
+      
+  </thead>
+  <tbody>
+   <aura:iteration items="{!v.Contacts}" var="contact1" indexVar="index" >  
+
+<tr id ="{!index}" onclick="{!c.clickEvent}">
+    
+  
+    <td data-label="Select" ><div class="slds-truncate" id="{!contact1.Id}"><ui:InputCheckbox aura:id="chkbx" value="false" click="{!c.clickbox}" text="{!index}"></ui:InputCheckbox></div></td>
+    <td data-label="First Name" ><div class="slds-truncate" >{!contact1.FirstName}</div></td>
+    <td data-label="Last Name" ><div class="slds-truncate">{!contact1.LastName}</div></td>
+    <td data-label="Group" ><div class="slds-truncate">{!contact1.Account.Name}</div></td>
+    <td data-label="Phone" ><div class="slds-truncate">{!contact1.Phone}</div></td>
+	<td data-label="Fax" ><div class="slds-truncate">{!contact1.Fax}</div></td>
+	<td data-label="Email" ><div class="slds-truncate">{!contact1.Email}</div></td>
+      
+    </tr>
+        </aura:iteration> 
+             
+  </tbody>
+  </table>
+     <div>
+     <ui:button class="slds-button slds-button--brand" press="{!c.SaveRcd}" label="Ok"/>
+         <ui:button class="slds-button slds-button--brand" press="{!c.HideCmp}" label="Cancel"/>
+     
+</div>  
+     <aura:if isTrue="{!v.modalIsOpen}">
+            <!--###### MODAL BOX Start From Here ######-->
+            <div role="dialog" tabindex="-1" aura:id="popupContactNew" aria-labelledby="New Competitor" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container" min-width="50%" height="107%">
+                    
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="newcompheader" class="slds-text-heading--medium">New Contact</h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                    <c:CreateContactModalCmp />
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}">Cancel</button>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="slds-backdrop slds-backdrop--open" aura:id="popupCompetitorNewBackground"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+
+ 
+   
+</aura:component>

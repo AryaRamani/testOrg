@@ -1,0 +1,219 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+ <aura:attribute name="navigate" type="Boolean" default="false"/>
+    <div class="slds-page-header" role="banner" style="margin-top:15px">
+  <div class="slds-grid">
+   <div class="slds-align_absolute-center">
+     <p class="slds-text-heading--label" align="centre"> MEMBER  TASKS          </p>
+                   
+      </div>
+     </div>
+    </div>
+    <div class="slds-align_absolute-center">
+        <section id="accordion"> 
+           <div>
+                <input id="COBRequest" name="accordion-role" type="radio"/>
+                <label for="COBRequest">
+                    COB Request
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li class="active">
+                            <a href="">
+                                COB Request
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="PCPChange" name="accordion-role" type="radio"/>
+                <label for="PCPChange">
+                    PCP Change
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li class="inactive">
+                            <a href="https://benefitalign-dev-ed.lightning.force.com/one/one.app#/n/PCP_Change?a:t=1503030484470">
+                                 PCP Change
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="Reimbursement" name="accordion-role" type="radio"/>
+                <label for="Reimbursement">
+                    Reimbursement
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li class="inactive">
+                            <a href="">
+                               Reimbursement
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="TransportRequest" name="accordion-role" type="radio"/>
+                <label for="TransportRequest">
+                    Transport Request
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li class="inactive">
+                            <a href="">
+                                Transport Request
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="ComplianceR" name="accordion-role" type="radio"/>
+                <label for="ComplianceR">
+                    Compliance Referral
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                Compliance Referral
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+           
+            <div>
+                <input id="MemberAppeal" name="accordion-role" type="radio"/>
+                <label for="MemberAppeal">
+                    Member Appeal
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                Member Appeal
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="MemberAppealMP" name="accordion-role" type="radio"/>
+                <label for="MemberAppealMP">
+                    Member Appeal-Market Place
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                 Member Appeal-Market Place
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="DisRequest" name="accordion-role" type="radio"/>
+                <label for="DisRequest">
+                    Disenrollment Request
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                  Disenrollment Request
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+           
+             <div>
+                <input id="MedicalRequest" name="accordion-role" type="radio"/>
+                <label for="MedicalRequest">
+                    Medical Records Request
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                  Medical Records Request
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+             <div>
+                <input id="MemberUpdate" name="accordion-role" type="radio"/>
+                <label for="MemberUpdate">
+                    Member Update
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                 Member Update
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+             <div>
+                <input id="CasemgmntReferral" name="accordion-role" type="radio"/>
+                <label for="CasemgmntReferral">
+                   Case Management Referral
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                 Case Management Referral
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+             
+            <div>
+                <input id="MemberRequest" name="accordion-role" type="radio"/>
+                <label for="MemberRequest">
+                    Member Request
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                 Member Request
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+            <div>
+                <input id="RecommendedReview" name="accordion-role" type="radio"/>
+                <label for="RecommendedReview">
+                    Recommended Review
+                </label>
+                <article>
+                    <div class="slds-p-around--medium">
+                        <li classs="inactive">
+                            <a href="">
+                                 Recommended Review
+                            </a>
+                        </li>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </div>
+    <style>
+{text-decoration: none}
+{ text-decoration: none}
+a:hover {text-decoration: none}
+a:active {text-shadow:inherit;font-weight:bold; color: #1E90FF; }
+    </style>
+</aura:component>

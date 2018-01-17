@@ -1,0 +1,44 @@
+<aura:component >
+    <!-- PUBLIC USER DEFINED ATTRIBUTES -->
+    <aura:attribute name="taskDisplayName" type="String" description="Display Name Of the Chapter" />
+    <aura:attribute name="cellinfo" type="Object[]" description="Passthrough attribute for Quote Census" />
+    <aura:attribute name="group" type="Object" />
+     <aura:attribute name="GroupId" type="String"/>
+     <aura:attribute name="validate" type="Boolean" default="true"/>
+      <aura:attribute name="displaysection" type="Boolean" default="true"/>
+      <aura:attribute name="readonly" type="Boolean" default="false"/>
+      <aura:attribute name="Industrylist" type="String[]" />
+     
+    <!-- INTERNAL ATTRIBUTES -->
+
+    <!-- HANDLERS AND EVENTS-->
+    <aura:registerEvent name="ChapterInitCmpEvt" type="c:ChapterInitCmpEvt" />
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+    <aura:registerEvent name="navigationEvt" type="c:Ba_NavigateEvt" />
+    
+       <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+    <aura:attribute name="group" type="Object"/> 
+    <aura:attribute name="navigate" type="Boolean" default="true"/>
+   
+</aura:method> 
+    
+
+    <!-- PUBLIC METHODS -->
+    
+   
+    
+       
+    <div class="slds-grid slds-wrap">
+      
+        <div class="slds-col slds-size--3-of-3">
+            <c:Ba_GroupsummaryFrmCmp Industrylist="{!v.Industrylist}" aura:id="GrpSummary" group="{!v.group}"  GroupId="{!v.GroupId}" readonly="{!v.readonly}"/>
+        </div>
+        
+      <aura:if isTrue="{!v.displaysection}">  
+        <div class="slds-col slds-size--3-of-3">
+          <c:Ba_AdditionalGroupInfoCmp aura:id='AdditionalInfo' Industrylist="{!v.Industrylist}" group="{!v.group}" GroupId="{!v.GroupId}"/> 
+        </div>
+    </aura:if>   
+    </div>
+</aura:component>

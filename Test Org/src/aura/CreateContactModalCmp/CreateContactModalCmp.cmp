@@ -1,0 +1,47 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global" controller="ContactSearchClass">
+	<aura:attribute name="con1" type="Contact[]"/>
+    <aura:attribute name="FstName" type="String"/>
+     <aura:attribute name="LstName" type="String"/>
+    <aura:attribute name="Email" type="String"/>
+    <aura:attribute name="Phone" type="String"/>
+    <aura:attribute name="Gender" type="String"/>
+     <aura:registerEvent name="ContactPopupCloseEvnt" type="c:CloseContactModalEvnt"/>
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+     <form>
+    
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="FirstName" label="FirstName:" class="slds-input" labelClass="slds-form-element__label" value="{!v.FstName}" required="true" />
+        </div>
+    </div>
+
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="LastName" label="LastName :" class="slds-input" labelClass="slds-form-element__label" value="{!v.LstName}" required="true" />
+        </div>
+    </div>
+         
+<div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="Phone" label="PhoneNum :" class="slds-input adjwidth" labelClass="slds-form-element__label" value="{!v.Phone}" />
+        </div>
+    </div>
+    <div class="slds-form-element">
+        <div class="slds-form-element__control">
+            <ui:inputEmail aura:id="Email" label="EmailAddr:" class="slds-input adjwidth" labelClass="slds-form-element__label" value="{!v.Email}" />
+        </div>
+    </div>
+    
+    <div class="slds-form-element">
+     <div class="slds-form-element__control">
+            <ui:inputText aura:id="Gender" label="Gender  :" class="slds-input" labelClass="slds-form-element__label" value="{!v.Gender}" />
+        </div>
+    </div>
+
+    <div class="slds-form-element">
+        <ui:button label="Save" class="slds-button slds-button--brand" press="{!c.submitForm}" />
+    </div>
+
+    </form>
+</aura:component>

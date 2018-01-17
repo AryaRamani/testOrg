@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Used to Open Contact Info Modal Popup Component">
+    <aura:attribute name="IsOpen" type="boolean" />
+</aura:event>

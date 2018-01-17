@@ -1,0 +1,18 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="CompetitorProductList" ref="CompProductListcmp"
+		label="CompProductListcmp">
+		<p>Competitor Product List</p>
+		<p>
+			Usage : Adding list of product to the competitor Parent Component :
+			Events Fired : ProductModifyEvt Events Handled : Handler For Event
+			Triggered From CompProductFormcmp
+			<!-- <aura:handler name="saveProduct" event="c:ProductModifyEvt" action="{!c.handleAddNew}" />-->
+			Handler For Event Triggered From CompProductListItemcmp
+			<!-- <aura:handler name="editProduct" event="c:ProductModifyEvt" action="{!c.editProduct}" /> -->
+			Dependent Child Components : CompProductListItemcmp- Table to store
+			the record of productlist CompProductFormCmp- content of Model box
+			Apex Class Name : CompetitorProductDAOClass
+		</p>
+	</aura:example>
+</aura:documentation>

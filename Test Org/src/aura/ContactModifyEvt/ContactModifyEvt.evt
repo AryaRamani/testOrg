@@ -1,0 +1,4 @@
+<aura:event type="COMPONENT">
+    <aura:attribute name="Contacts" type="Contact"/>
+    <aura:attribute name="contactidx" type="Integer"/>
+</aura:event>

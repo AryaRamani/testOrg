@@ -1,0 +1,4 @@
+<design:component >
+	<design:attribute name="contacttotal" label="example" />
+    <design:attribute name="ChildObj" label="Enter the child object names separated by commas" />
+</design:component>

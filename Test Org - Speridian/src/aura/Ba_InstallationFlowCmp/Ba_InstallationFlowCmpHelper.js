@@ -1,4 +1,34 @@
 ({
+     fetchgroupInformation: function(component, event, helper) {
+        var getTaskChptrAction = component.get("c.getGroupInformation");
+        getTaskChptrAction.setParams({
+            "GroupId": component.get("v.GroupId")
+        });
+
+        // Add Asynch Callback For Class Action
+        getTaskChptrAction
+            .setCallback(
+                this,
+                function(response) {
+                    var state = response.getState();
+                    if (component.isValid() && state === "SUCCESS") {
+                        console.log('Group Information' + JSON.stringify(response
+                            .getReturnValue()));
+                        component.set("v.groupInfo", response
+                            .getReturnValue());
+
+
+                    } else {
+                        // Replace With Error Handler f/w once available
+                        console.log("Failed with state: " + state);
+                    }
+                });
+        // Enqueue Class Action
+        $A.enqueueAction(getTaskChptrAction);
+    },
+    
+    
+    
     fetchTaskChapters: function(component, currentTaskflow) {
         component.set("v.IsSpinner", true);
         var helper = this;
@@ -7,7 +37,7 @@
         // Apex Class Action
         var getTaskChptrAction = component.get("c.getTaskChapters");
         getTaskChptrAction.setParams({
-            "taskName": currentTaskflow
+            "taskId": currentTaskflow.Id
         });
 
         // Add Asynch Callback For Class Action
@@ -19,6 +49,8 @@
                     if (component.isValid() && state === "SUCCESS") {
                         component.set("v.taskChapters", response
                             .getReturnValue());
+                        // alert( JSON.stringify(response
+                            .getReturnValue())); 
                         var taskChapters = component
                             .get("v.taskChapters");
                         for (var taskChapter in taskChapters) {
@@ -26,8 +58,8 @@
                             componentName = "c:" +
                                 taskChapters[taskChapter].ba_Chapter_Component_Name__c;
                             // Create Chapter
-                            helper.createChapterDiv(component,
-                                chapterName, componentName, helper);
+                           helper.createChapterDiv(component,
+                                chapterName, componentName, helper); 
                         }
                     console.log('Resume'+component.get("v.resume"));
                        
@@ -52,6 +84,7 @@
                 "class": "slds-form-element__group slds-hide"
             }
         }, function(chapterDivCmp) {
+          //alert('here@@@@@@@@@@@@@');
             var container = component.find("taskFormContainer");
             if (container.isValid()) {
                 var body = container.get("v.body");
@@ -83,6 +116,8 @@
             'taskDisplayName': component.getReference("v.activeChapter"),
             'group' : component.getReference("v.groupInfo"),
             'NewNotes' : component.getReference("v.Notes"),
+            'enrollselectedlst': component.getReference("v.enrollselectedlst"),
+            'GrpClass' : component.getReference("v.GrpClass")
             
 
         }, function(newCmp) {
@@ -116,12 +151,12 @@
             component.set("v.lastChapter", false);
         }
         // Hide & Show Components For Navigation
-
+      alert('#############'+component.find("taskFormContainer"));
         var container = component.find("taskFormContainer");
         if (container.isValid()) {
             var body = container.get("v.body");
 
-
+           if(body.length>0){
             // Hide From Navigation Div Container If Not First Chapter
             if (navigateFromChapterNo > -1) {
                 var navigateFromComponentDiv = body[navigateFromChapterNo]
@@ -150,6 +185,12 @@
 
             }
             component.set("v.IsSpinner", false);
+          }
+          else{
+               this.navigateFunction(component, taskChapters, navigateToChapterNo,
+        navigateFromChapterNo);
+          }  
+           
 
         } else {
             component.set("v.IsSpinner", false);
@@ -222,33 +263,7 @@
         }
     },
 
-    fetchgroupInformation: function(component, event, helper) {
-        var getTaskChptrAction = component.get("c.getGroupInformation");
-        getTaskChptrAction.setParams({
-            "GroupId": component.get("v.GroupId")
-        });
-
-        // Add Asynch Callback For Class Action
-        getTaskChptrAction
-            .setCallback(
-                this,
-                function(response) {
-                    var state = response.getState();
-                    if (component.isValid() && state === "SUCCESS") {
-                        console.log('Group Information' + JSON.stringify(response
-                            .getReturnValue()));
-                        component.set("v.groupInfo", response
-                            .getReturnValue());
-
-
-                    } else {
-                        // Replace With Error Handler f/w once available
-                        console.log("Failed with state: " + state);
-                    }
-                });
-        // Enqueue Class Action
-        $A.enqueueAction(getTaskChptrAction);
-    },
+   
 
     commitinformation: function(component, event, helper) {
         var info = {
@@ -258,7 +273,9 @@
             'Billing': component.get("v.GrpBilling"),
             'Address': component.get("v.Address"),
             'Notes':component.get("v.Notes"),
-            'group' : component.get("v.groupInfo")
+            'group' : component.get("v.groupInfo"),
+            'enrollableclass' : component.get("v.enrollselectedlst"),
+            'probationary': component.get("v.GrpClass")
         };
 
         var getTaskChptrAction = component.get("c.creategroupInformation");
@@ -355,7 +372,9 @@
 						 
 						
 						    var taskChapters = component.get("v.taskChapters");
-						   this.navigateChapter(component, taskChapters, navigateTo, navigateFrom);
+						    alert('here in pause');
+						    	this.navigateFunction(component, taskChapters, navigateTo, navigateFrom);
+						    
 						
                     } else {
                         // Replace With Error Handler f/w once available
@@ -364,6 +383,26 @@
                 });
         // Enqueue Class Action
         $A.enqueueAction(getTaskChptrAction);
+    },
+    
+    navigateFunction : function(component,taskChapters, navigateTo, navigateFrom){
+    
+           navigateTo=component.get("v.currentChapterSequence");
+		  navigateFrom=component.get("v.currentChapterSequence")+1;
+		  if(component.find("taskFormContainer").get("v.body").length>0){
+       
+        this.navigateChapter(component, taskChapters, navigateTo,navigateFrom);
+        }
+        else{
+        setTimeout(function(){  alert('##'+component.find("taskFormContainer").get("v.body").length);
+           this.navigateFunction(component, taskChapters, navigateTo,navigateFrom); }, 3000);
+
+        
+             
+        }
+         
+        
+        
     }
 
 })

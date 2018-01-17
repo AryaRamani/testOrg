@@ -1,0 +1,7 @@
+.THIS .hideContent{
+   display:none
+}
+
+.THIS .section{
+    font-style:token(bodyfontstyle)
+}

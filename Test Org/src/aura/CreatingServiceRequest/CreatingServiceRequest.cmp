@@ -1,0 +1,136 @@
+<aura:component implements="force:appHostable">
+        <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+ 
+    <div class="slds-page-header slds-text-heading_large slds-box " role="banner" style="padding-left:30px">
+        <h1>Service Request Details</h1>
+    </div>
+    
+    <div  aura:id="serviceform-id" style="padding-top:20px; padding-left:40px" class="slds-grid slds-wrap " >
+        <form class="slds-form--stacked  slds-form--compound" style="padding-left:15px">
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                    <div class="  slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 ">
+            
+                <lightning:input type="text" label="SR#" aura:id="sr-id" name="SR"
+                        disabled="true"/>
+                    </div>
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                         <lightning:input type="text"   aura:id="status-id" label="Status"
+                                  name="status" disabled="true" required="true"/>
+                    </div>
+                    <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                         <lightning:input type="text"   aura:id="priority-id" label="Priority"
+                                  name="priority"  />  
+                    </div>
+                </div>
+             </div>
+             <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                      <lightning:input type="text" aura:id="type-id" label="Type" name="type"
+                        disabled="true"/>
+                    </div>
+                       <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                       <lightning:input type="text"   aura:id="area-id" label="Area"
+                                  name="area"  />
+                    </div>
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                         <lightning:input type="text"   aura:id="creator-id" label="Creator"
+                                  name="creator" disabled="true" />  
+                    </div>
+                 </div>
+            </div>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                                   <lightning:input type="date" aura:id="date-id" label="Opened Date" name="date"  disabled="true"  required="true"/>
+
+                    </div>
+                                          <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                   <lightning:input type="text"   aura:id="prefer-id" label="Preferred Contact Method"
+                                  name="preferredcontactmethod"  />
+                    </div>
+                    <div class="slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                          <lightning:input type="text"   aura:id="contact-id" label="Contact Info"
+                                  name="contactinfo"  />       
+                    </div>
+                </div>
+            </div>
+            
+               <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                           <lightning:input type="text" aura:id="depart-id" label="Department" name="department"
+                        disabled="true"/>
+                    </div>
+                    <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                          <lightning:input type="text"  aura:id="provider-id" label="Provider Name"
+                                  name="providername"
+                        disabled="true"/>
+                    </div>
+                   
+                     <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" >
+                    <lightning:input type="text"  aura:id="req-id" label="Req Recd On"
+                                  name="reqrecdon"  />             
+                    </div>
+                   </div>
+            </div>
+       <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                             <lightning:input type="text" aura:id="memlast-id" label="Member Last Name" name="memberlastname"
+                        disabled="true"/>
+            
+                    </div>
+                        <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                          <lightning:input type="text"   aura:id="claim-id" label="Claim#"
+                                  name="claim" disabled="true" />
+              
+                    </div>
+                     <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                           <lightning:input type="text"   aura:id="crm-id" label="CRM Provider ID"
+                                  name="CRMproviderid" disabled="true" />  
+                    </div>
+                   
+                                    </div>
+            </div>
+            
+ <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                            <lightning:input type="text" aura:id="memfrst-id" label="Member First Name"
+                                  name="memberfirstname"
+                        disabled="true"/>
+                    </div>
+                      <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2">
+                               <lightning:input type="text"   aura:id="mem-id" label="Member ID"
+                                  name="memberid" disabled="true" />   
+                    </div>
+                    
+                     <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2 slds-p-left--large slds-size--4-of-12" style="padding-left:10px"  >
+                           
+                    <lightning:textarea name="Summary" aura:id="summary-id" label="Summary"
+                                        maxlength="100"  />
+                    </div>
+     </div>
+            </div>
+            <div class="slds-form-element__group">
+                <div class="slds-form-element__row">
+                     <div class=" slds-col slds-wrap slds-col--padded slds-size--1-of-1 slds-medium-size--1-of-2" >
+ <lightning:input type="checkbox" aura:id="notice-id"  class="slds-checkbox" 
+                                     label="Notification Required" name="NotificationRequired" checked="false" />
+
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <footer role="contentinfo" class="slds-p-around--large">
+    <div class="slds-grid slds-grid--align-center">
+         <lightning:button aura:id="next-id" variant="brand" label="next"  class="slds-button slds-button--neutral" onclick="{! c.Next }" />
+     
+         <lightning:button aura:id="cancel-id" variant="brand" label="Cancel"  class="slds-button slds-button--neutral" onclick="{! c.Cancel }" />
+
+    </div>
+    </footer>
+</aura:component>

@@ -1,0 +1,79 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+    <aura:attribute name="pAttlist" type="Object[]" /> 
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}" />
+   
+<aura:registerEvent name="navigationEvt" type="c:Ba_NavigateEvt"/> 
+   <!--      <aura:handler name="navigateEvt"  event="c:Ba_NavigateEvt"
+		action="{!c.handleNavigateNext}" /> -->
+     <aura:attribute name="GroupId" type="String" />
+    
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon size="small" iconName="standard:document" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Install Information">Installation Document Information</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+    <div aura:id="mainform" style="padding:15px; background-color:whitesmoke " class="slds-grid slds-wrap ">
+        <div>
+
+            <div style="font-weight:bolder; padding-bottom:10px;font-variant-caps: titling-caps;font-size: medium">Groups enrolling 15 or more subscribers</div>
+
+            <div style="font-weight:bolder; padding-bottom:10px;">Groups enrolling 15 or more enrolled subscribers may submit a current 2 week
+         payroll instead of their most recent RT-6
+         
+         </div>
+            <div style=" padding-bottom:10px;">The payroll report should include all of the following:
+         
+          </div>
+            <div style=" padding-bottom:10px;">Cover and summary page(s), Group Name, pay period, Hourly Wages, Hours worked,Payroll company Name and/or logo(if applicable)
+         
+         </div>
+        </div>
+        <div style="padding-top:10px">
+
+            <div style="font-weight:bolder; padding-bottom:10px;font-variant-caps: titling-caps;font-size: medium">UCT-6/RT-6</div>
+
+            <div style="font-weight:bolder; padding-bottom:10px;">For groups submitting a UCT-6/RT-6:
+         
+         </div>
+
+            <div style=" padding-bottom:10px;">
+         When fewer than 50% of the employees that are listed on the company's most recent UCT-6/RT-6 and who received wages are enrolling a current Payroll report must be provided
+         </div>
+         
+         <div style="font-weight:bolder; padding-bottom:10px;">Are less than 50% of the employees that are listed on the company's most recent UCT-6/RT-6 and who received wages enrolling?
+         
+         </div>
+         <div>
+         <lightning:input type="radio" label="Yes" name="yes" value=" " /> 
+         <lightning:input type="radio" label="No" name="no" value=" " checked="true" />
+         
+         </div>
+          <div style=" padding-bottom:10px;">
+         If "Yes", a payroll must be attached  and include the following:
+         </div>
+          <div style=" padding-bottom:10px;">
+         Cover and summary page(s), Group Name, Pay period, Hourly Wages, Hours worked,Payroll company Name and/or logo(if applicable) 
+         </div>
+         
+        </div>
+
+
+    </div>
+    <div style="position:relative">
+    <c:Ba_UploadAttachmentCmp GroupId="{!v.GroupId}" pAttlist="{!v.pAttlist}"  />
+    </div>
+</aura:component>

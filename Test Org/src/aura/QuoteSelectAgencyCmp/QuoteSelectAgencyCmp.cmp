@@ -1,0 +1,101 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="SelectAgencyclass">
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+    <aura:attribute name="Agency" type="Account[]" />
+    <aura:attribute name="agencyId" type="String"/>
+    
+     <aura:attribute name="GroupId" type="String" />
+    <!--sept6 -->
+	<aura:registerEvent name="sendtoProducer" type="c:navigatetoParentEvt"/>
+    <!--handler-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <div class="slds bounceInRight">
+
+       
+
+        <div style="width 100% !important">
+            <div class="slds-page-header">
+                <div class="slds-grid">
+                    <form class="slds-form--inline" style="padding-left:5px">
+                        <!-- Header People Icon -->
+
+                        <!-- / Header People Icon -->
+                        <!-- Chapter Title -->
+                        <div class="slds-form-element" style="margin-top:5px">
+                            <div class="slds-col slds-has-flexi-truncate">
+                                <h1 class="slds-text-heading--medium slds-truncate" title="AgencyList">Agency List</h1>
+                            </div>
+                            <!-- / Chapter Title -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <p style="font-size:12px;padding-top:10px;font-style:italic">Select a Producer associated with Agency</p><br></br>
+
+
+            <table class="slds-table slds-table_bordered slds-table_cell-buffer" id="tbl1">
+                <thead>
+                    <tr class="slds-text-title_caps">
+                        <!--  <th scope="col">
+        <div class="slds-truncate" title="Select">Select</div>
+      </th> -->
+                        <th scope="col">
+                            <div class="slds-truncate" title="Agency#">Agency #</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Agency Name">Agency Name</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Agency Status">Agency Status</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Effective Date">Effective Date</div>
+                        </th>
+                        <th scope="col">
+                            <div class="slds-truncate" title="Termination Date">Termination Date</div>
+                        </th>
+                    </tr>
+
+
+
+
+
+                </thead>
+                <tbody>
+                    <aura:iteration items="{!v.Agency}" var="account1" indexVar="index">
+
+                        <!--<tr id="{!contact1.Id}" onclick="{!c.clickEvent}">-->
+                        <tr aura:id="row-id" onclick="{!c.getproducers}" data-row-index="{!index}">
+                            <!-- <td data-label="Select" ><div class="slds-truncate" id="{!contact1.Id}"><ui:InputCheckbox aura:id="chkbx" value="false" click="{!c.clickbox}" text="{!index}"></ui:InputCheckbox></div></td>-->
+
+                            <td data-label="Agency#">
+                                <div class="slds-truncate">{!account1.AccountNumber}</div>
+                            </td>
+                            <td data-label="Agency Name">
+                                <div class="slds-truncate">{!account1.Name}</div>
+                            </td>
+                            <td data-label="Agency Status">
+                                <div class="slds-truncate">{!account1.CleanStatus}</div>
+                            </td>
+                            <td data-label="Effective Date">
+                                <div class="slds-truncate">{!account1.ba_EffectiveDate__c}</div>
+                            </td>
+                            <td data-label="Termination Date">
+                                <div class="slds-truncate">{!account1.ba_TerminationDate__c}</div>
+                            </td>
+
+                        </tr>
+                    </aura:iteration>
+                </tbody>
+            </table>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+            <br></br>
+        </div>
+		
+    </div>
+
+</aura:component>

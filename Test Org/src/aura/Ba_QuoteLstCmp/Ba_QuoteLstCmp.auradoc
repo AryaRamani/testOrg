@@ -1,0 +1,15 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		Example Description
+
+	
+	 <p> Usage                : Displays the Quote and related Quote Line Item and allows to select Quote LineItem.  
+     Parent Component           :  
+     Events Fired               : 
+     Events Handled             : 
+     Dependent Child Components :  
+     Apex Class Name            : Ba_QuoteLstClass
+        </p>
+        	</aura:example>
+</aura:documentation>

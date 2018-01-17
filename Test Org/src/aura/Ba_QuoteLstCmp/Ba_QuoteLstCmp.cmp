@@ -1,0 +1,182 @@
+<aura:component controller="Ba_QuoteLstClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+
+    <aura:attribute name="GroupId" type="String"  />
+    <!-- Group Id to query the related Quote -->
+    <aura:attribute name="Quotelst" type="Object[]" />
+    <!-- list of Quote -->
+    <aura:attribute name="LineItemlst" type="Object[]" />
+    <!-- list of Quote line Item -->
+    <aura:attribute name="statuslst" type="String[]" />
+    <!-- list of Quote line status -->
+
+
+    <aura:attribute name="offset" type="integer" default="0" />
+    <!-- offset value  -->
+    <aura:attribute name="next" type="boolean" default="true" />
+    <!-- next value for pagination in Quote -->
+    <aura:attribute name="prev" type="boolean" default="true" />
+    <!-- previous value for pagination in Quote-->
+    <aura:attribute name="target" type="integer" default="0" />
+    <!-- to store index of clicked row -->
+
+    <aura:attribute name="searchvalue" type="String" default="All" />
+    <!-- to store selected search option for Quote-->
+    <aura:attribute name="searchtext" type="String" />
+    <!-- to enter search text-->
+
+    <aura:attribute name="searchtype" type="String" default="All" />
+    <!-- to store selected search option for line Item -->
+    <aura:attribute name="searchkey" type="String" />
+    <!-- to enter search text -->
+
+    <aura:attribute name="off" type="integer" default="0" />
+    <!-- offset value for line Item -->
+    <aura:attribute name="Isnext" type="boolean" default="true" />
+    <!-- next value for pagination in line Item -->
+    <aura:attribute name="Isprev" type="boolean" default="true" />
+    <!-- previous value for pagination in line Item -->
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <!-- to show/hide spinner -->
+    
+     <aura:attribute name="selectedlst" type="Object[]" />
+     <!-- to store Quote line Item selection -->
+     
+     
+      <aura:attribute name="selectedQuoteId" type="String" />
+     
+    
+    <aura:attribute name="message" type="String" />
+
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+        <aura:registerEvent name="datatable" type="c:Ba_DataTableEvt"/>
+    
+
+
+    <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+
+<div class="slds-card">
+    <!-- Page header -->
+    <div class="slds-page-header">
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon size="small" iconName="standard:quotes" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Census Information">Quote Selection</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Page header ends -->
+
+
+    <!-- main form component -->
+    <div aura:id="mainform" style="padding-top: 20px; " class="slds-grid slds-wrap slds-form--compound ">
+       <div >
+            <span style="font-style:italic; padding-bottom:10px;padding-left:10px">Please select All the Quotes needed for Installation</span>
+        </div>
+        <div class="slds-form-element__group hideContent" style="padding-top:20px;width:100%">
+            <div class="slds-form-element__row">
+
+                <!-- To display search options -->
+                <div class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+
+                    <lightning:select name="selectItem" label="Filter Search: " onchange="{!c.getsearchValue}" value="{!v.searchvalue}">
+                        <option value="All">All</option>
+                        <option value="segment">Group Segment</option>
+                        <option value="region">Rating Region</option>
+
+                    </lightning:select>
+                </div>
+
+                <!-- search text -->
+                <div style="padding-left:10px;padding-top:4px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+                    <lightning:input label="" name="search" value="{!v.searchtext}" />
+                </div>
+
+                <!-- on click of search icon -->
+                <div onclick="{!c.getsearchresults}" style="padding-left:10px; padding-top:20px" class="slds-col slds-size--1-of-1 slds-medium-size--2-of-6 slds-large-size--2-of-6">
+                    <lightning:icon iconName="utility:search" size="small" />
+
+                </div>
+
+
+            </div> 
+
+        </div> 
+        <!-- table to display Quotes -->
+        <table class="slds-table slds-table--bordered slds-table--cell-buffer slds-no-row-hover" style="width:98%">
+
+            <thead>
+
+                <tr class="slds-text-heading--label">
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Quote ID</span></th>
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Effective Date</span></th>
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Status</span></th>
+                    <th class="slds-size--1-of-12 hideContent" scope="col"><span class="slds-truncate">Group Segment</span></th>
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Rating Region</span></th>
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Sales Rep ID</span></th>
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Sales Rep Name</span></th>
+                    <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Agency Name</span></th>
+                    <th class="slds-size--1-of-12 hideContent" scope="col"><span class="slds-truncate">Business Type</span></th>
+
+                </tr>
+            </thead>
+            <tbody aura:id="body-id">
+
+                <aura:iteration items="{!v.Quotelst}" var="quote" indexVar="index">
+                    <tr aura:id="row-id" onclick="{!c.getLineItems}" data-row-index="{!index}">
+
+
+                        <td class="slds-size--1-of-12">{!quote.QuoteNumber}</td>
+                        <td class="slds-size--1-of-12">{!quote.ba_EffectiveDate__c}</td>
+                        <td class="slds-size--1-of-12">{!quote.Status}</td>
+                        <td class="slds-size--1-of-12 hideContent"></td>
+                        <td class="slds-size--1-of-12">{!quote.ba_RatingRegion__c }</td>
+                        <td class="slds-size--1-of-12">{!quote.ba_Owner__c}</td>
+                        <td class="slds-size--1-of-12">{!quote.ba_Owner__r.Name}</td>
+                        <td class="slds-size--1-of-12">{!quote.Ba_Agency__r.Name}</td>
+                        <td class="slds-size--1-of-12 hideContent"></td>
+
+                    </tr>
+                </aura:iteration>
+
+            </tbody>
+        </table>
+        <!-- previous and next button for pagination -->
+        <div style="width:100%;padding-top:10px" class="slds-grid slds-grid--align-center">
+            <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.Previous}" disabled="{!v.prev}">
+                <span class="slds-icon slds-icon-text-default">
+            <lightning:icon iconName="utility:chevronleft" variant=" " size="x-small"/>
+                <span class="slds-assistive-text">Previous</span>
+                </span>
+            </ui:button>
+            <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.Next}" disabled="{!v.next}">
+                <span class="slds-icon slds-icon-text-default">
+                <lightning:icon iconName="utility:chevronright" variant=" " size="x-small"/>
+                <span class="slds-assistive-text">Next</span>
+                </span>
+            </ui:button>
+        </div>
+
+
+
+       
+       
+</div>
+	
+</div>
+
+
+
+
+
+</aura:component>

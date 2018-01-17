@@ -1,0 +1,20 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+		<p>Example Description</p>
+		
+		 <p> Usage              : Form Collects the Member Details, Submit the Form.
+     Parent Component           :  MemberServiceCmp
+     Events Fired               : <!--    <aura:registerEvent name="sendtoParent" type="c:sendCasetoParentEvt"/>
+-->
+     Events Handled             :<!-- <aura:handler name="zipcodeEvt" event="c:LookUpEvt" action="{!c.getPCPName}" />
+-->
+                                  
+     Dependent Child Components : CustomLookUp 
+     Apex Class Name            : PCPChangeController
+        </p>
+		
+		
+	</aura:example>
+	
+</aura:documentation>

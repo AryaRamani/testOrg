@@ -1,0 +1,38 @@
+<aura:component >
+
+ <!-- PUBLIC USER DEFINED ATTRIBUTES -->
+  
+    <aura:attribute name="group" type="Object" />
+     <aura:attribute name="GroupId" type="String"/>
+     <aura:attribute name="validate" type="Boolean" default="true"/>
+     
+      <aura:attribute name="readonly" type="Boolean" default="true"/>
+     
+    <!-- INTERNAL ATTRIBUTES -->
+
+    <!-- HANDLERS AND EVENTS-->
+    <aura:registerEvent name="ChapterInitCmpEvt" type="c:ChapterInitCmpEvt" />
+   
+    <aura:registerEvent name="navigationEvt" type="c:Ba_NavigateEvt" />
+    
+       <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+    <aura:attribute name="group" type="Object"/> 
+    <aura:attribute name="navigate" type="Boolean" default="true"/>
+   
+</aura:method> 
+    
+
+    <!-- PUBLIC METHODS -->
+    
+   
+    
+       
+    <div class="slds-grid slds-wrap">
+      
+        <div class="slds-col slds-size--3-of-3">
+            <c:Ba_GroupsummaryFrmCmp aura:id="GrpSummary" group="{!v.group}"  GroupId="{!v.GroupId}" readonly="{!v.readonly}"/>
+        </div>
+        
+  </div>
+</aura:component>

@@ -1,0 +1,9 @@
+<aura:documentation>
+	<aura:description>
+        <p>An <code>np:InsertProspectCmp</code>This component represents the New Prospect insertion,it requires the values of fields Group Name and autopopulate the legal Entity Name based on the GroupName provided 
+        and group Status,Phone,Anticipated Effective Date and Zip code ,related country will be autopopulated and  city,finally SIC Code are given in InsertProspect Component</p></aura:description>
+	
+    <aura:example name="InsertProspectCmpExample" ref="InsertProspectCmp" label="example">
+	<p> For example if you want to insert a new prospect,this component will provide a list of values that are reuired to insert a new prospect like groupname and based on that group naem legal entity will be populated and other Zip,Sic code,phone are required to fill and finally click on next to proceed.</p>
+	</aura:example>
+</aura:documentation>

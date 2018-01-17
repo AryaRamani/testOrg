@@ -1,0 +1,66 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+	 <aura:attribute name="selectedType" type="String" />
+    <aura:attribute name="typeoptions" type="String[]" />
+    <aura:attribute name="selectedStatus" type="String" />
+    <aura:attribute name="statusoptions" type="String[]" />
+    <aura:attribute name="uploadfile" type="String" default="file" />
+    <aura:attribute name="uploadurl" type="String" default="url" />
+    <aura:attribute name="docclink" type="String" />
+    <aura:attribute name="selectedoption" type="String" />
+    <aura:attribute name="fileName" type="String"  />
+      <aura:attribute name="myRecordId" type="String" description="Record to which the files should be attached" />
+    
+     <aura:registerEvent name="upload" type="c:Ba_AttachmentUploadCmpEvt"/>
+    
+	 <div class="slds-modal__content " style="padding:40px">
+
+
+                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4">
+
+                        <lightning:select name="type" label="Select the type of Attachment" aura:id="type" value="{!v.selectedType}" required="true">
+                            <aura:iteration items="{!v.typeoptions}" var="item">
+                                <option text="{!item}" value="{!item}" />
+                            </aura:iteration>
+                        </lightning:select>
+
+                    </div>
+                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4" style="padding-top: 40px">
+                        <lightning:select name="type" label="Select the status of Attachment" aura:id="status" value="{!v.selectedStatus}" required="true">
+                            <aura:iteration items="{!v.statusoptions}" var="item">
+                                <option text="{!item}" value="{!item}" />
+                            </aura:iteration>
+                        </lightning:select>
+
+                    </div>
+
+
+                    <div class="slds-col slds-size--1-of-1 slds-medium-size--3-of-6 slds-large-size--2-of-4" style="padding-top: 40px">
+                        <div><abbr style="color:red" title="required value">*</abbr> Please select an option </div>
+     
+    
+                        <lightning:input aura:id="file" type="radio" label="Upload New File" name="file" value="{!v.uploadfile}" onchange="{!c.getuploadtype}" />
+                        <lightning:input aura:id="url" type="radio" label="Add New URL" name="file" value="{!v.uploadurl}" onchange="{!c.getuploadtype}" />
+
+                    </div>
+
+                    <div style="padding-top:20px">
+                       <lightning:fileUpload aura:id="fileId" label="Upload New File" 
+        multiple="true" 
+        accept=".pdf, .png, .docx, .xlsx"
+        recordId="{!v.myRecordId}" 
+        onuploadfinished="{!c.handleUploadFinished}" class="hideContent" />
+                        <div aura:id="linkId" class="hideContent">
+                            <lightning:input label="Document Link" name="link" value="{!v.docclink}" required="true" />
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="slds-modal__footer" style="padding-top: 20px">
+                    <lightning:button aura:id="save" label="Save" class="slds-button slds-button--brand buttontype" onclick="{!c.savedocument}" />
+                    <lightning:button aura:id="Cancel" label="Cancel" class="slds-button slds-button--brand buttontype" onclick="{!c.hidePopup}" />
+                </div>
+                
+</aura:component>

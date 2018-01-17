@@ -1,0 +1,29 @@
+.THIS div.adjustwidth {
+    width:75% !important;
+    height:0% !important;
+}
+.THIS div.adwidth {
+    width:25% !important;
+    height:100% !important;
+}
+.THIS .bounceInRight {
+    width:20%;
+    animation: bounceInRight 1s !important;
+}
+
+@keyframes bounceInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(200px);
+    }
+    60% {
+        opacity: 1;
+        transform: translateX(-5px);
+    }
+    80% {
+        transform: translateX(10px);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}

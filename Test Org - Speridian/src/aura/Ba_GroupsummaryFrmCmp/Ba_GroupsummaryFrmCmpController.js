@@ -9,9 +9,10 @@
         
         
          validateFields: function(component, event) {
-
+        	
             var error = [];
             var params = event.getParam('arguments');
+           
             var message;
             if (params) {
             if($A.util.isEmpty(component.get("v.group.Name"))||$A.util.isEmpty(component.get("v.group.groupsic"))||$A.util.isEmpty(component.get("v.group.TIN_EIN__c"))){
@@ -46,11 +47,12 @@
 
 
                 } 
-                }
+                
                 else {
                     params.validate = true;
                     component.find('tin-id').set("v.error",false);
 
+                }
                 }
 
                // component.set("v.Errormessage", error);
@@ -58,6 +60,67 @@
                 return params;  //return validation status to chapter component
             }
         },
+        
+         
+       getAttributeMethod : function(component, event){
+    	 var params = event.getParam('arguments');
+		 params.group=component.get("v.group");
+		 
+		
+		
+        if (params) {
+        	if($A.util.isEmpty(component.get("v.group.Name"))||$A.util.isEmpty(component.get("v.group.groupsic"))||$A.util.isEmpty(component.get("v.group.TIN_EIN__c"))){
+             // Checks if Group Name is empty. 
+               if ($A.util.isEmpty(component.get("v.group.Name"))) {
+                	
+                    params.validate = false;
+                    //message = 'Please enter SIC code';
+                    component.find('name-id').set("v.error",true);   //if validation fails, sets error to true and displays error message below the field.
+                    //error.push(message);
+
+                } 
+                else{
+                   component.find('name-id').set("v.error",false);
+                }
+                //checks if SIC is empty
+                if ($A.util.isEmpty(component.get("v.group.groupsic"))) {
+                	
+                    params.validate = false;
+                    //message = 'Please enter SIC code';
+                    component.find('sic-id').set("v.error",true);
+                    //error.push(message);
+
+                } 
+                else{
+                   component.find('sic-id').set("v.error",false);
+                }
+                //Validation for TIN/EIN
+                if ($A.util.isEmpty(component.get("v.group.TIN_EIN__c"))) {
+                    params.validate = false;
+                    component.find('tin-id').set("v.error",true);
+
+
+                } 
+                
+                else {
+                    params.validate = true;
+                    component.find('tin-id').set("v.error",false);
+
+                }
+                }
+                else{
+                 params.validate = true;
+                }
+                if(params.validate){
+                	params.navigate=true;
+                }
+               // component.set("v.Errormessage", error);
+               // alert('In child'+ params.validate);
+                return params;  //return validation status to chapter component
+          
+        }
+       },
+       
 
 
 
@@ -68,6 +131,7 @@
             /*Event fired to master comp to start the flow. Not required for New Quote Request design*/
             var cmpEvent = component.getEvent("navigationEvt");
             cmpEvent.fire();
+           // alert('group');
             /*End*/
 
 

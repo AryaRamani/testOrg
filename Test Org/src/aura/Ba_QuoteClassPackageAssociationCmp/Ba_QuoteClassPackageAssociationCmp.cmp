@@ -1,0 +1,54 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Ba_QuoteClassPackageAssociationDAOClass" >
+ <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+ <aura:attribute name="ClsId" type="String[]" default="a0r7F000000E1NLQA0,a0r7F000000E695QAC"></aura:attribute>
+ <aura:attribute name="data" type="Object"></aura:attribute>
+  <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+     <aura:attribute name="modalIsOpen" type="Boolean" default="false" />
+    <!--attributes from plan component-->
+    <aura:attribute name="selectedlst" type="Object[]"/>
+    <aura:attribute name="ClsIndx" type="String" />    
+    <aura:attribute name="Indx" type="String" />   
+    <aura:attribute name="lngth" type="integer"  /> 
+    <aura:attribute name="selectedId" type="List[]" />
+    <aura:attribute name="ClassId" type="String[]" />
+    <aura:attribute name="QRCP" type="ba_QuoteRequestClassPackage__c[]" />
+    <aura:attribute name="data1" type="Object"></aura:attribute>
+    <aura:attribute name="enrollselectedlst" type="Object[]"/>
+    <aura:attribute name="Classpackagelist" type="Object[]"/>
+     
+      <aura:method name="getAttributeMethod" action="{!c.getAttributeMethod}" 
+  description="Sample method with parameters"> 
+  
+    <aura:attribute name="navigate" type="Boolean" default="true"/> 
+    
+</aura:method>
+     
+
+    <!-- to show/hide spinner --> 
+    	 <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+	
+    <div class="slds-page-header">
+   
+        <div class="slds-grid">
+            <form class="slds-form--inline" style="padding-left: 5px">
+                <div class="slds-form-element">
+                    <lightning:icon iconName="utility:package" size="small" />
+                </div>
+                <div class="slds-form-element" style="margin-top: 5px">
+                    <div class="slds-col slds-has-flexi-truncate">
+                        <h1 class="slds-text-heading--medium slds-truncate" title="Class Package">Class Package</h1>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+     <div>{!v.body}</div>
+    <div style="padding-top:10px"><c:Ba_QuoteClassPackageAssociationPlanCmp Classpackagelist="{!v.Classpackagelist}" selectedlst='{!v.selectedlst}' QRCP='{!v.QRCP}' data1='{!v.data1}' ClassId='{!v.ClassId}' selectedId='{!v.selectedId}' lngth='{!v.lngth}' Indx='{!v.Indx}' ClsIndx='{!v.ClsIndx}'/></div>
+    
+  
+    
+</aura:component>

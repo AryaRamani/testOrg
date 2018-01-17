@@ -1,0 +1,32 @@
+<aura:component >
+    <!-- Imports & Declarations-->
+    <aura:registerEvent name="saveCompetitor" type="c:CompetitorModifyEvt" />
+    <aura:attribute name="parentGroupId" type="String" required="true" />
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <aura:attribute name="competitor" type="BA_Group_Competitor__c" />
+    <!-- / Imports & Declarations-->
+
+
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputText aura:id="competitorName" label="Name" class="slds-input" labelClass="slds-form-element__label" value="{!v.competitor.ba_CompetitorName__c}" required="true" />
+        </div>
+    </div>
+
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputNumber aura:id="competitorEnrolled" label="Contracts Enrolled" class="slds-input" labelClass="slds-form-element__label" value="{!v.competitor.ba_ContractsEnrolled__c}" required="true" />
+        </div>
+    </div>
+
+    <div class="slds-form-element slds-is-required">
+        <div class="slds-form-element__control">
+            <ui:inputTextArea aura:id="competitorNotes" label="Notes" class="slds-input" labelClass="slds-form-element__label" value="{!v.competitor.Notes__c}" required="true" />
+        </div>
+    </div>
+
+    <div class="slds-form-element">
+        <ui:button label="Save" class="slds-button slds-button--brand" press="{!c.submitForm}" />
+    </div>
+
+</aura:component>

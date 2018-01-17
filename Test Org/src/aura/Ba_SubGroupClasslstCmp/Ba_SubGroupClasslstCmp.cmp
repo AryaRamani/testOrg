@@ -1,0 +1,166 @@
+<aura:component controller="Ba_SubGroupClasslstClass" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+	
+<aura:attribute name="showSpinner" type="Boolean" default="false" />
+<aura:attribute name="GroupClassParentlst" type="Object[]" default="[{'Id':'a0B7F000000VuYgUAK',
+																'ba_EffectiveDate__c': '11-1--2017',
+																'Name': 'A01',
+																'ba_ClassDescription__c':'A01-Active',
+																'ba_ProbationaryPeriod__c':'FOMF 30 days',
+																'ba_ClassStatus__c':'Pending',
+																'Enrollable_Class__c': true
+																},{'Id':'',
+																'ba_EffectiveDate__c': '11-1--2017',
+																'Name': 'A02',
+																'ba_ClassDescription__c':'A02-Active',
+																'ba_ProbationaryPeriod__c':'FOMF 30 days',
+																'ba_ClassStatus__c':'Pending',
+																'Enrollable_Class__c': false
+																}]"/>
+<aura:attribute name="GroupClasslst" type="Object[]"/>
+<aura:attribute name="benefitpacklst" type="Object[]"/>
+
+   <aura:attribute name="pageSize" type="Integer" default="5"/>
+<aura:attribute name="masterlistSize" type="Integer"/>
+<aura:attribute name="startPosn" type="Integer" default="0"/>
+<aura:attribute name="endPosn" type="Integer"/>
+
+<aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+<div class="slds ">
+
+<aura:if isTrue="{!v.showSpinner}">
+<lightning:spinner variant="brand" size="large"/>
+</aura:if>
+
+
+        <!-- Page header of the component -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <div class="slds-form-element">
+                        <lightning:icon iconName="action:join_group" size="small" />
+                    </div>
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Sub Group Class">Sub Group Classes</h1>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div aura:id="mainform" style="padding-top: 20px; " class="slds-grid slds-wrap slds-card">
+            <div >
+                <span style="font-style:italic; padding-bottom:10px">Please select the class(es) to be available in the Sub Group </span>
+            </div>
+            
+            
+            <table class="slds-table slds-table--bordered slds-table--cell-buffer" style="width:100%; padding-top:10px">
+
+                        <thead>
+
+                            <tr class="slds-text-title">
+                                <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Selection</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Effective date</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Class ID</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Class Description</span></th>
+                                <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Probationary Period</span></th>
+								 <th class="slds-size--2-of-12" scope="col"><span class="slds-truncate">Period status</span></th>
+								  <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Enrollable Class</span></th>
+                            </tr>
+                        </thead>
+
+                        <tbody aura:id="bodyid" >
+
+                            <aura:iteration items="{!v.GroupClasslst}" var="item" indexVar="index">
+                                <tr aura:id="row2-id" style="line-height:0.6rem" onclick="{!c.getbenefitpackages}" data-row-index="{!index}">
+
+
+                                    <td class="slds-size--1-of-12">
+                                        <lightning:input type="checkbox" label="" name="select" variant="{!index}" checked="{!item.selected}" value="{!item.selected}" onchange="{!c.getselection}" />
+                                    </td>
+                                    <td class="slds-size--2-of-12">{!item.ba_EffectiveDate__c}</td>
+                                    <td class="slds-size--2-of-12">{!item.Name}</td>
+                                    <td class="slds-size--2-of-12">{!item.ba_ClassDescription__c}</td>
+                                    <td class="slds-size--2-of-12">{!item.ba_ProbationaryPeriod__c}
+                                    </td>
+									<td class="slds-size--2-of-12">{!item.ba_ClassStatus__c}
+                                    </td>
+									<td class="slds-size--1-of-12">
+                                        <lightning:input type="checkbox" label="" name="enrollable"  checked="{!item.Enrollable_Class__c}" value="{!item.Enrollable_Class__c}" disabled="true" />
+                                  
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+
+                        </tbody>
+                    </table>
+                    
+                    <div class="slds-grid slds-grid--align-center" style="padding-top:20px">
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.previous}" disabled="{!v.startPosn == 0}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronleft" />
+                <span class="slds-assistive-text">Previous</span>
+                            </span>
+                        </ui:button>
+                        <ui:button class="slds-button slds-button--neutral slds-p-horizontal--xx-small slds-m-right--x-small slds-float--right" press="{!c.next}" disabled="{!v.endPosn+1 >= v.GroupClassParentlst.length}">
+                            <span class="slds-icon slds-icon-text-default">
+                <c:svg class="slds-button__icon slds-button__icon--medium" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#chevronright" />
+                <span class="slds-assistive-text">Next</span>
+                            </span>
+                        </ui:button>
+                    </div>
+                    
+                    <div aura:id="dep-id" style="padding-top:20px;width:100%" >
+                    <h3 class="slds-section-title--divider">Class Benefit Package</h3>
+                   </div> 
+                   
+                     <table class="slds-table slds-table--bordered slds-table--cell-buffer" style="width:100%; padding-top:10px">
+
+                        <thead>
+
+                            <tr class="slds-text-title">
+                                <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Quote ID</span></th>
+                                <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Line Number</span></th>
+                                <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Line Item status</span></th>
+                                <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Benefit Package</span></th>
+                                <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Rating Region</span></th>
+								 <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Effective date</span></th>
+								  <th class="slds-size--1-of-12" scope="col"><span class="slds-truncate">Termination date</span></th>
+                            			
+                            
+                            </tr>
+                        </thead>
+
+                        <tbody aura:id="bodyid" >
+
+                            <aura:iteration items="{!v.benefitpacklst}" var="item" indexVar="index">
+                                <tr aura:id="row-id">
+
+
+                                    <td class="slds-size--1-of-12">
+                                      {!item.Benefit_Package__r.QuoteId}
+                                    </td>
+                                    <td class="slds-size--2-of-12">{!item.ba_QuoteLineID__r.LineNumber}</td>
+                                    <td class="slds-size--2-of-12">{!item.ba_QuoteLineID__r.Line_Item_status__c}</td>
+                                    <td class="slds-size--2-of-12">{!item.Name}</td>
+                                    <td class="slds-size--2-of-12">{!item.ba_RatingRegion__c}
+                                    </td>
+									<td class="slds-size--2-of-12">{!item.ba_RateEffectiveDate__c}
+                                    </td>
+									<td class="slds-size--1-of-12">
+                                      {!item.ba_RateTerminationDate__c}
+                                    </td>
+                                </tr>
+                            </aura:iteration>
+
+                        </tbody>
+                    </table>
+                   
+            </div>
+        
+        
+  </div>  
+      
+        
+</aura:component>

@@ -1,0 +1,17 @@
+<aura:documentation>
+	<aura:description>Documentation</aura:description>
+	<aura:example name="ExampleName" ref="exampleComponentName" label="Label">
+        
+        <p>Example Description</p>
+		
+		<p> Usage               :  Displays the Help message .
+     Parent Component           :  PCPChangeCmp,                       
+     Events Fired               : NO events fired
+     Events Handled             :  No events handled
+                                  
+     Dependent Child Components : 
+     Apex Class Name            :  
+        </p>
+	</aura:example>
+    
+</aura:documentation>

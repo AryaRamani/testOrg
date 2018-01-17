@@ -1,0 +1,9 @@
+<aura:event access="global" type="COMPONENT" description="Event template" >
+    <aura:attribute name="Agency" type="Account[]"/>
+    <aura:attribute name="AgencyId" type="Id"/>
+        <aura:attribute name="Producer" type="Contact[]"/>
+    <aura:attribute name="option" type="Boolean"/>
+     <aura:attribute name="cellinfo" type="Object[]" />
+    <aura:attribute name="AllDependent" type="Object[]"/>
+    <aura:attribute name="eligibilityinfo" type="EligibilityInfoClass.EligibilityInfoWrpClass[]" />
+</aura:event>

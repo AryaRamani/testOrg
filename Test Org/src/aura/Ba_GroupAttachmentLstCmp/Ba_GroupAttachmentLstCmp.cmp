@@ -1,0 +1,37 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Ba_GroupAttachmentClass" >
+    <aura:attribute name="data" type="Object"/>
+    <aura:attribute name="Attach" type="BA_Correspondence__c" />
+    <aura:attribute name="GroupId" type="String" />
+    <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <!--Handler -->
+	<aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+ 
+    
+     <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+	
+    
+    
+<div style="width 100% !important"> <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left:5px">
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top:5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+  <h1 class="slds-text-heading--medium slds-truncate" title="Producers">Group Attachment </h1>
+                        </div>
+                    <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Display STRIKE DATAGRID -->
+    <c:strike_dataGrid data="{!v.data}" />	
+   <!-- Uploading attachment -->
+    <c:Ba_UploadAttachmentCmp GroupId="{!v.GroupId}" />
+      
+</aura:component>

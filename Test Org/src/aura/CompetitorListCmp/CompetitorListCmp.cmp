@@ -1,0 +1,91 @@
+<aura:component implements="force:appHostable" controller="CompetitorDAOClass">
+    <!-- Imports & Declarations-->
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <aura:attribute name="modalIsOpen" type="boolean" default="false" />
+    <aura:attribute name="groupId" type="string" />
+    <aura:attribute name="competitor" type="BA_Group_Competitor__c" default="{ 'sobjectType': 'BA_Group_Competitor__c',
+                    'ba_CompetitorName__c': '',
+                    'ba_ContractsEnrolled__c': 0,
+                    'ba_Created__c': '',
+              		'CreatedById': '',
+              		'ba_Group__c': '',
+              		'Notes__c' : ''              
+              }" />
+    <aura:attribute name="competitors" type="BA_Group_Competitor__c[]" />
+    <aura:attribute name="activeRow" type="Integer" />
+    <aura:registerEvent name="activeCompetitorChange" type="c:CompetitorModifyEvt" />
+    <!--Handler For Event Triggered From CompetitorFormCmp -->
+    <aura:handler name="saveCompetitor" event="c:CompetitorModifyEvt" action="{!c.handleAddCompetitor}" />
+    <!--Handler For Event Triggered From CompetitorListItmCmp -->
+    <aura:handler name="editCompetitor" event="c:CompetitorModifyEvt" action="{!c.editCompetitor}" />
+    <!--Handler For Event Triggered From CompetitorListItmCmp -->
+    <aura:handler name="selectCompetitor" event="c:CompetitorModifyEvt" action="{!c.selectCompetitor}" />
+    <!-- / Imports & Declarations-->
+    <!-- Wrapper SLDS -->
+    <div class="slds">
+        <!-- Page Header -->
+        <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <!-- Header People Icon -->
+                    <div class="slds-form-element">
+                        <c:svg aria-hidden="true" class="slds-button__icon--large" xlinkHref="/resource/slds100/assets/icons/utility-sprite/svg/symbols.svg#people">
+                        </c:svg>
+                    </div>
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Add New Prospect Competitor Information">Competitor Information
+                            </h1>
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- / Page Header -->
+
+        <!-- Competitor List Item Table -->
+        
+        <!-- Component Title -->
+        <div class="slds-form-element" style="padding-top: 40px; padding-left: 20px; padding-bottom: 10px">Please Add the Competitor Information</div>
+        <!-- / Component Title -->
+        <div class="slds-form-element" style="padding-top: 40px; padding-right: 20px; padding-bottom: 10px" align="right">
+            <ui:button label="Add Competitor" class="slds-button slds-button--brand" press="{!c.addCompetitor}" />
+        </div>
+
+        <c:CompetitorListItmCmp aura:id="competitorListItmChld" parentGroupId="{!v.groupId}" competitors="{!v.competitors}" />
+
+        <!-- / Competitor List Item Table -->
+
+        <!-- New Competitor Modal Component -->
+        <aura:if isTrue="{!v.modalIsOpen}">
+            <!--###### MODAL BOX Start From Here ######-->
+            <div role="dialog" tabindex="-1" aura:id="popupCompetitorNew" aria-labelledby="New Competitor" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModel}">
+							X <span class="slds-assistive-text">Close</span>
+						</button>
+                        <h2 id="newcompheader" class="slds-text-heading--medium">New Competitor
+                        </h2>
+                    </div>
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <c:CompetitorFormCmp parentGroupId="{!v.groupId}" competitor="{!v.competitor}" />
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModel}">Cancel</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open" aura:id="popupCompetitorNewBackground"></div>
+            <!--###### MODAL BOX Part END Here ######-->
+        </aura:if>
+        <!-- / New Competitor Modal Component -->
+        
+    </div>
+    <!-- / Wrapper SLDS -->
+</aura:component>

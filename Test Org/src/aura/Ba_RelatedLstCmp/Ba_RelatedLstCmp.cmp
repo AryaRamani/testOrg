@@ -1,0 +1,159 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"  access="global"  controller="RelatedListClass" >
+    <!-- attributes for dynamic related list -->
+    <aura:attribute name="childRecords" type="RelatedListClass.ChildRecordDetails[]" />
+    <aura:attribute name="Account" type="ID" />
+	<aura:attribute name="recordId" type="String" /> 
+    <aura:attribute name="ChildObjects" type="List"/>
+    <aura:attribute name="ChildObj" type="String" description="To get values from design"/>
+     <aura:attribute name="defaultOptions" type="List" default="[]"/>
+    <aura:attribute name="SelectedOptions" type="List" />
+    <aura:attribute name="showModel" type="Boolean" default="false"/>
+    <aura:attribute name="ParentObjtName" type="String" default="account" />
+    
+    <aura:attribute name="showSpinner" type="Boolean" default="false"/>
+    <aura:attribute name="contactdetails" type="Contact" />
+    <aura:attribute name="oppdetails" type="opportunity" />
+    <aura:attribute name="casedetails" type="Case" />
+    <aura:attribute name="Quotedetails" type="Quote" />
+    <aura:attribute name="Addressdetails" type="BA_Address__c" />
+    <aura:attribute name="Correspondancedetails" type="BA_Correspondence__c" />
+    <aura:attribute name="Benefitdetails" type="BA_Asset__c" />
+    <aura:attribute name="Subgroupdetails" type="BA_Subgroup__c" />
+    <aura:attribute name="Groupclassdetails" type="BA_Class_Package__c" />
+    
+    <aura:attribute name="notedetails" type="ContentDocument"/>
+    <aura:attribute name="contacttotal" type="integer" default="0"/>
+    <aura:attribute name="Opptotal" type="integer" default="0"/>
+    <aura:attribute name="Casetotal" type="integer" default="0"/>
+    <aura:attribute name="notetotal" type="integer" default="0"/>
+    <aura:attribute name="quotetotal" type="integer" default="0"/>
+    <aura:attribute name="Correspondtotal" type="integer" default="0"/>
+    <aura:attribute name="subgrouptotal" type="integer" default="0"/>
+    <aura:attribute name="groupclasstotal" type="integer" default="0"/>
+    <aura:attribute name="benefittotal" type="integer" default="0"/>
+    <aura:attribute name="addresstotal" type="integer" default="0"/>
+    
+    
+    
+    <aura:attribute name="buttonsort" type="account[]"/>
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:EmployerGroupRelatedListEvt" action="{!c.handleid}"/> 
+    
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large"  /> 
+    </aura:if>
+    
+    <div class="slds-page-header slds-has-flexi-truncate"  style="padding-left: 25px">
+        <h1 class="slds-text-heading--medium slds-truncate " title="Related list">Related List</h1>
+    </div>
+    <!--  choose child objects-->
+    
+   
+    <aura:if isTrue="{!v.ChildObjects.length != 0}">
+        <div style="padding:10px">
+        <a onclick="{!c.showPopUp}" style="padding-right:10px"> Click here to Customize related list</a> 
+   </div>
+        </aura:if>
+    <aura:if isTrue="{!v.showModel}">
+   
+    <div role="dialog" class="slds-modal slds-fade-in-open" style="padding-top:5%">
+      <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                   <div
+								class="slds-button slds-button--icon-inverse slds-modal__close"
+								onclick="{!c.hideModal}">
+								<c:svg aria-hidden="true"
+									class="slds-button__icon slds-button__icon--large"
+									xlinkHref="/resource/slds100/assets/icons/action-sprite/svg/symbols.svg#close"></c:svg>
+								<span class="slds-assistive-text">Close</span>
+							</div>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Choose child Objects</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                    <lightning:dualListbox aura:id="selectOptions" name="Select Child Objects"  label="Select Child Objects" 
+                                           sourceLabel="Child Objects" 
+                                           selectedLabel="Selected Child Objects" 
+                                           options="{!v.ChildObjects}"
+                                           value="{!v.defaultOptions}"
+                                           onblur="{!c.sendToApex}"
+                                           onchange="{!c.getSelectedOptions}"
+                                           />
+                </div>
+               <div class="slds-modal__footer" style="padding-top: 20px">
+							<lightning:button aura:id="okbtn"
+								class="slds-button slds-button--brand buttontype" label="Filter"
+								onclick="{!c.sendToApex}" />
+							<lightning:button aura:id="Cancel" label="Cancel"
+								class="slds-button slds-button--brand buttontype"
+								onclick="{!c.hideModal}" />
+						</div>
+            </div>
+          </div>
+   
+        <div class="slds-backdrop slds-backdrop--open"
+					aura:id="popUpBackgroundSICId"></div>
+    </aura:if>
+ <!--lightning:button label="Show Related Records"  variant="brand" /-->
+   
+    <aura:iteration items="{!v.childRecords}" var="cr" >
+        <article class="slds-card slds-card_boundary slds-m-top_small">
+            <div class="slds-card__header slds-grid slds-p-bottom_x-small">
+                <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                    <div class="slds-media__figure">
+                        <span class="slds-icon_container" title="description of icon when needed">
+                            <lightning:icon size="small"
+                                            iconName="standard:related_list" />
+                        </span>
+                    </div>
+                    <div class="slds-media__body">
+                        <h2 class="slds-text-heading_small">
+                            <a href=""  class="slds-card__header-link slds-truncate" id="{!cr.ChildRelationShipName}" onclick = "{!c.gotoRelatedList}">      
+                                <span class="slds-text-heading_small">  {!cr.ObjLabel} </span>
+                                <span  class="slds-text-heading--medium slds-truncate">({!cr.Count})</span>
+                            </a>
+                        </h2>
+                    </div>
+                </header>
+            </div>        
+            <aura:If isTrue="{!cr.Count >=1}">
+                <div class="slds-card__body slds-card__body_inner">
+                    <ul class="slds-truncate slds-p-top_xx-small">
+                        <li class="slds-truncate" >
+                            <span>
+                                <aura:iteration items="{!cr.SobjectList}" var="obj">
+                                    <p class="slds-p-bottom_small">
+                                        <a href=""  style="border-bottom: 1px dotted;text-decoration: none;color: rgb(0, 112, 210);font-weight: unset;"  class="slds-card__header-link slds-truncate " id="{!obj.Id}" onclick = "{!c.navigateToObject}">
+                                            <aura:if isTrue="{!cr.ObjLabel == 'Case'}">
+                                                {!obj.CaseNumber}
+                                                  <aura:set attribute="else">
+                                                    {!obj.Name}
+                                                </aura:set>
+                                               
+                                               
+                                            </aura:if>
+                                             <aura:if isTrue="{!cr.ObjLabel == 'Notes and Attachments'}" >
+                                                 {!obj.Title}
+                                                   
+                                                </aura:if>
+                                        </a>
+                                    </p>
+                                </aura:iteration>
+                            </span>   
+                        </li>
+                    </ul>
+                </div>
+                <footer class="slds-card__footer slds-align_absolute-center">
+                    <a href=""  class="slds-card__header-link slds-truncate" id ="{!cr.ChildRelationShipName}" onclick = "{!c.gotoRelatedList}" >
+                        <span>View All</span>   
+                    </a>
+                </footer>
+            </aura:If>
+        </article>
+    </aura:iteration>
+    
+  
+        
+ 
+</aura:component>

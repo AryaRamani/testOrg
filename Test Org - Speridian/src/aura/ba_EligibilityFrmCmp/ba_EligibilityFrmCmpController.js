@@ -4,8 +4,9 @@
         var cmpEvent = component.getEvent("navigationEvt");
         cmpEvent.fire(); 
          /*End*/ 
+     
+       if(component.get("v.BA_Eligiblity_Administration__c")==''||component.get("v.BA_Eligiblity_Administration__c")==null){
       
-       if(component.get("v.BA_Eligiblity_Administration__c")==''){
         var action = component.get("c.getEligiblityAdministrationQuestions");
         action.setCallback(this, function(response) {
             var state = response.getState();

@@ -1,0 +1,42 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+    <aura:attribute name="options" type="List" default="[
+    {'label': 'Ross', 'value': 'option1'},
+    {'label': 'Rachel', 'value': 'option2'},
+    ]"/>
+    <aura:attribute name="value" type="List" default="option1"/>
+     <aura:attribute name="variant" type="String" default="non-linear"/>
+    <aura:attribute name="hideUpdateButton" type="Boolean" default="false"/>
+    
+   <lightning:accordion >
+     <lightning:accordionSection name="A" label="Accordion Title A">This is the content area for section A</lightning:accordionSection>
+     <lightning:accordionSection name="B" label="Accordion Title B">This is the content area for section B</lightning:accordionSection>
+     <lightning:accordionSection name="C" label="Accordion Title C">This is the content area for section C</lightning:accordionSection>
+   </lightning:accordion>
+    
+    
+    <lightning:checkboxGroup aura:id="mygroup"
+        name="checkboxGroup"
+        label="Checkbox Group"
+        options="{! v.options }"
+        value="{! v.value }"
+        onchange="{! c.handleChange }"
+        required="true" />
+    <div style="padding-top:20px">
+        <lightning:dynamicIcon type="eq" alternativeText="Your calculation is running."/>
+    </div>
+    
+    <lightning:recordViewForm recordId="0037F0000063re1QAA"  objectApiName="Contact">
+        <div class="slds-box slds-theme_default">
+            <lightning:outputField fieldName="Name" />
+            <lightning:outputField fieldName="Phone"/>
+            <lightning:outputField fieldName="Email" />
+            <lightning:outputField fieldName="Birthdate" />
+            <lightning:outputField fieldName="LeadSource" />
+        </div>
+    </lightning:recordViewForm>
+    
+    
+
+
+</aura:component>

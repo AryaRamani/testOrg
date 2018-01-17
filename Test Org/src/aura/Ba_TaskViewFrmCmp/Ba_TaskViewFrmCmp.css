@@ -1,0 +1,23 @@
+.THIS li {
+    overflow: hidden;
+    position: relative;
+    padding: 0 0 30px 30px;
+}
+.THIS li:last-child::before {
+    border-width: 2px 0 0;
+}
+
+.THIS li::after {
+    content: '';
+    position: absolute;
+    left: 12px;
+    top: 7px;
+    width: 6px;
+    height: 6px;
+    background: #3d7cd3;
+    border: 2px solid #0070d2;
+    border-radius: 100%;
+}
+.THIS ul.Bgcl{
+   background-color: rgb(247, 249, 251)!important;
+}

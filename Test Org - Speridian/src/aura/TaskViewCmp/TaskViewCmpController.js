@@ -45,6 +45,7 @@
            });*/
 
         var taskflow = event.getSource().get("v.title");
+        
         if (!$A.util.isEmpty(component.get("v.ParentId"))) {
             // alert('task'+JSON.stringify(taskflow));
             var evt = $A.get("e.force:navigateToComponent");
@@ -76,6 +77,7 @@
             });
             toastEvent.fire();
 
+        
         }
     },
 

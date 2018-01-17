@@ -1,0 +1,60 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" controller="DependentDetailsClass">
+
+<aura:attribute name="Dependent" type="Object[]" />
+    
+     <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    
+  <h3 class="slds-section-title--divider">Dependent Information</h3>
+   
+   <div style="padding-top:10px">
+   
+                    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+                        <thead>
+                            <tr class="slds-text-heading--label">
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <span class="slds-truncate" title="Last Name">Last Name</span>
+                                </th>
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <div class="slds-truncate" title="First Name">First Name</div>
+                                </th>
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <div class="slds-truncate" title="Relation">Relation</div>
+                                </th>
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <div class="slds-truncate" title="Date Of Birth">Date Of Birth</div>
+                                </th>
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <div class="slds-truncate" title="Tobacco Used In Last 12 Months">Tobacco Used In Last 12 Months</div>
+                                </th>
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <div class="slds-truncate" title="Dependents Sub-type">Dependents Sub-type</div>
+                                </th>
+                                <th class="slds-size--1-of-12" scope="col">
+                                    <div class="slds-truncate" title="Disabled">Disabled</div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <aura:iteration items="{!v.Dependent}" var="det" indexVar="index">
+                                <tr>
+                                    <td class="slds-size--2-of-12">{!det.LastName}</td>
+                                    <td class="slds-size--2-of-12">{!det.FirstName}</td>
+                                    <td class="slds-size--2-of-12">{!det.Relation}</td>
+                                    <td class="slds-size--2-of-12">{!det.Date}</td>
+                                    <td class="slds-size--2-of-12">
+                                        <lightning:input aura:id="check-id" type="checkbox" disabled="true" name="value" checked="{!det.CheckVal}" />
+                                    </td>
+                                    <td class="slds-size--2-of-12"></td>
+                                    <td class="slds-size--2-of-12"></td>
+                                </tr>
+                            </aura:iteration>
+                        </tbody>
+                    </table>
+    
+   </div>
+  
+   
+
+	
+</aura:component>

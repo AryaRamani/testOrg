@@ -1,0 +1,64 @@
+<aura:component controller="InstallationFlowAdminClass"  implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+	
+	 <ltng:require scripts="/resource/lodash/lodash/lodash.js" /> 
+	 
+	  <!-- Imports & Declarations-->
+    <aura:attribute name="currentTaskFlow" type="BA_Task_Flow__c"  />
+    
+    <aura:attribute name="currentChapterSequence" type="Integer" default="0" />
+    <aura:attribute name="activeChapter" type="String" />
+    <aura:attribute name="childChapterInits" type="String[]" />
+    <aura:attribute name="taskChapters" type="BA_Task_Chapter__c[]" />
+    <aura:attribute name="IsSpinner" type="Boolean" default="false" />
+ 
+    <aura:attribute name="firstChapter" type="Boolean" default="true" />
+    <aura:attribute name="lastChapter" type="Boolean" default="false" />
+    <aura:attribute name="Direction" type="String" />
+    
+    <aura:attribute name="SequenceDir" type="Flow_Navigation__c" />
+    <aura:attribute name="GroupId" type="String" default="0017F00000KktWeQAJ" />
+    <aura:attribute name="groupInfo" type="Object"/>
+    <aura:attribute name="Attlist" type="Object"/>
+     <aura:attribute name="pauseflow" type="Pause_Task__c"  />
+     <aura:attribute name="resume" type="Boolean" default="false" />
+   
+    
+    
+        <aura:handler name="init" action="{!c.doInit}" value="{!this}" /> 
+     
+       <aura:handler name="navigateNextEvt" event="c:Ba_NavigateFlowCmpEvt" action="{!c.handleNavigateNext}" />     
+       <aura:handler name="navigatePreviousEvt" event="c:Ba_NavigateFlowCmpEvt" action="{!c.handleNavigatePrevious}" />
+       <aura:handler name="flowPauseEvt" event="c:Ba_NavigateFlowCmpEvt" action="{!c.handleFlowPause}" />
+       <aura:handler name="flowSubmitEvt" event="c:Ba_NavigateFlowCmpEvt" action="{!c.handleFlowSubmit}" />
+        <aura:handler name="flowCancelEvt" event="c:Ba_NavigateFlowCmpEvt" action="{!c.handleFlowCancel}" />
+       
+       
+     <div style="padding-bottom:5%">
+      <div >
+      <c:Ba_FlowInformationCmp group="{!v.groupInfo}" aura:id='top-id'/>
+      </div>   
+    
+    <div aura:id="parentdiv" class="slds-grid slds-wrap  slds-card">
+        <aura:if isTrue="{!v.IsSpinner}">
+            <lightning:spinner variant="brand" size="large" alternativeText="Page Loading..." />
+        </aura:if>
+        
+    
+     
+        
+        <div class="slds-col slds-size--2-of-5 slds-small-size--0-of-1 slds-medium-size--1-of-3">
+            <c:chaptercmp aura:id="TaskChapterCmp" taskChapters="{!v.taskChapters}" taskDisplayName="{!v.currentTaskFlow.ba_Display_Name__c}" activeChapter="{!v.activeChapter}" />
+        </div>
+        <div  class="slds-col slds-size--3-of-5 slds-small-size--1-of-1 slds-medium-size--2-of-3">
+            <div class="slds-form-element__group bounceInRight" aura:id="taskFormContainer"  style="padding-right:2%; top:0">
+            {!v.body}
+            </div>
+          
+            <footer role="contentinfo" class="slds-p-around--large" aura:id="navfooter">
+                <c:Ba_NavigateFlowCmp aura:id="NavigateFlowCmp" currentFlow="{!v.currentTaskFlow}" firstChapter="{!v.firstChapter}" lastChapter="{!v.lastChapter}" />
+            </footer>
+        </div>
+
+    </div>
+    </div>
+</aura:component>

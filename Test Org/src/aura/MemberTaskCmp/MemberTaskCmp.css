@@ -1,0 +1,52 @@
+.THIS .Taskbar{
+   height:3rem;
+    background:rgb(247, 249, 251);
+    max-width:11em;
+    position:fixed;
+    z-index: 4;
+}
+
+.THIS .TaskContent{
+    width: 100%;
+}
+
+.THIS .TaskButton-active{
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    background: #27ae60;
+    padding-left: 0.8rem;
+    line-height: 3;
+    width: 100%;
+    text-align: left;
+}
+
+
+.THIS div.Message {
+    color: #000000;
+    font-weight : bold;
+    background: rgb(247, 249, 251);
+    width : 95% ;
+    padding : 5px;
+    margin : 2px auto 2px auto ;
+    border-radius: 5px;
+}
+
+.THIS div.container {
+    margin: 0px 20px 0px 40px;
+}
+
+.THIS div.expandCollapse{
+    cursor : pointer;
+    width:10%;
+    float:right ;
+}
+.THIS div.show{
+    display:block;
+}
+.THIS div.hide{
+    display:none;
+}
+.THIS .textcolor{
+   color:blue;
+}

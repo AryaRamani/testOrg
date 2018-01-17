@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes" access="global">
+    <ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="c:AddContactInfoEvent" action="{!c.CloseInfoCmp}" />
+    <aura:attribute name='modalIsOpen' type="boolean" default="false" />
+    <aura:handler event="c:ContactSearchEvent" action="{!c.setAttributeValue}" />
+    <div class="slds-grid slds-wrap">
+        <div class="slds-col slds-size--1-of-1 slds-small-size--2-of-3 slds-medium-size--4-of-5">
+            <div class="slds-form-element__group slds-show" aura:id="ContactInfo">
+                <c:ContactInfoCmp />
+            </div>
+            <div class="slds-form-element__group slds-hide" aura:id="ContactList">
+                <c:ContactSearchCmp />
+            </div>
+        </div>
+    </div>
+</aura:component>

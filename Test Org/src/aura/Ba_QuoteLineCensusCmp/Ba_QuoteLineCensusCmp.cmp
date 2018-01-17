@@ -1,0 +1,42 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="Ba_QuoteLineItemReviewDataGridClass" >
+    <!--HANDLERS AND EVENTS -->
+    <aura:handler name="init" value="{!this}" action="{!c.init}"/>
+     <aura:handler event="c:Ba_Strike_GridCmpEvt" action="{!c.StrikeEvent}"/>
+    <!--PUBLIC USER DEFINED ATTRIBUTES -->    
+    <aura:attribute name="QLIId" type="String"></aura:attribute>
+    <aura:attribute name="data" type="Object"></aura:attribute>
+     <aura:attribute name="showSpinner" type="Boolean" default="false" />
+    <aura:attribute name="Spinner" type="Boolean" default="false" />
+    <!-- to show/hide spinner -->
+    
+     <!-- spinner code -->
+    <aura:if isTrue="{!v.showSpinner}">
+        <lightning:spinner variant="brand" size="large" />
+    </aura:if>
+    
+    <div class="slds-page-header">
+            <div class="slds-grid">
+                <form class="slds-form--inline" style="padding-left: 5px">
+                    <!-- Header People Icon -->
+                    <div class="slds-form-element">
+                       
+                    </div>
+                    <!-- / Header People Icon -->
+                    <!-- Chapter Title -->
+                    <div class="slds-form-element" style="margin-top: 5px">
+                        <div class="slds-col slds-has-flexi-truncate">
+                          
+                            
+                            <h1 class="slds-text-heading--medium slds-truncate" title="Quote Line Item Census Information">Member Rate Info
+                            </h1>
+                            
+                        </div>
+                        <!-- / Chapter Title -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    <div>{!v.body}</div>
+    
+    
+</aura:component>

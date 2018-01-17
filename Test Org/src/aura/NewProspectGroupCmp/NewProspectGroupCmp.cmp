@@ -1,0 +1,27 @@
+<aura:component access="global" implements="force:appHostable,flexipage:availableForAllPageTypes" >
+<ltng:require styles="/resource/slds100/assets/styles/salesforce-lightning-design-system.min.css" />
+
+
+ <aura:attribute name="group" type="Account" default="{ 'sobjectType': 'Account',
+                'Name': '',
+                'ba_GroupStatus__c':'Prospect',
+                'ba_LegalEntityName__c': '',
+                'Phone': '',
+                  'ba_EffectiveDate__c':''                                       }"/> <!-- value attribute for store group -->
+   
+    <aura:attribute name="zipdata" type="BA_Zipcode_Admin__c"  default="{ 'sobjectType': 'BA_Zipcode_Admin__c',
+                'ba_County__c': '',
+                'ba_City__c':'',
+                'ba_Zipcode__c': '',
+                                                }"/> <!--value attribute for county and city  -->
+    <aura:attribute name="sicCode" type="String" /> <!--value attribute for SIC code  -->
+    
+ 
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" /> 
+    <aura:handler event="c:navigateProspectEvt" action="{!c.NavigateComponent}" />
+    
+    <div class="slds">
+        {!v.body}
+    </div>
+	
+</aura:component>
